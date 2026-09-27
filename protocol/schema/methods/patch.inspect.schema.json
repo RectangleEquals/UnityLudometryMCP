@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/patch.inspect.schema.json",
+  "title": "patch.inspect",
+  "description": "All Harmony patches on a method, including other mods'.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "PatchInspectParams",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    "result": {
+      "title": "PatchInspectResult",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "patches": {
+          "type": "array",
+          "items": {
+            "title": "HarmonyPatchInfo",
+            "type": "object",
+            "properties": {
+              "owner": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "prefix",
+                  "postfix",
+                  "transpiler",
+                  "finalizer"
+                ]
+              },
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "priority": {
+                "type": "integer"
+              },
+              "before": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "after": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "owner",
+              "kind",
+              "priority"
+            ]
+          }
+        }
+      },
+      "required": [
+        "method",
+        "patches"
+      ]
+    }
+  }
+}

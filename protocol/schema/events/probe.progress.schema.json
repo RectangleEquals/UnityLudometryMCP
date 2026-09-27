@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/probe.progress.schema.json",
+  "title": "probe.progress",
+  "description": "Progress of a probe batch.",
+  "$defs": {
+    "params": {
+      "title": "ProbeProgressEventParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "probeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId",
+        "probeId",
+        "index",
+        "total",
+        "status"
+      ]
+    }
+  }
+}

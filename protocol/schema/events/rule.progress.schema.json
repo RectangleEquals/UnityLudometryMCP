@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/rule.progress.schema.json",
+  "title": "rule.progress",
+  "description": "A sub-condition of a rule was satisfied.",
+  "$defs": {
+    "params": {
+      "title": "RuleProgressEventParams",
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conditionPath": {
+          "type": "string"
+        },
+        "satisfied": {
+          "type": "boolean"
+        },
+        "detail": {},
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "ruleId",
+        "conditionPath",
+        "satisfied",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

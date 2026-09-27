@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/content.summary.schema.json",
+  "title": "content.summary",
+  "description": "Counts and estimated memory per type of loaded content.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ContentSummaryParams",
+      "type": "object",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "result": {
+      "title": "ContentSummaryResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "ContentTypeSummary",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "estimatedBytes": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              }
+            },
+            "required": [
+              "type",
+              "count",
+              "estimatedBytes"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

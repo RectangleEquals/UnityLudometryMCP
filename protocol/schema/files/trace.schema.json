@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/trace.schema.json",
+  "description": "A call trace (`trace.start`): instrumentation records in sequence order. Each line is one record; see `ndjson.schema.json` for the header and footer.",
+  "oneOf": [
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/header"
+    },
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/footer"
+    },
+    {
+      "$ref": "#/$defs/record"
+    }
+  ],
+  "$defs": {
+    "record": {
+      "allOf": [
+        {
+          "$ref": "../common/instrumentation-record.schema.json"
+        }
+      ],
+      "properties": {
+        "rec": {
+          "const": "call"
+        }
+      },
+      "required": [
+        "rec"
+      ],
+      "x-rec": "call",
+      "description": "One enter/exit/throw record."
+    }
+  }
+}

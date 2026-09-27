@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `scene`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-433",
+    "kind": "request",
+    "method": "scene.unload",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-433",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.scene is required.",
+      "data": {
+        "param": "params.scene"
+      }
+    }
+  }
+}

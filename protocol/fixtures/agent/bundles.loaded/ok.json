@@ -1,0 +1,32 @@
+{
+  "description": "`bundles.loaded` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-61",
+    "kind": "request",
+    "method": "bundles.loaded",
+    "params": {
+      "includeAssetNames": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-61",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "h": 481,
+          "name": "Player",
+          "isStreamedSceneAssetBundle": true,
+          "assetNames": [
+            "plank"
+          ],
+          "scenePaths": [
+            "example-scenePath"
+          ]
+        }
+      ]
+    }
+  }
+}

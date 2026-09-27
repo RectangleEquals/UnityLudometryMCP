@@ -1,0 +1,17 @@
+{
+  "description": "`patch.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-366",
+    "kind": "request",
+    "method": "patch.list"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-366",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

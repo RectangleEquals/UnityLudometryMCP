@@ -1,0 +1,22 @@
+{
+  "description": "`resources.load` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-391",
+    "kind": "request",
+    "method": "resources.load",
+    "params": {
+      "path": "Root/Player"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-391",
+    "kind": "response",
+    "result": {
+      "descriptor": null,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

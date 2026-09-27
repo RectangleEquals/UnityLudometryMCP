@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/scene.roots.schema.json",
+  "title": "scene.roots",
+  "description": "Root GameObjects of a scene (`ddol` for DontDestroyOnLoad).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "SceneRootsParams",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "description": "Name, build index, or `ddol`."
+        }
+      },
+      "required": [
+        "scene"
+      ]
+    },
+    "result": {
+      "title": "SceneRootsResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/handle-descriptor.schema.json"
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

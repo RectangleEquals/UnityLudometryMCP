@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.resolve.schema.json",
+  "title": "code.resolve",
+  "description": "Exploratory: resolves names to anchor candidates (flagged `exploratory`). Several matches without a signature → AMBIGUOUS.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeResolveParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "member": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "result": {
+      "title": "CodeResolveResult",
+      "type": "object",
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "exploratory": {
+          "const": true
+        }
+      },
+      "required": [
+        "candidates",
+        "exploratory"
+      ]
+    }
+  }
+}

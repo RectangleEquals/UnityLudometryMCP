@@ -1,0 +1,20 @@
+<Project>
+  <!--
+    Self-contained on purpose: when another repository builds UnityLudometry.Protocol through a git submodule,
+    MSBuild finds this file (the nearest one), so the package builds the same everywhere.
+  -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Authors>RectangleEquals</Authors>
+    <Copyright>Copyright (c) 2026 RectangleEquals</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/RectangleEquals/UnityLudometryMCP</RepositoryUrl>
+    <!-- The protocol version, independent of the orchestrator's version. -->
+    <Version>0.1.0-dev.1</Version>
+  </PropertyGroup>
+</Project>

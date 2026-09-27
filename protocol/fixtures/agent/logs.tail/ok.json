@@ -1,0 +1,43 @@
+{
+  "description": "`logs.tail` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-274",
+    "kind": "request",
+    "method": "logs.tail",
+    "params": {
+      "sinceSeq": 1,
+      "limit": 50,
+      "minLevel": "example-minLevel",
+      "sources": [
+        "unity"
+      ],
+      "channels": [
+        "Unity"
+      ],
+      "regex": "item_.*"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-274",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "seq": 1201,
+          "realtimeMs": 64000,
+          "frame": 3902,
+          "source": "unity",
+          "channel": "Unity",
+          "level": "debug",
+          "message": "Example message.",
+          "stack": "at Example.Run ()",
+          "marker": "before-click"
+        }
+      ],
+      "nextSeq": 1,
+      "dropped": 1
+    }
+  }
+}

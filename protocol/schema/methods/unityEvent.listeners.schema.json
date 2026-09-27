@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/unityEvent.listeners.schema.json",
+  "title": "unityEvent.listeners",
+  "description": "Persistent and runtime listeners of a UnityEvent.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "UnityEventListenersParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json"
+        }
+      },
+      "required": [
+        "target",
+        "path"
+      ]
+    },
+    "result": {
+      "title": "UnityEventListenersResult",
+      "type": "object",
+      "properties": {
+        "persistent": {
+          "type": "array",
+          "items": {
+            "title": "PersistentListener",
+            "type": "object",
+            "properties": {
+              "target": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "../common/handle-descriptor.schema.json"
+                  }
+                ]
+              },
+              "method": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "target",
+              "method"
+            ]
+          }
+        },
+        "runtimeListeners": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "persistent",
+        "runtimeListeners"
+      ]
+    }
+  }
+}

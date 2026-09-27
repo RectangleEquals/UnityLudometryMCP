@@ -1,0 +1,22 @@
+{
+  "description": "`overlay.notify` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-340",
+    "kind": "request",
+    "method": "overlay.notify",
+    "params": {
+      "text": "Craft",
+      "level": "info",
+      "durationMs": 120
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-340",
+    "kind": "response",
+    "result": {
+      "shown": true
+    }
+  }
+}

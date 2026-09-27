@@ -1,0 +1,21 @@
+{
+  "description": "`agent.setMode` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-33",
+    "kind": "request",
+    "method": "agent.setMode",
+    "params": {
+      "mode": "ReadOnly"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-33",
+    "kind": "response",
+    "result": {
+      "previous": "ReadOnly",
+      "mode": "ReadOnly"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "`go.find` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-204",
+    "kind": "request",
+    "method": "go.find"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-204",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

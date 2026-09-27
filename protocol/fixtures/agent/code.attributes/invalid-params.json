@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `attribute`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-75",
+    "kind": "request",
+    "method": "code.attributes",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-75",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.attribute is required.",
+      "data": {
+        "param": "params.attribute"
+      }
+    }
+  }
+}

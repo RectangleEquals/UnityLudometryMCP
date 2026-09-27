@@ -1,0 +1,76 @@
+{
+  "description": "`obj.invoke` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-315",
+    "kind": "request",
+    "method": "obj.invoke",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "method": {
+        "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+        "token": 100663553,
+        "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+      },
+      "args": [
+        "example"
+      ],
+      "typeArgs": [
+        "System.Int32"
+      ],
+      "view": {
+        "depth": 1,
+        "maxMembers": 1,
+        "maxItems": 1,
+        "maxString": 1,
+        "properties": true,
+        "nonPublic": true,
+        "enumerate": true,
+        "anchors": true,
+        "unityStructsCompact": true
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-315",
+    "kind": "response",
+    "result": {
+      "returnValue": {
+        "t": "list",
+        "count": 3,
+        "items": [
+          1,
+          {
+            "t": "Vector3",
+            "x": 1.5,
+            "y": 0,
+            "z": -2
+          },
+          {
+            "redacted": {
+              "reason": "maxItems",
+              "ref": "x7:42",
+              "size": {
+                "count": 3,
+                "length": null,
+                "estBytes": null
+              },
+              "range": [
+                2,
+                3
+              ]
+            }
+          }
+        ]
+      },
+      "outArgs": {},
+      "durationMs": 120,
+      "locator": "live://Main/Player#Example.Inventory.items",
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

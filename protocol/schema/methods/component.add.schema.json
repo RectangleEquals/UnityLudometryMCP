@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/component.add.schema.json",
+  "title": "component.add",
+  "description": "Adds a component to a GameObject.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ComponentAddParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "target",
+        "type"
+      ]
+    },
+    "result": {
+      "title": "ComponentAddResult",
+      "type": "object",
+      "properties": {
+        "descriptor": {
+          "$ref": "../common/handle-descriptor.schema.json"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "descriptor",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

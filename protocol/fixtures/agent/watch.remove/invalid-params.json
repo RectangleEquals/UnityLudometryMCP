@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `watchId`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-543",
+    "kind": "request",
+    "method": "watch.remove",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-543",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.watchId is required.",
+      "data": {
+        "param": "params.watchId"
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/scene.list.schema.json",
+  "title": "scene.list",
+  "description": "Loaded scenes, including the DontDestroyOnLoad pseudo-scene.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "SceneListParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "SceneListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/scene-info.schema.json"
+          }
+        },
+        "sceneCountInBuildSettings": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "items",
+        "sceneCountInBuildSettings"
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/handles.release.schema.json",
+  "title": "handles.release",
+  "description": "Releases handles (their strong references).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "HandlesReleaseParams",
+      "type": "object",
+      "properties": {
+        "handles": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "handles"
+      ]
+    },
+    "result": {
+      "title": "HandlesReleaseResult",
+      "type": "object",
+      "properties": {
+        "released": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "required": [
+        "released",
+        "unknown"
+      ]
+    }
+  }
+}

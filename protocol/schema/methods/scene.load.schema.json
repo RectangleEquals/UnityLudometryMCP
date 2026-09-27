@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/scene.load.schema.json",
+  "title": "scene.load",
+  "description": "Loads a scene (single or additive) and completes when it's loaded. Prefer the game's own loading methods where they exist.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "SceneLoadParams",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "description": "Name or build index."
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "single",
+            "additive"
+          ]
+        },
+        "async": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "scene"
+      ]
+    },
+    "result": {
+      "title": "SceneLoadResult",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "$ref": "../common/scene-info.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "scene",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

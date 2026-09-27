@@ -1,0 +1,21 @@
+{
+  "description": "`rule.cancel` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-401",
+    "kind": "request",
+    "method": "rule.cancel",
+    "params": {
+      "ruleId": "r-7"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-401",
+    "kind": "response",
+    "result": {
+      "cancelled": true,
+      "resumed": true
+    }
+  }
+}

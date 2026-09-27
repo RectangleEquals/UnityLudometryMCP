@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.setState.schema.json",
+  "title": "overlay.setState",
+  "description": "Shows, collapses or hides the overlay, or selects a tab (UI only).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlaySetStateParams",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "hidden",
+            "collapsed",
+            "expanded"
+          ]
+        },
+        "tab": {
+          "type": "string"
+        }
+      }
+    },
+    "result": {
+      "title": "OverlaySetStateResult",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string"
+        },
+        "tab": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "tab"
+      ]
+    }
+  }
+}

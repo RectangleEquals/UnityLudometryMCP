@@ -1,0 +1,27 @@
+{
+  "description": "`locator.resolve` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-267",
+    "kind": "request",
+    "method": "locator.resolve",
+    "params": {
+      "locator": "live://Main/Player#Example.Inventory.items"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-267",
+    "kind": "response",
+    "result": {
+      "target": {
+        "h": 481
+      },
+      "path": [
+        {
+          "name": "items"
+        }
+      ]
+    }
+  }
+}

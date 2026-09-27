@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/addressables.locate.schema.json",
+  "title": "addressables.locate",
+  "description": "Locations of one Addressables key.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false,
+    "requires": [
+      "module:addressables"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "AddressablesLocateParams",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ]
+    },
+    "result": {
+      "title": "AddressablesLocateResult",
+      "type": "object",
+      "properties": {
+        "locations": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/addressables.keys.schema.json#/$defs/result/properties/items/items/properties/locations/items"
+          }
+        }
+      },
+      "required": [
+        "locations"
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "description": "`patch.apply` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-358",
+    "kind": "request",
+    "method": "patch.apply",
+    "params": {
+      "assembly": "QUJDRA=="
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-358",
+    "kind": "response",
+    "result": {
+      "patchSetId": "proto-1",
+      "patched": [],
+      "errors": []
+    }
+  }
+}

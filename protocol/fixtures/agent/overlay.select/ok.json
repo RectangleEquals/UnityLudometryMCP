@@ -1,0 +1,22 @@
+{
+  "description": "`overlay.select` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-346",
+    "kind": "request",
+    "method": "overlay.select",
+    "params": {
+      "target": {
+        "h": 481
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-346",
+    "kind": "response",
+    "result": {
+      "selected": true
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "description": "`events.unsubscribe` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-185",
+    "kind": "request",
+    "method": "events.unsubscribe",
+    "params": {
+      "kinds": [
+        "survey"
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-185",
+    "kind": "response",
+    "result": {
+      "unsubscribed": [
+        "example-unsubscribed"
+      ]
+    }
+  }
+}

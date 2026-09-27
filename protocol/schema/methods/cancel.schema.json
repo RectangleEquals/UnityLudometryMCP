@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/cancel.schema.json",
+  "title": "cancel",
+  "description": "Cancels an in-flight request on this connection. Jobs are cancelled with `job.cancel`.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CancelParams",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "result": {
+      "title": "CancelResult",
+      "type": "object",
+      "properties": {
+        "cancelled": {
+          "type": "boolean",
+          "description": "False when the request had already finished or was unknown."
+        }
+      },
+      "required": [
+        "cancelled"
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/anchor.schema.json",
+  "description": "An exact code reference: the module version id of the defining module plus the metadata token of the definition. Static tools and the runtime agent produce the same (mvid, token) for the same assembly build. Never bound by name.",
+  "title": "Anchor",
+  "type": "object",
+  "properties": {
+    "mvid": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "description": "Module version id (GUID) of the defining module."
+    },
+    "token": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295,
+      "description": "Metadata token of the definition. Table byte: 0x02 TypeDef, 0x04 Field, 0x06 Method, 0x14 Event, 0x17 Property."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name. Informative only, never used for binding."
+    },
+    "typeArgs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/typeRef"
+      },
+      "description": "Generic arguments of the declaring type."
+    },
+    "methodArgs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/typeRef"
+      },
+      "description": "Generic arguments of the method."
+    }
+  },
+  "required": [
+    "mvid",
+    "token"
+  ],
+  "$defs": {
+    "typeRef": {
+      "description": "An anchor, or the full name of a primitive/BCL type (e.g. `System.Int32`).",
+      "anyOf": [
+        {
+          "$ref": "#"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    }
+  }
+}

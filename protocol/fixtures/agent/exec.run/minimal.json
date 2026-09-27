@@ -1,0 +1,24 @@
+{
+  "description": "`exec.run` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-191",
+    "kind": "request",
+    "method": "exec.run",
+    "params": {
+      "assembly": "QUJDRA=="
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-191",
+    "kind": "response",
+    "result": {
+      "value": 3,
+      "logs": [],
+      "emitted": [],
+      "durationMs": 120,
+      "frames": 2
+    }
+  }
+}

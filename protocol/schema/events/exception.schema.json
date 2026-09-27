@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/exception.schema.json",
+  "title": "exception",
+  "description": "Batched exceptions (logged ones, and first-chance ones when enabled).",
+  "$defs": {
+    "params": {
+      "title": "ExceptionEventParams",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "ObservedException",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "stack": {
+                "type": "string"
+              },
+              "stackAnchors": {
+                "type": "array",
+                "items": {
+                  "$ref": "../common/anchor.schema.json"
+                }
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "log",
+                  "firstChance"
+                ]
+              },
+              "frame": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Frame of the read."
+              },
+              "realtimeMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Milliseconds since the game started."
+              }
+            },
+            "required": [
+              "type",
+              "message",
+              "source",
+              "frame",
+              "realtimeMs"
+            ]
+          }
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Items dropped under back-pressure since the previous batch."
+        }
+      },
+      "required": [
+        "items",
+        "dropped"
+      ]
+    }
+  }
+}

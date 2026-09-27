@@ -1,0 +1,25 @@
+{
+  "description": "Missing the required `target`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-501",
+    "kind": "request",
+    "method": "ui.setText",
+    "params": {
+      "text": "Craft"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-501",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.target is required.",
+      "data": {
+        "param": "params.target"
+      }
+    }
+  }
+}

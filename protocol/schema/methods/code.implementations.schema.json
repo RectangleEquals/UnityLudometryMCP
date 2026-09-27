@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.implementations.schema.json",
+  "title": "code.implementations",
+  "description": "Overrides and interface implementations of a method among loaded types.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeImplementationsParams",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    "result": {
+      "title": "CodeImplementationsResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "Implementation",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "declaringType": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "via": {
+                "type": "string",
+                "enum": [
+                  "override",
+                  "interface"
+                ]
+              }
+            },
+            "required": [
+              "method",
+              "declaringType",
+              "via"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

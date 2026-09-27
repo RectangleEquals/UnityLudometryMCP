@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/watch.changes.schema.json",
+  "title": "watch.changes",
+  "description": "Recorded changes of a watch (pull).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "WatchChangesParams",
+      "type": "object",
+      "properties": {
+        "watchId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sinceFrame": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      },
+      "required": [
+        "watchId"
+      ]
+    },
+    "result": {
+      "title": "WatchChangesResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "WatchChange",
+            "type": "object",
+            "properties": {
+              "watchId": {
+                "type": "string"
+              },
+              "previous": {
+                "$ref": "../common/value.schema.json"
+              },
+              "current": {
+                "$ref": "../common/value.schema.json"
+              },
+              "frame": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Frame of the read."
+              },
+              "realtimeMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Milliseconds since the game started."
+              }
+            },
+            "required": [
+              "watchId",
+              "previous",
+              "current",
+              "frame",
+              "realtimeMs"
+            ]
+          }
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "items",
+        "dropped"
+      ]
+    }
+  }
+}

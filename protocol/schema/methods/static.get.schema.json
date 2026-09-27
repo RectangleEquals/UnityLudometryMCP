@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/static.get.schema.json",
+  "title": "static.get",
+  "description": "Static field values of a type (optionally static property getters). Types whose static constructor hasn't been observed to run are skipped unless `allowInit` (Full mode).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "StaticGetParams",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        },
+        "properties": {
+          "type": "boolean"
+        },
+        "allowInit": {
+          "type": "boolean"
+        },
+        "expected": {
+          "type": "object",
+          "description": "Expected values by path key (`paths` index as string); the result reports match/expected/actual per path."
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "result": {
+      "title": "StaticGetResult",
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "title": "StaticValue",
+            "type": "object",
+            "properties": {
+              "member": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "$ref": "../common/value.schema.json"
+              }
+            },
+            "required": [
+              "member",
+              "name",
+              "value"
+            ]
+          }
+        },
+        "expected": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/expected-match.schema.json"
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "values",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/condition.schema.json",
+  "description": "A condition on a value: used by queries (on candidates), hooks (on captured arguments or the instance) and rules. `arg` / `instance` select the hook value the path starts from.",
+  "title": "Condition",
+  "type": "object",
+  "properties": {
+    "arg": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Hooks: the argument index the path starts from."
+    },
+    "instance": {
+      "type": "boolean",
+      "description": "Hooks: start from the instance (`this`)."
+    },
+    "path": {
+      "$ref": "../common/member-path.schema.json"
+    },
+    "op": {
+      "type": "string",
+      "enum": [
+        "eq",
+        "ne",
+        "lt",
+        "le",
+        "gt",
+        "ge",
+        "in",
+        "contains",
+        "regex",
+        "isNull",
+        "notNull",
+        "typeIs"
+      ]
+    },
+    "value": {
+      "description": "Comparison value (an array for `in`, a pattern for `regex`, an anchor for `typeIs`)."
+    }
+  },
+  "required": [
+    "op"
+  ]
+}

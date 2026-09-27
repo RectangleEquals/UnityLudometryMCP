@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/probe.runBatch.schema.json",
+  "title": "probe.runBatch",
+  "description": "Executes probes in order with a budget, as a job; emits `probe.progress`.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ProbeRunBatchParams",
+      "type": "object",
+      "properties": {
+        "probes": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/probe.schema.json#/$defs/probe"
+          },
+          "minItems": 1
+        },
+        "budgetMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stopOnError": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "probes"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "ProbeRunBatchJobResult",
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/probe.schema.json#/$defs/result"
+          }
+        }
+      },
+      "required": [
+        "results"
+      ]
+    }
+  }
+}

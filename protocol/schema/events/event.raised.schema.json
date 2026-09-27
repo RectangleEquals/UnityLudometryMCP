@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/event.raised.schema.json",
+  "title": "event.raised",
+  "description": "Batched raises of subscribed C# events / UnityEvents.",
+  "$defs": {
+    "params": {
+      "title": "EventRaisedEventParams",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "RaisedEvent",
+            "type": "object",
+            "properties": {
+              "subscriptionId": {
+                "type": "string"
+              },
+              "args": {
+                "type": "array",
+                "items": {
+                  "$ref": "../common/value.schema.json"
+                }
+              },
+              "frame": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Frame of the read."
+              },
+              "realtimeMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Milliseconds since the game started."
+              }
+            },
+            "required": [
+              "subscriptionId",
+              "args",
+              "frame",
+              "realtimeMs"
+            ]
+          }
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Items dropped under back-pressure since the previous batch."
+        }
+      },
+      "required": [
+        "items",
+        "dropped"
+      ]
+    }
+  }
+}

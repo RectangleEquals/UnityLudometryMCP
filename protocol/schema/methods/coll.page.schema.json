@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/coll.page.schema.json",
+  "title": "coll.page",
+  "description": "A slice of a list, array, dictionary or set at a member path.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CollPageParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        }
+      },
+      "required": [
+        "target",
+        "path"
+      ]
+    },
+    "result": {
+      "title": "CollPageResult",
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/value.schema.json"
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "count",
+        "offset",
+        "items",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

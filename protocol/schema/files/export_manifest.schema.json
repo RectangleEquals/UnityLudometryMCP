@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/export_manifest.schema.json",
+  "description": "The per-job export manifest `export-<jobId>.ndjson` (`content.export.start`). Each line is one record; see `ndjson.schema.json` for the header and footer.",
+  "oneOf": [
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/header"
+    },
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/footer"
+    },
+    {
+      "$ref": "#/$defs/file"
+    }
+  ],
+  "$defs": {
+    "file": {
+      "title": "ExportedFile",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "file"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source": {
+          "title": "ExportSource",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "instanceId": {
+              "type": "integer"
+            },
+            "locator": {
+              "$ref": "../common/locator.schema.json"
+            }
+          },
+          "required": [
+            "type",
+            "name",
+            "instanceId"
+          ]
+        },
+        "format": {
+          "type": "string"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "path",
+        "sha256",
+        "size",
+        "source",
+        "format"
+      ],
+      "x-rec": "file"
+    }
+  }
+}

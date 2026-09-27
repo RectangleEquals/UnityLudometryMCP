@@ -1,0 +1,47 @@
+{
+  "description": "`patch.apply` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-357",
+    "kind": "request",
+    "method": "patch.apply",
+    "params": {
+      "assembly": "QUJDRA==",
+      "types": [
+        "UnityEngine.Texture2D"
+      ],
+      "id": "x-1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-357",
+    "kind": "response",
+    "result": {
+      "patchSetId": "proto-1",
+      "patched": [
+        {
+          "target": {
+            "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+            "token": 100663553,
+            "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+          },
+          "prefixes": 1,
+          "postfixes": 1,
+          "transpilers": 1,
+          "finalizers": 1
+        }
+      ],
+      "errors": [
+        {
+          "target": {
+            "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+            "token": 100663553,
+            "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+          },
+          "message": "Example message."
+        }
+      ]
+    }
+  }
+}

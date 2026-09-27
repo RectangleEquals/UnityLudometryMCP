@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.state.schema.json",
+  "title": "overlay.state",
+  "description": "Overlay availability and state.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayStateParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "OverlayStateResult",
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "hidden",
+            "collapsed",
+            "expanded"
+          ]
+        },
+        "edge": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ]
+        },
+        "offset": {
+          "type": "number"
+        },
+        "tab": {
+          "type": "string"
+        },
+        "pickMode": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "available",
+        "state",
+        "edge",
+        "offset",
+        "tab",
+        "pickMode"
+      ]
+    }
+  }
+}

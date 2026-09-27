@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/go.get.schema.json",
+  "title": "go.get",
+  "description": "Full GameObject view: transform, parent, sibling index, components, active flags, hide flags, scene.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "GoGetParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        }
+      },
+      "required": [
+        "target"
+      ]
+    },
+    "result": {
+      "title": "GoGetResult",
+      "type": "object",
+      "properties": {
+        "gameObject": {
+          "$ref": "../common/handle-descriptor.schema.json"
+        },
+        "path": {
+          "type": "string"
+        },
+        "scene": {
+          "type": "string"
+        },
+        "transform": {
+          "title": "TransformInfo",
+          "type": "object",
+          "properties": {
+            "localPosition": {
+              "$ref": "../common/value.schema.json"
+            },
+            "localRotation": {
+              "$ref": "../common/value.schema.json"
+            },
+            "localScale": {
+              "$ref": "../common/value.schema.json"
+            },
+            "position": {
+              "$ref": "../common/value.schema.json"
+            },
+            "rotation": {
+              "$ref": "../common/value.schema.json"
+            },
+            "lossyScale": {
+              "$ref": "../common/value.schema.json"
+            }
+          },
+          "required": [
+            "localPosition",
+            "localRotation",
+            "localScale",
+            "position",
+            "rotation",
+            "lossyScale"
+          ]
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "../common/handle-descriptor.schema.json"
+            }
+          ]
+        },
+        "siblingIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "activeSelf": {
+          "type": "boolean"
+        },
+        "activeInHierarchy": {
+          "type": "boolean"
+        },
+        "hideFlags": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "layer": {
+          "type": "integer"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/go.tree.schema.json#/$defs/result/properties/items/items/properties/components/items"
+          }
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "gameObject",
+        "path",
+        "scene",
+        "transform",
+        "parent",
+        "siblingIndex",
+        "activeSelf",
+        "activeInHierarchy",
+        "components",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

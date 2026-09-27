@@ -1,0 +1,19 @@
+{
+  "description": "`handles.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-225",
+    "kind": "request",
+    "method": "handles.list"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-225",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "cursor": null,
+      "total": null
+    }
+  }
+}

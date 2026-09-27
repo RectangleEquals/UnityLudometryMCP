@@ -1,0 +1,16 @@
+{
+  "description": "`rule.progress` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "rule.progress",
+    "seq": 7,
+    "params": {
+      "ruleId": "r-7",
+      "conditionPath": "when.seq[0]",
+      "satisfied": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

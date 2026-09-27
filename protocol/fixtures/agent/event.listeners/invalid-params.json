@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `event`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-169",
+    "kind": "request",
+    "method": "event.listeners",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-169",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.event is required.",
+      "data": {
+        "param": "params.event"
+      }
+    }
+  }
+}

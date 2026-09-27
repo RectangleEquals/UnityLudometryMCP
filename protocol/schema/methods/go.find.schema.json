@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/go.find.schema.json",
+  "title": "go.find",
+  "description": "GameObjects by path, name, tag or component type.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "GoFindParams",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nameRegex": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "componentType": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "scene": {
+          "type": "string"
+        },
+        "includeInactive": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      }
+    },
+    "result": {
+      "title": "GoFindResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/handle-descriptor.schema.json"
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

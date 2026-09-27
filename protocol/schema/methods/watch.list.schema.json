@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/watch.list.schema.json",
+  "title": "watch.list",
+  "description": "Active watches.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "WatchListParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "WatchListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "WatchInfo",
+            "type": "object",
+            "properties": {
+              "watchId": {
+                "type": "string"
+              },
+              "target": {
+                "$ref": "../common/target.schema.json"
+              },
+              "path": {
+                "$ref": "../common/member-path.schema.json"
+              },
+              "changes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "owner": {
+                "type": "string"
+              },
+              "persistent": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "watchId",
+              "target",
+              "path",
+              "changes",
+              "owner",
+              "persistent"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

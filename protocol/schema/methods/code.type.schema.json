@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.type.schema.json",
+  "title": "code.type",
+  "description": "Full type description: base chain, interfaces, generic parameters, nested types, attributes and members.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeTypeParams",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "inherited": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "result": {
+      "title": "CodeTypeResult",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../methods/code.types.schema.json#/$defs/result/properties/items/items"
+        },
+        "baseChain": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "genericParameters": {
+          "type": "array",
+          "items": {
+            "title": "GenericParameter",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "constraints": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+        "nestedTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/code.assembly.schema.json#/$defs/result/properties/attributes/items"
+          }
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "title": "MemberSummary",
+            "type": "object",
+            "properties": {
+              "anchor": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "field",
+                  "method",
+                  "constructor",
+                  "property",
+                  "event",
+                  "nestedType"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "string"
+              },
+              "static": {
+                "type": "boolean"
+              },
+              "visibility": {
+                "type": "string"
+              },
+              "attributes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "anchor",
+              "kind",
+              "name",
+              "signature",
+              "static",
+              "visibility"
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "baseChain",
+        "interfaces",
+        "members"
+      ]
+    }
+  }
+}

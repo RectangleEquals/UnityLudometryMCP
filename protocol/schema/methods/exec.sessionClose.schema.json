@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/exec.sessionClose.schema.json",
+  "title": "exec.sessionClose",
+  "description": "Disposes a snippet session's state.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ExecSessionCloseParams",
+      "type": "object",
+      "properties": {
+        "session": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "session"
+      ]
+    },
+    "result": {
+      "title": "ExecSessionCloseResult",
+      "type": "object",
+      "properties": {
+        "closed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "closed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/test.list.schema.json",
+  "title": "test.list",
+  "description": "Tests discovered in an assembly, without running them.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "TestListParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "title": "TestAssembly",
+          "type": "object",
+          "properties": {
+            "base64": {
+              "type": "string"
+            },
+            "loadedName": {
+              "type": "string"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "base64"
+              ]
+            },
+            {
+              "required": [
+                "loadedName"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "assembly"
+      ]
+    },
+    "result": {
+      "title": "TestListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "TestInfo",
+            "type": "object",
+            "properties": {
+              "test": {
+                "$ref": "../common/test.schema.json#/$defs/id"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "order": {
+                "type": "integer"
+              },
+              "skip": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "requiresScene": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "test",
+              "skip",
+              "requiresScene"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

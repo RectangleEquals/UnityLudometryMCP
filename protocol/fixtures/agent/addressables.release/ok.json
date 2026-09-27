@@ -1,0 +1,20 @@
+{
+  "description": "`addressables.release` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-21",
+    "kind": "request",
+    "method": "addressables.release",
+    "params": {
+      "opHandle": 1
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-21",
+    "kind": "response",
+    "result": {
+      "released": true
+    }
+  }
+}

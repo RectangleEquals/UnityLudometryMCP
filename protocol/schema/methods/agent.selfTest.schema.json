@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/agent.selfTest.schema.json",
+  "title": "agent.selfTest",
+  "description": "Quick internal check after launch: pump round-trip, anchor resolution on a known agent type, a hook add/remove on an agent-owned method, a log round-trip.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AgentSelfTestParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "AgentSelfTestResult",
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "title": "SelfTestCheck",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "passed": {
+                "type": "boolean"
+              },
+              "durationMs": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "passed",
+              "durationMs"
+            ]
+          }
+        }
+      },
+      "required": [
+        "passed",
+        "checks"
+      ]
+    }
+  }
+}

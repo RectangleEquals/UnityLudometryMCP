@@ -1,0 +1,78 @@
+{
+  "description": "`screenshot.capture` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-437",
+    "kind": "request",
+    "method": "screenshot.capture",
+    "params": {
+      "path": "Root/Player",
+      "outDir": "X:/Example/Output",
+      "source": "unity",
+      "camera": {
+        "h": 481
+      },
+      "superSize": 1,
+      "hideOverlay": true,
+      "maxWidth": 1,
+      "maxHeight": 1,
+      "format": "png",
+      "quality": 1,
+      "region": {
+        "x": 0.5,
+        "y": 0.5,
+        "w": 0.5,
+        "h": 0.5,
+        "target": {
+          "h": 481
+        },
+        "padding": 0.5
+      },
+      "annotate": "none",
+      "burst": {
+        "count": 3,
+        "everyFrames": 1,
+        "everyMs": 1
+      },
+      "inline": {
+        "maxBytes": 1
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-437",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "path": "Root/Player",
+          "width": 1568,
+          "height": 882,
+          "originalWidth": 1,
+          "originalHeight": 1,
+          "bytes": 204800,
+          "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+          "frame": 3902,
+          "realtimeMs": 64000,
+          "marks": [
+            {
+              "mark": 7,
+              "h": 481,
+              "kind": "survey",
+              "text": "Craft",
+              "rect": {
+                "x": 0.5,
+                "y": 0.5,
+                "w": 0.5,
+                "h": 0.5
+              },
+              "locator": "live://Main/Player#Example.Inventory.items"
+            }
+          ],
+          "inline": "example-inline"
+        }
+      ]
+    }
+  }
+}

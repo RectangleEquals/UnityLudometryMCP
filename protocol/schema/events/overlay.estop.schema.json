@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/overlay.estop.schema.json",
+  "title": "overlay.estop",
+  "description": "The user engaged E-STOP: mode lowered to ReadOnly, patches reverted, instrumentation removed, jobs and rules cancelled.",
+  "$defs": {
+    "params": {
+      "title": "EstopEventParams",
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "../common/agent-mode.schema.json"
+        },
+        "patchesReverted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "instrumentationRemoved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "jobsCancelled": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rulesCancelled": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "disconnecting": {
+          "type": "boolean"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "mode",
+        "patchesReverted",
+        "instrumentationRemoved",
+        "jobsCancelled",
+        "rulesCancelled",
+        "paused",
+        "disconnecting",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.highlight.schema.json",
+  "title": "overlay.highlight",
+  "description": "Outlines targets with a label.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayHighlightParams",
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/target.schema.json"
+          },
+          "minItems": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "targets"
+      ]
+    },
+    "result": {
+      "title": "OverlayHighlightResult",
+      "type": "object",
+      "properties": {
+        "highlightId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "drawn": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "highlightId",
+        "drawn"
+      ]
+    }
+  }
+}

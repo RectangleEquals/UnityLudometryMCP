@@ -1,0 +1,31 @@
+{
+  "description": "`obj.get` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-308",
+    "kind": "request",
+    "method": "obj.get",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "paths": [
+        [
+          {
+            "name": "items"
+          }
+        ]
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-308",
+    "kind": "response",
+    "result": {
+      "values": [],
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

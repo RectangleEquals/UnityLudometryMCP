@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/scene.unload.schema.json",
+  "title": "scene.unload",
+  "description": "Unloads a scene.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "SceneUnloadParams",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "description": "Name, build index or handle."
+        }
+      },
+      "required": [
+        "scene"
+      ]
+    },
+    "result": {
+      "title": "SceneUnloadResult",
+      "type": "object",
+      "properties": {
+        "unloaded": {
+          "type": "boolean"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "unloaded",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

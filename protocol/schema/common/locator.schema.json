@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/locator.schema.json",
+  "title": "Locator",
+  "description": "A durable, re-resolvable evidence address: `code://<assembly>@<mvid>/<token>`, `il://<assembly>@<mvid>/<token>#IL_xxxx`, `live://<scene>/<path>#<Component>.<member path>`, `live://ddol/...`, `live://static/<Type>.<member path>`, `live://asset/<Type>/<name>#<instanceId>`, `addr://<key>`, `hit://<hookId>/<seq>`, `trace://<jobId>/<seq>`.",
+  "type": "string",
+  "pattern": "^(code|il|live|addr|hit|trace)://.+"
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `ref`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-521",
+    "kind": "request",
+    "method": "value.expand",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-521",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.ref is required.",
+      "data": {
+        "param": "params.ref"
+      }
+    }
+  }
+}

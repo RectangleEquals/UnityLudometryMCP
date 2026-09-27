@@ -1,0 +1,18 @@
+{
+  "description": "`agent.selfTest` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-32",
+    "kind": "request",
+    "method": "agent.selfTest"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-32",
+    "kind": "response",
+    "result": {
+      "passed": true,
+      "checks": []
+    }
+  }
+}

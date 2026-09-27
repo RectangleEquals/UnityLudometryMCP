@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/event.subscribe.schema.json",
+  "title": "event.subscribe",
+  "description": "Observes a C# event or UnityEvent: each raise is reported with its arguments.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "EventSubscribeParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "event": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json",
+          "description": "UnityEvent: member path under the target."
+        },
+        "capture": {
+          "title": "EventCapture",
+          "type": "object",
+          "properties": {
+            "args": {
+              "type": "boolean"
+            },
+            "depth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2
+            }
+          }
+        },
+        "maxEvents": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "persistent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "result": {
+      "title": "EventSubscribeResult",
+      "type": "object",
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "subscriptionId"
+      ]
+    }
+  }
+}

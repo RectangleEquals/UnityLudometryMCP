@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/scene-info.schema.json",
+  "description": "A loaded scene, or the DontDestroyOnLoad pseudo-scene (`isDontDestroyOnLoad`).",
+  "title": "SceneInfo",
+  "type": "object",
+  "properties": {
+    "handle": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "buildIndex": {
+      "type": "integer"
+    },
+    "isLoaded": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "rootCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "isDontDestroyOnLoad": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "handle",
+    "name",
+    "path",
+    "buildIndex",
+    "isLoaded",
+    "isActive",
+    "rootCount",
+    "isDontDestroyOnLoad"
+  ]
+}

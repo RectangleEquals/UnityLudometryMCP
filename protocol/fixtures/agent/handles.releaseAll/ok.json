@@ -1,0 +1,20 @@
+{
+  "description": "`handles.releaseAll` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-229",
+    "kind": "request",
+    "method": "handles.releaseAll",
+    "params": {
+      "includeVariables": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-229",
+    "kind": "response",
+    "result": {
+      "released": 1
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "description": "`app.runInBackground` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-51",
+    "kind": "request",
+    "method": "app.runInBackground",
+    "params": {
+      "value": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-51",
+    "kind": "response",
+    "result": {
+      "previous": true,
+      "current": true
+    }
+  }
+}

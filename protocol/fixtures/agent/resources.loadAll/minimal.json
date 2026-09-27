@@ -1,0 +1,25 @@
+{
+  "description": "`resources.loadAll` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-395",
+    "kind": "request",
+    "method": "resources.loadAll",
+    "params": {
+      "path": "Root/Player"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-395",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "resources.loadAll"
+    }
+  },
+  "jobResult": {
+    "items": [],
+    "truncated": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/trigger.schema.json",
+  "description": "What makes an observed method run: invoke a method, run a snippet, click a UI element, or wait for the user.",
+  "title": "Trigger",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "invoke",
+        "exec",
+        "ui.click",
+        "wait"
+      ]
+    },
+    "target": {
+      "$ref": "../common/target.schema.json"
+    },
+    "method": {
+      "$ref": "../common/anchor.schema.json"
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "$ref": "../common/value.schema.json"
+      }
+    },
+    "assembly": {
+      "type": "string",
+      "description": "exec: the snippet assembly, base64."
+    },
+    "entryType": {
+      "type": "string"
+    },
+    "entryMethod": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind"
+  ]
+}

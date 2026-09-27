@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/exec.run.schema.json",
+  "title": "exec.run",
+  "description": "Runs a compiled snippet on the main thread (single frame, or multi-frame via an iterator). Synchronous snippets can't be interrupted.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ExecRunParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Assembly bytes, base64. Unique assembly name per build."
+        },
+        "entryType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entryMethod": {
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "type": "object"
+        },
+        "session": {
+          "type": "string"
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outDir": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "assembly"
+      ]
+    },
+    "result": {
+      "title": "ExecRunResult",
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "../common/value.schema.json"
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "emitted": {
+          "type": "array",
+          "items": {
+            "title": "EmittedItem",
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "payload": {}
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frames": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "value",
+        "logs",
+        "emitted",
+        "durationMs",
+        "frames"
+      ]
+    }
+  }
+}

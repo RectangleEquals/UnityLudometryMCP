@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `path`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-393",
+    "kind": "request",
+    "method": "resources.load",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-393",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.path is required.",
+      "data": {
+        "param": "params.path"
+      }
+    }
+  }
+}

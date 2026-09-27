@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/test.run.schema.json",
+  "title": "test.run",
+  "description": "Runs in-game tests sequentially on the main thread, as a job.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": true,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "TestRunParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "$ref": "../methods/test.list.schema.json#/$defs/params/properties/assembly"
+        },
+        "filter": {
+          "title": "TestFilter",
+          "type": "object",
+          "properties": {
+            "fixture": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "stopOnFail": {
+          "type": "boolean"
+        },
+        "defaultTimeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timeScale": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "assembly"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "TestRunJobResult",
+      "type": "object",
+      "properties": {
+        "totals": {
+          "$ref": "../common/test.schema.json#/$defs/totals"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/test.schema.json#/$defs/result"
+          }
+        },
+        "agentVersion": {
+          "type": "string"
+        },
+        "unityVersion": {
+          "type": "string"
+        },
+        "frameRange": {
+          "title": "FrameRange",
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "last": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "first",
+            "last"
+          ]
+        }
+      },
+      "required": [
+        "totals",
+        "durationMs",
+        "tests",
+        "agentVersion",
+        "unityVersion",
+        "frameRange"
+      ]
+    }
+  }
+}

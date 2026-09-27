@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/bundles.load.schema.json",
+  "title": "bundles.load",
+  "description": "Loads an asset from a loaded AssetBundle.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly+Load",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "BundlesLoadParams",
+      "type": "object",
+      "properties": {
+        "bundle": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "assetName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "bundle",
+        "assetName"
+      ]
+    },
+    "result": {
+      "title": "BundlesLoadResult",
+      "type": "object",
+      "properties": {
+        "descriptor": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "../common/handle-descriptor.schema.json"
+            }
+          ]
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "descriptor",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

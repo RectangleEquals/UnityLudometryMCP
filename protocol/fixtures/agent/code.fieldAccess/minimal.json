@@ -1,0 +1,23 @@
+{
+  "description": "`code.fieldAccess` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-85",
+    "kind": "request",
+    "method": "code.fieldAccess",
+    "params": {
+      "field": {
+        "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+        "token": 100663553
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-85",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

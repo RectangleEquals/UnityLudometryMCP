@@ -1,0 +1,17 @@
+{
+  "description": "`rules.clear` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-416",
+    "kind": "request",
+    "method": "rules.clear"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-416",
+    "kind": "response",
+    "result": {
+      "cancelled": 1
+    }
+  }
+}

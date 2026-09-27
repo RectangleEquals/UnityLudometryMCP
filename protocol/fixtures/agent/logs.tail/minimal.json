@@ -1,0 +1,19 @@
+{
+  "description": "`logs.tail` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-275",
+    "kind": "request",
+    "method": "logs.tail"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-275",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "nextSeq": 1,
+      "dropped": 1
+    }
+  }
+}

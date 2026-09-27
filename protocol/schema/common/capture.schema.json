@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/capture.schema.json",
+  "description": "Screenshot options for LLM vision (scale, crop, annotate, bursts, inline bytes) and the capture result.",
+  "$defs": {
+    "options": {
+      "title": "CaptureOptions",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Output file. Exactly one of `path` and `outDir` is required."
+        },
+        "outDir": {
+          "type": "string",
+          "description": "Output directory; files are named `shot-<frame>-<n>.<ext>`."
+        },
+        "source": {
+          "type": "string",
+          "description": "`screen` (default) or `camera`."
+        },
+        "camera": {
+          "$ref": "../common/target.schema.json",
+          "description": "The camera when `source` is `camera`."
+        },
+        "superSize": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "hideOverlay": {
+          "type": "boolean",
+          "default": true
+        },
+        "maxWidth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxHeight": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "png",
+            "jpg"
+          ]
+        },
+        "quality": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "region": {
+          "title": "CaptureRegion",
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "w": {
+              "type": "number"
+            },
+            "h": {
+              "type": "number"
+            },
+            "target": {
+              "$ref": "../common/target.schema.json"
+            },
+            "padding": {
+              "type": "number"
+            }
+          },
+          "description": "Either a screen rectangle (x, y, w, h) or a target to crop to (+ padding)."
+        },
+        "annotate": {
+          "type": "string",
+          "enum": [
+            "none",
+            "highlights",
+            "ui-marks"
+          ]
+        },
+        "burst": {
+          "title": "CaptureBurst",
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "everyFrames": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "everyMs": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "count"
+          ]
+        },
+        "inline": {
+          "title": "CaptureInline",
+          "type": "object",
+          "properties": {
+            "maxBytes": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "maxBytes"
+          ]
+        }
+      }
+    },
+    "rect": {
+      "title": "ScreenRect",
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "w": {
+          "type": "number"
+        },
+        "h": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "w",
+        "h"
+      ]
+    },
+    "mark": {
+      "title": "UiMark",
+      "type": "object",
+      "properties": {
+        "mark": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "h": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "type": "string"
+        },
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rect": {
+          "$ref": "#/$defs/rect"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        }
+      },
+      "required": [
+        "mark",
+        "h",
+        "kind",
+        "text",
+        "rect"
+      ]
+    },
+    "result": {
+      "title": "CaptureResult",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "originalWidth": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "originalHeight": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        },
+        "marks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mark"
+          }
+        },
+        "inline": {
+          "type": "string",
+          "description": "Base64 image bytes, when `inline` was requested and they fit."
+        }
+      },
+      "required": [
+        "path",
+        "width",
+        "height",
+        "bytes",
+        "sha256",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

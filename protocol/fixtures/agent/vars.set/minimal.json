@@ -1,0 +1,27 @@
+{
+  "description": "`vars.set` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-530",
+    "kind": "request",
+    "method": "vars.set",
+    "params": {
+      "name": "Player",
+      "target": {
+        "h": 481
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-530",
+    "kind": "response",
+    "result": {
+      "variable": {
+        "name": "Player",
+        "kind": "handle"
+      },
+      "replaced": true
+    }
+  }
+}

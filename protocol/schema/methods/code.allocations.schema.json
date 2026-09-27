@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.allocations.schema.json",
+  "title": "code.allocations",
+  "description": "Methods allocating a type.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeAllocationsParams",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "result": {
+      "title": "CodeAllocationsResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "AllocationSite",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "opcode": {
+                "type": "string",
+                "enum": [
+                  "newobj",
+                  "newarr",
+                  "box",
+                  "initobj"
+                ]
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "method",
+              "opcode",
+              "offset"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/job.get.schema.json",
+  "title": "job.get",
+  "description": "State, progress and (when finished) result of a job.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "JobGetParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "jobId"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/info"
+    }
+  }
+}

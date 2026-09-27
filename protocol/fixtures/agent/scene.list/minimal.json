@@ -1,0 +1,18 @@
+{
+  "description": "`scene.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-418",
+    "kind": "request",
+    "method": "scene.list"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-418",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "sceneCountInBuildSettings": 1
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/hook.remove.schema.json",
+  "title": "hook.remove",
+  "description": "Removes a hook.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "HookRemoveParams",
+      "type": "object",
+      "properties": {
+        "hookId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "hookId"
+      ]
+    },
+    "result": {
+      "title": "HookRemoveResult",
+      "type": "object",
+      "properties": {
+        "hits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "hits",
+        "dropped"
+      ]
+    }
+  }
+}

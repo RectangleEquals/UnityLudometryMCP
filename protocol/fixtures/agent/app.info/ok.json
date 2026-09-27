@@ -1,0 +1,34 @@
+{
+  "description": "`app.info` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-46",
+    "kind": "request",
+    "method": "app.info",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-46",
+    "kind": "response",
+    "result": {
+      "productName": "ExampleGame",
+      "companyName": "Example Studio",
+      "version": "1.2.3",
+      "unityVersion": "2021.3.45f1",
+      "platform": "WindowsPlayer",
+      "dataPath": "X:/Example/Games/ExampleGame/ExampleGame_Data",
+      "persistentDataPath": "X:/Example/LocalLow/Example Studio/ExampleGame",
+      "consoleLogPath": "X:/Example/LocalLow/Example Studio/ExampleGame/Player.log",
+      "isFocused": true,
+      "runInBackground": true,
+      "screen": {
+        "width": 1568,
+        "height": 882,
+        "fullScreen": true
+      },
+      "qualityLevel": 1,
+      "graphicsDevice": "Direct3D11"
+    }
+  }
+}

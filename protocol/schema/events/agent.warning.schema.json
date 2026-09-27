@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/agent.warning.schema.json",
+  "title": "agent.warning",
+  "description": "The agent disabled or limited something to protect the game (e.g. faulting instrumentation removed, a cap reached, many assemblies loaded).",
+  "$defs": {
+    "params": {
+      "title": "AgentWarningParams",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    }
+  }
+}

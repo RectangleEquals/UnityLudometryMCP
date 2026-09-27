@@ -1,0 +1,20 @@
+{
+  "description": "`overlay.setCapabilities` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-350",
+    "kind": "request",
+    "method": "overlay.setCapabilities"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-350",
+    "kind": "response",
+    "result": {
+      "openInStaticTool": true,
+      "showSource": true,
+      "showAssetOrigin": true,
+      "followStaticToolSelection": true
+    }
+  }
+}

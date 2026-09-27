@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/metrics.schema.json",
+  "description": "A metrics time series (`metrics.sample.start`). Each line is one record; see `ndjson.schema.json` for the header and footer.",
+  "oneOf": [
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/header"
+    },
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/footer"
+    },
+    {
+      "$ref": "#/$defs/sample"
+    }
+  ],
+  "$defs": {
+    "sample": {
+      "allOf": [
+        {
+          "$ref": "../methods/metrics.get.schema.json#/$defs/result"
+        }
+      ],
+      "properties": {
+        "rec": {
+          "const": "sample"
+        }
+      },
+      "required": [
+        "rec"
+      ],
+      "x-rec": "sample",
+      "description": "One sample."
+    }
+  }
+}

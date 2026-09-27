@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/agent-mode.schema.json",
+  "title": "AgentMode",
+  "description": "What the agent may do. `ReadOnly`: observe only. `ReadOnly+Load`: also load content (changes memory, not game logic). `Full`: also mutate state, execute code, patch and hot-reload.",
+  "type": "string",
+  "enum": [
+    "ReadOnly",
+    "ReadOnly+Load",
+    "Full"
+  ]
+}

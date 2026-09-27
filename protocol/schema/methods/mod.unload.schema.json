@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/mod.unload.schema.json",
+  "title": "mod.unload",
+  "description": "Destroys a plugin instance and unpatches its Harmony id (the assembly stays loaded).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ModUnloadParams",
+      "type": "object",
+      "properties": {
+        "pluginGuid": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "pluginGuid"
+      ]
+    },
+    "result": {
+      "title": "ModUnloadResult",
+      "type": "object",
+      "properties": {
+        "destroyed": {
+          "type": "boolean"
+        },
+        "unpatched": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "destroyed",
+        "unpatched"
+      ]
+    }
+  }
+}

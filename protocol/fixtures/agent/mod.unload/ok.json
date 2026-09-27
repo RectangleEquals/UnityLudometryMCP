@@ -1,0 +1,21 @@
+{
+  "description": "`mod.unload` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-286",
+    "kind": "request",
+    "method": "mod.unload",
+    "params": {
+      "pluginGuid": "com.example.mod"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-286",
+    "kind": "response",
+    "result": {
+      "destroyed": true,
+      "unpatched": 1
+    }
+  }
+}

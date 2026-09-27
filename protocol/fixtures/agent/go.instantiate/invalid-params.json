@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `original`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-213",
+    "kind": "request",
+    "method": "go.instantiate",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-213",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.original is required.",
+      "data": {
+        "param": "params.original"
+      }
+    }
+  }
+}

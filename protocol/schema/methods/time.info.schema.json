@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.info.schema.json",
+  "title": "time.info",
+  "description": "Time and frame state.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "TimeInfoParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "TimeInfoResult",
+      "type": "object",
+      "properties": {
+        "frameCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "time": {
+          "type": "number"
+        },
+        "unscaledTime": {
+          "type": "number"
+        },
+        "realtimeSinceStartup": {
+          "type": "number"
+        },
+        "timeScale": {
+          "type": "number"
+        },
+        "deltaTime": {
+          "type": "number"
+        },
+        "unscaledDeltaTime": {
+          "type": "number"
+        },
+        "fixedDeltaTime": {
+          "type": "number"
+        },
+        "targetFrameRate": {
+          "type": "integer"
+        },
+        "vSyncCount": {
+          "type": "integer"
+        },
+        "fps": {
+          "type": "number"
+        },
+        "paused": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "frameCount",
+        "time",
+        "unscaledTime",
+        "realtimeSinceStartup",
+        "timeScale",
+        "deltaTime",
+        "unscaledDeltaTime",
+        "fixedDeltaTime",
+        "targetFrameRate",
+        "vSyncCount",
+        "fps",
+        "paused"
+      ]
+    }
+  }
+}

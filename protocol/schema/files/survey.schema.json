@@ -1,0 +1,426 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/survey.schema.json",
+  "description": "The survey catalogue (`survey.start`), in stable order: assembly name, then token. Each line is one record; see `ndjson.schema.json` for the header and footer.",
+  "oneOf": [
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/header"
+    },
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/footer"
+    },
+    {
+      "$ref": "#/$defs/assembly"
+    },
+    {
+      "$ref": "#/$defs/type"
+    },
+    {
+      "$ref": "#/$defs/member"
+    },
+    {
+      "$ref": "#/$defs/unity_message"
+    },
+    {
+      "$ref": "#/$defs/serialized_field"
+    },
+    {
+      "$ref": "#/$defs/custom_serializer"
+    },
+    {
+      "$ref": "#/$defs/static"
+    },
+    {
+      "$ref": "#/$defs/instance_count"
+    },
+    {
+      "$ref": "#/$defs/error"
+    }
+  ],
+  "$defs": {
+    "assembly": {
+      "title": "SurveyAssembly",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "assembly"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "mvid": {
+          "type": "string"
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "referencedAssemblies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "loadErrors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "name",
+        "version",
+        "mvid",
+        "location"
+      ],
+      "x-rec": "assembly"
+    },
+    "type": {
+      "title": "SurveyType",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "type"
+        },
+        "anchor": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "base": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "genericParams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "unityComponent",
+              "scriptableObject",
+              "serializable",
+              "abstract",
+              "static"
+            ]
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "anchor",
+        "fullName",
+        "kind"
+      ],
+      "x-rec": "type"
+    },
+    "member": {
+      "title": "SurveyMember",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "member"
+        },
+        "anchor": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "declaringType": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "static": {
+          "type": "boolean"
+        },
+        "visibility": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fieldType": {
+          "type": "string"
+        },
+        "readOnly": {
+          "type": "boolean"
+        },
+        "literal": {
+          "type": "boolean"
+        },
+        "ilSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ilHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "Methods with a body only."
+        },
+        "virtual": {
+          "type": "boolean"
+        },
+        "abstract": {
+          "type": "boolean"
+        },
+        "override": {
+          "type": "boolean"
+        },
+        "generic": {
+          "type": "boolean"
+        },
+        "hasBody": {
+          "type": "boolean"
+        },
+        "implFlags": {
+          "type": "string"
+        },
+        "getter": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "setter": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "adder": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "remover": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "rec",
+        "anchor",
+        "declaringType",
+        "kind",
+        "name",
+        "signature",
+        "static",
+        "visibility"
+      ],
+      "x-rec": "member"
+    },
+    "unity_message": {
+      "title": "SurveyUnityMessage",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "unity_message"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rec",
+        "type",
+        "method",
+        "message"
+      ],
+      "x-rec": "unity_message"
+    },
+    "serialized_field": {
+      "title": "SurveySerializedField",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "serialized_field"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "field": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "rule": {
+          "type": "string",
+          "enum": [
+            "public",
+            "serializeField",
+            "serializeReference"
+          ]
+        },
+        "fieldType": {
+          "type": "string"
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "serialized",
+            "not_serializable_type",
+            "nonSerialized"
+          ]
+        }
+      },
+      "required": [
+        "rec",
+        "type",
+        "field",
+        "rule",
+        "fieldType",
+        "verdict"
+      ],
+      "x-rec": "serialized_field"
+    },
+    "custom_serializer": {
+      "title": "SurveyCustomSerializer",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "custom_serializer"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "marker": {
+          "type": "string"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "type",
+        "marker"
+      ],
+      "x-rec": "custom_serializer"
+    },
+    "static": {
+      "title": "SurveyStatic",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "static"
+        },
+        "member": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "readOnly": {
+          "type": "boolean"
+        },
+        "singletonCandidate": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rec",
+        "member",
+        "kind",
+        "type",
+        "readOnly",
+        "singletonCandidate"
+      ],
+      "x-rec": "static"
+    },
+    "instance_count": {
+      "title": "SurveyInstanceCount",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "instance_count"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "includesAssets": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "rec",
+        "type",
+        "count",
+        "includesAssets"
+      ],
+      "x-rec": "instance_count"
+    },
+    "error": {
+      "title": "SurveyError",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "error"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "assembly",
+            "type",
+            "member"
+          ]
+        },
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rec",
+        "scope",
+        "message"
+      ],
+      "x-rec": "error"
+    }
+  }
+}

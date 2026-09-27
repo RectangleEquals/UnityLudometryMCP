@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ping.schema.json",
+  "title": "ping",
+  "description": "Liveness check. Answered off the main thread, so it works while the game is loading.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "PingParams",
+      "type": "object",
+      "properties": {
+        "echo": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      }
+    },
+    "result": {
+      "title": "PingResult",
+      "type": "object",
+      "properties": {
+        "echo": {
+          "type": "string"
+        },
+        "uptimeMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frame": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Last frame the main-thread pump saw; null before its first tick."
+        }
+      },
+      "required": [
+        "uptimeMs",
+        "frame"
+      ]
+    }
+  }
+}

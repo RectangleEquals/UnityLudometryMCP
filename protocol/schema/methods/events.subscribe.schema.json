@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/events.subscribe.schema.json",
+  "title": "events.subscribe",
+  "description": "Subscribes this connection to event kinds. High-rate kinds are delivered in batches `{items, dropped}`.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "EventsSubscribeParams",
+      "type": "object",
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "filter": {
+          "type": "object",
+          "description": "Kind-specific filters, e.g. `{\"log\": {\"minLevel\": \"warning\", \"sources\": [\"unity\"]}}`."
+        },
+        "throttleMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000,
+          "default": 100
+        },
+        "maxBatch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000,
+          "default": 500
+        }
+      },
+      "required": [
+        "kinds"
+      ]
+    },
+    "result": {
+      "title": "EventsSubscribeResult",
+      "type": "object",
+      "properties": {
+        "subscribed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Requested kinds this agent doesn't know."
+        }
+      },
+      "required": [
+        "subscribed",
+        "unknown"
+      ]
+    }
+  }
+}

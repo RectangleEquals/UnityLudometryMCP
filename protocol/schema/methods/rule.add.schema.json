@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/rule.add.schema.json",
+  "title": "rule.add",
+  "description": "Arms a when→then rule. The rule needs the highest mode any of its conditions or actions need; the check happens here.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "$ref": "../common/rule.schema.json#/$defs/rule"
+    },
+    "result": {
+      "title": "RuleAddResult",
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredMode": {
+          "$ref": "../common/agent-mode.schema.json"
+        },
+        "armedAtFrame": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "ruleId",
+        "requiredMode",
+        "armedAtFrame"
+      ]
+    }
+  }
+}

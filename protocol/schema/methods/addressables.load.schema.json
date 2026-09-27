@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/addressables.load.schema.json",
+  "title": "addressables.load",
+  "description": "Loads content by Addressables key (waits across frames). Side effect: loads content.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly+Load",
+    "job": false,
+    "mutating": true,
+    "requires": [
+      "module:addressables"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "AddressablesLoadParams",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "key"
+      ]
+    },
+    "result": {
+      "title": "AddressablesLoadResult",
+      "type": "object",
+      "properties": {
+        "opHandle": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/handle-descriptor.schema.json"
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "opHandle",
+        "items",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

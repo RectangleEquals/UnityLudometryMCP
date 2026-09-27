@@ -1,0 +1,427 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/value.schema.json",
+  "title": "EncodedValue",
+  "description": "A live value encoded as JSON. Primitives are native; everything else is a tagged object (`t`), a handle descriptor, an enum, a cycle reference, a delegate, a member error or a redaction stub.",
+  "anyOf": [
+    {
+      "type": [
+        "null",
+        "boolean",
+        "number",
+        "string"
+      ]
+    },
+    {
+      "$ref": "#/$defs/tagged"
+    },
+    {
+      "$ref": "#/$defs/unityStruct"
+    },
+    {
+      "$ref": "../common/handle-descriptor.schema.json"
+    },
+    {
+      "$ref": "../common/redaction-stub.schema.json"
+    },
+    {
+      "$ref": "#/$defs/enumValue"
+    },
+    {
+      "$ref": "#/$defs/cycleRef"
+    },
+    {
+      "$ref": "#/$defs/delegate"
+    },
+    {
+      "$ref": "#/$defs/memberError"
+    },
+    {
+      "$ref": "#/$defs/skipped"
+    },
+    {
+      "$ref": "../common/anchor.schema.json",
+      "description": "A Type or MemberInfo value."
+    }
+  ],
+  "$defs": {
+    "tagged": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "i64"
+            },
+            "v": {
+              "type": "string",
+              "pattern": "^-?[0-9]+$"
+            }
+          },
+          "required": [
+            "t",
+            "v"
+          ],
+          "description": "long outside ±2^53."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "u64"
+            },
+            "v": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            }
+          },
+          "required": [
+            "t",
+            "v"
+          ],
+          "description": "ulong outside 2^53."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "enum": [
+                "f32",
+                "f64"
+              ]
+            },
+            "v": {
+              "enum": [
+                "NaN",
+                "Infinity",
+                "-Infinity"
+              ]
+            }
+          },
+          "required": [
+            "t",
+            "v"
+          ],
+          "description": "Non-finite floating-point value."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "enum": [
+                "guid",
+                "datetime",
+                "datetimeoffset",
+                "timespan"
+              ]
+            },
+            "v": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "t",
+            "v"
+          ],
+          "description": "ISO-style string with a type tag."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "list"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#"
+              }
+            }
+          },
+          "required": [
+            "t",
+            "count",
+            "items"
+          ],
+          "description": "Array, IList or ICollection. A range stub summarises items beyond maxItems."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "dict"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "entries": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "k": {
+                        "$ref": "#"
+                      },
+                      "v": {
+                        "$ref": "#"
+                      }
+                    },
+                    "required": [
+                      "k",
+                      "v"
+                    ]
+                  },
+                  {
+                    "$ref": "../common/redaction-stub.schema.json"
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "t",
+            "count",
+            "entries"
+          ],
+          "description": "IDictionary, in enumeration order."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "enumerable"
+            },
+            "type": {
+              "$ref": "../common/anchor.schema.json"
+            }
+          },
+          "required": [
+            "t"
+          ],
+          "description": "A lazy IEnumerable, not enumerated unless requested."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "unityEvent"
+            },
+            "persistent": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "$ref": "#"
+                  },
+                  "method": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "runtimeListeners": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "t"
+          ],
+          "description": "UnityEvent listeners."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "object"
+            },
+            "h": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "fields": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#"
+              }
+            },
+            "props": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#"
+              }
+            }
+          },
+          "required": [
+            "t",
+            "type"
+          ],
+          "description": "Any other object, members in declaration order."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "t": {
+              "const": "new"
+            },
+            "type": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "ctor": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#"
+              }
+            },
+            "fields": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#"
+              }
+            },
+            "uninitialized": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "t",
+            "type"
+          ],
+          "description": "Decoding only (JSON → live): construct an object."
+        }
+      ]
+    },
+    "unityStruct": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "enum": [
+            "Vector2",
+            "Vector3",
+            "Vector4",
+            "Vector2Int",
+            "Vector3Int",
+            "Quaternion",
+            "Color",
+            "Color32",
+            "Rect",
+            "RectInt",
+            "Bounds",
+            "Matrix4x4",
+            "LayerMask"
+          ]
+        }
+      },
+      "required": [
+        "t"
+      ],
+      "description": "Unity value struct; its components are numeric properties (x, y, z, w, r, g, b, a, …)."
+    },
+    "enumValue": {
+      "type": "object",
+      "properties": {
+        "enum": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "value": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "enum",
+        "value"
+      ],
+      "description": "Enum value."
+    },
+    "cycleRef": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "ref"
+      ],
+      "description": "Repeated reference (cycle or shared object)."
+    },
+    "delegate": {
+      "type": "object",
+      "properties": {
+        "delegate": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "../common/handle-descriptor.schema.json"
+                  }
+                ]
+              },
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              }
+            },
+            "required": [
+              "method"
+            ]
+          }
+        }
+      },
+      "required": [
+        "delegate"
+      ],
+      "description": "Delegate invocation list."
+    },
+    "memberError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "../common/error.schema.json"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "description": "A member whose read failed."
+    },
+    "skipped": {
+      "type": "object",
+      "properties": {
+        "skipped": {
+          "type": "string",
+          "enum": [
+            "static_ctor_not_observed"
+          ]
+        }
+      },
+      "required": [
+        "skipped"
+      ],
+      "description": "A static value not read, to avoid running a static constructor (pass allowInit to read it)."
+    }
+  }
+}

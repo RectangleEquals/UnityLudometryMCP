@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/trace.stop.schema.json",
+  "title": "trace.stop",
+  "description": "Ends a trace early.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "TraceStopParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "jobId"
+      ]
+    },
+    "result": {
+      "title": "TraceStopResult",
+      "type": "object",
+      "properties": {
+        "stopped": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stopped"
+      ]
+    }
+  }
+}

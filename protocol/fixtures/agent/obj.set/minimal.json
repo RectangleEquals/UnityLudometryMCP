@@ -1,0 +1,31 @@
+{
+  "description": "`obj.set` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-328",
+    "kind": "request",
+    "method": "obj.set",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "path": [
+        {
+          "name": "items"
+        }
+      ],
+      "value": null
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-328",
+    "kind": "response",
+    "result": {
+      "previous": 3,
+      "current": 3,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

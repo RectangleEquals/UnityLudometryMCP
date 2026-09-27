@@ -1,0 +1,23 @@
+{
+  "description": "`overlay.estop` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "overlay.estop",
+    "seq": 7,
+    "params": {
+      "mode": "ReadOnly",
+      "patchesReverted": 1,
+      "instrumentationRemoved": 1,
+      "jobsCancelled": 1,
+      "rulesCancelled": 1,
+      "paused": true,
+      "disconnecting": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

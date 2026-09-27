@@ -1,0 +1,38 @@
+{
+  "description": "`content.scan.start` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-160",
+    "kind": "request",
+    "method": "content.scan.start",
+    "params": {
+      "outFile": "X:/Example/Output/example.ndjson",
+      "types": [
+        "UnityEngine.Texture2D"
+      ],
+      "includeAddressablesKeys": true,
+      "includeBundles": true,
+      "includeResourcesLoaded": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-160",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "content.scan"
+    }
+  },
+  "jobResult": {
+    "file": {
+      "path": "Root/Player",
+      "bytes": 204800,
+      "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+      "counts": {
+        "example": 1
+      }
+    },
+    "durationMs": 120
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "description": "Missing the required `targets`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-334",
+    "kind": "request",
+    "method": "obj.snapshot",
+    "params": {
+      "paths": [
+        [
+          {
+            "name": "items"
+          }
+        ]
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-334",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.targets is required.",
+      "data": {
+        "param": "params.targets"
+      }
+    }
+  }
+}

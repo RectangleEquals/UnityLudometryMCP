@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/exec.emit.schema.json",
+  "title": "exec.emit",
+  "description": "A custom event emitted by a running snippet (`ctx.Emit`).",
+  "$defs": {
+    "params": {
+      "title": "ExecEmitEventParams",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload": {},
+        "session": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    }
+  }
+}

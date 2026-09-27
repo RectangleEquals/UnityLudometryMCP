@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.get.schema.json",
+  "title": "obj.get",
+  "description": "Values of several member paths, read in one frame (consistent).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjGetParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/member-path.schema.json"
+          },
+          "minItems": 1
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        },
+        "expected": {
+          "type": "object",
+          "description": "Expected values by path key (`paths` index as string); the result reports match/expected/actual per path."
+        }
+      },
+      "required": [
+        "target",
+        "paths"
+      ]
+    },
+    "result": {
+      "title": "ObjGetResult",
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/observation.schema.json"
+          }
+        },
+        "expected": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/expected-match.schema.json"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/warning.schema.json"
+          },
+          "description": "Non-fatal notes (truncation, exploratory resolution, skipped members)."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "values",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

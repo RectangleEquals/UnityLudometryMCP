@@ -1,0 +1,26 @@
+{
+  "description": "`obj.destroy` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-298",
+    "kind": "request",
+    "method": "obj.destroy",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "immediate": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-298",
+    "kind": "response",
+    "result": {
+      "destroyed": true,
+      "locator": "live://Main/Player#Example.Inventory.items",
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

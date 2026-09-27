@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.snapshot.schema.json",
+  "title": "obj.snapshot",
+  "description": "A table of values: rows per target, columns per path (max 500 targets). Useful to diff state around an action.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjSnapshotParams",
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/target.schema.json"
+          },
+          "minItems": 1,
+          "maxItems": 500
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/member-path.schema.json"
+          },
+          "minItems": 1
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        },
+        "expected": {
+          "type": "object",
+          "description": "Expected values by path key (`paths` index as string); the result reports match/expected/actual per path."
+        }
+      },
+      "required": [
+        "targets",
+        "paths"
+      ]
+    },
+    "result": {
+      "title": "ObjSnapshotResult",
+      "type": "object",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "title": "SnapshotRow",
+            "type": "object",
+            "properties": {
+              "target": {
+                "$ref": "../common/target.schema.json"
+              },
+              "descriptor": {
+                "$ref": "../common/handle-descriptor.schema.json"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "$ref": "../common/value.schema.json"
+                }
+              },
+              "error": {
+                "$ref": "../common/error.schema.json"
+              }
+            },
+            "required": [
+              "target",
+              "values"
+            ]
+          }
+        },
+        "expected": {
+          "type": "array",
+          "items": {
+            "title": "SnapshotExpectedMatch",
+            "type": "object",
+            "properties": {
+              "row": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "path": {
+                "type": "string"
+              },
+              "match": {
+                "type": "boolean"
+              },
+              "expected": {},
+              "actual": {}
+            },
+            "required": [
+              "row",
+              "path",
+              "match",
+              "expected",
+              "actual"
+            ]
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "rows",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "`patches.all` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-372",
+    "kind": "request",
+    "method": "patches.all"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-372",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

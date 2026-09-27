@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/batch.schema.json",
+  "title": "batch",
+  "description": "Runs several requests in order. With `sameFrame`, all main-thread requests run within one pump tick (a consistent snapshot of game state). Each item is checked against the mode like a single request.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "BatchParams",
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "array",
+          "items": {
+            "title": "BatchRequest",
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "minLength": 1
+              },
+              "params": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "method"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "sameFrame": {
+          "type": "boolean"
+        },
+        "stopOnError": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "requests"
+      ]
+    },
+    "result": {
+      "title": "BatchResult",
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "title": "BatchItemResult",
+            "type": "object",
+            "properties": {
+              "result": {},
+              "error": {
+                "$ref": "../common/error.schema.json"
+              }
+            },
+            "description": "Exactly one of result and error; skipped items (after stopOnError) have error CANCELLED."
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "results",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

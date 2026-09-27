@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/observation.schema.json",
+  "description": "A value read from the live game, with the moment of reading and a durable locator.",
+  "title": "Observation",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "../common/value.schema.json"
+    },
+    "locator": {
+      "$ref": "../common/locator.schema.json"
+    },
+    "frame": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Frame of the read."
+    },
+    "realtimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Milliseconds since the game started."
+    }
+  },
+  "required": [
+    "value",
+    "frame",
+    "realtimeMs"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "description": "`mod.reload` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-283",
+    "kind": "request",
+    "method": "mod.reload",
+    "params": {
+      "assemblies": [
+        {
+          "name": "Player",
+          "base64": "QUJDRA=="
+        }
+      ],
+      "pluginGuid": "com.example.mod"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-283",
+    "kind": "response",
+    "result": {
+      "previous": null,
+      "loaded": {
+        "assembly": "QUJDRA==",
+        "pluginType": "Example.Mod.Plugin",
+        "instance": {
+          "h": 481,
+          "type": {
+            "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+            "token": 33554471
+          }
+        }
+      }
+    }
+  }
+}

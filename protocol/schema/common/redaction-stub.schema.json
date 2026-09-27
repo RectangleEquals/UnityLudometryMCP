@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/redaction-stub.schema.json",
+  "description": "Stands in for a value a limit stopped the encoder from writing. Says what was left out, where it is and why, with a `ref` to expand it later (`value.expand`) and a `locator` that stays valid after the ref is evicted. Nothing is dropped silently.",
+  "title": "RedactionStub",
+  "type": "object",
+  "properties": {
+    "redacted": {
+      "title": "RedactionInfo",
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "enum": [
+            "depth",
+            "maxMembers",
+            "maxItems",
+            "maxString",
+            "maxBytes",
+            "cycle",
+            "notEnumerated",
+            "getterSkipped",
+            "policy"
+          ],
+          "description": "`policy` marks deliberately withheld values (e.g. secrets); those have no `ref`."
+        },
+        "ref": {
+          "type": "string",
+          "description": "Session-scoped expansion token."
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "member": {
+          "description": "Member name or anchor, when the stub stands for a member value.",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "../common/anchor.schema.json"
+            }
+          ]
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json"
+        },
+        "h": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "size": {
+          "title": "RedactionSize",
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "length": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "estBytes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "required": [
+            "count",
+            "length",
+            "estBytes"
+          ],
+          "description": "Whatever is known cheaply; null when unknown."
+        },
+        "preview": {
+          "type": "string",
+          "description": "Strings: the first maxString characters."
+        },
+        "range": {
+          "description": "For list/dict tails: [from, to).",
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "live": {
+          "type": "boolean",
+          "description": "True when expanding reads the current value rather than the captured one."
+        }
+      },
+      "required": [
+        "reason"
+      ]
+    }
+  },
+  "required": [
+    "redacted"
+  ]
+}

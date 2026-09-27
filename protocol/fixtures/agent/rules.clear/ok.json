@@ -1,0 +1,20 @@
+{
+  "description": "`rules.clear` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-415",
+    "kind": "request",
+    "method": "rules.clear",
+    "params": {
+      "owner": "connection"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-415",
+    "kind": "response",
+    "result": {
+      "cancelled": 1
+    }
+  }
+}

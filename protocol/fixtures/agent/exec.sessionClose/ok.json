@@ -1,0 +1,20 @@
+{
+  "description": "`exec.sessionClose` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-194",
+    "kind": "request",
+    "method": "exec.sessionClose",
+    "params": {
+      "session": "s1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-194",
+    "kind": "response",
+    "result": {
+      "closed": true
+    }
+  }
+}

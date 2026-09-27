@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/watch.add.schema.json",
+  "title": "watch.add",
+  "description": "Polls a value at a cadence and reports changes.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "WatchAddParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json"
+        },
+        "everyFrames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "everyMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "onChangeOnly": {
+          "type": "boolean"
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        },
+        "maxEvents": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "persistent": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "target",
+        "path"
+      ]
+    },
+    "result": {
+      "title": "WatchAddResult",
+      "type": "object",
+      "properties": {
+        "watchId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initial": {
+          "$ref": "../common/value.schema.json"
+        }
+      },
+      "required": [
+        "watchId",
+        "initial"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `probeId`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-376",
+    "kind": "request",
+    "method": "probe.cancel",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-376",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.probeId is required.",
+      "data": {
+        "param": "params.probeId"
+      }
+    }
+  }
+}

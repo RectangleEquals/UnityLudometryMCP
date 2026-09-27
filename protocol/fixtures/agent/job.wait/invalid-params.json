@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `jobId`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-265",
+    "kind": "request",
+    "method": "job.wait",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-265",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.jobId is required.",
+      "data": {
+        "param": "params.jobId"
+      }
+    }
+  }
+}

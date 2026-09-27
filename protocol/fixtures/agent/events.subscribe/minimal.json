@@ -1,0 +1,23 @@
+{
+  "description": "`events.subscribe` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-183",
+    "kind": "request",
+    "method": "events.subscribe",
+    "params": {
+      "kinds": [
+        "survey"
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-183",
+    "kind": "response",
+    "result": {
+      "subscribed": [],
+      "unknown": []
+    }
+  }
+}

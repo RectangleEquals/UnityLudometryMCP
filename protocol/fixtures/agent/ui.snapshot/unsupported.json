@@ -1,0 +1,21 @@
+{
+  "description": "The game lacks module:ugui.",
+  "request": {
+    "v": 0,
+    "id": "r-510",
+    "kind": "request",
+    "method": "ui.snapshot"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-510",
+    "kind": "response",
+    "error": {
+      "code": "UNSUPPORTED",
+      "message": "ui.snapshot needs module:ugui, which this game doesn't have.",
+      "data": {
+        "hint": "Check agent.capabilities modules."
+      }
+    }
+  }
+}

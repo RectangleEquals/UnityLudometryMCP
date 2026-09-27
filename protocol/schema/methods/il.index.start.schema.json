@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/il.index.start.schema.json",
+  "title": "il.index.start",
+  "description": "Scans every method body of the included assemblies on a worker thread and writes the runtime cross-reference index as NDJSON.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "IlIndexStartParams",
+      "type": "object",
+      "properties": {
+        "outFile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Assembly-name globs."
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Assembly-name globs."
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "calls",
+              "fieldAccess",
+              "strings",
+              "allocations",
+              "typeRefs",
+              "tokens"
+            ]
+          }
+        }
+      },
+      "required": [
+        "outFile"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "IlIndexStartJobResult",
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "../common/output-file.schema.json"
+        },
+        "cached": {
+          "type": "boolean"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "file",
+        "cached",
+        "durationMs"
+      ]
+    }
+  }
+}

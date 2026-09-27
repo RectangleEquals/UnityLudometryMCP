@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.create.schema.json",
+  "title": "obj.create",
+  "description": "Creates a plain C# object or a ScriptableObject.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjCreateParams",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "ctor": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "args": {
+          "type": "array",
+          "items": {}
+        },
+        "fields": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "result": {
+      "title": "ObjCreateResult",
+      "type": "object",
+      "properties": {
+        "descriptor": {
+          "$ref": "../common/handle-descriptor.schema.json"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "descriptor",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

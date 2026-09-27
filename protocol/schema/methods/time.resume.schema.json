@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.resume.schema.json",
+  "title": "time.resume",
+  "description": "Restores the time scale from before the pause.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "TimeResumeParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "TimeResumeResult",
+      "type": "object",
+      "properties": {
+        "timeScale": {
+          "type": "number"
+        },
+        "paused": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "timeScale",
+        "paused"
+      ]
+    }
+  }
+}

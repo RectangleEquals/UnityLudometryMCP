@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.find.schema.json",
+  "title": "obj.find",
+  "description": "Instances of a type: in scenes, or everything including assets and hidden objects.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjFindParams",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "scene",
+            "all",
+            "assets"
+          ]
+        },
+        "includeInactive": {
+          "type": "boolean"
+        },
+        "where": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/condition.schema.json"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "result": {
+      "title": "ObjFindResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/handle-descriptor.schema.json"
+          }
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "items",
+        "truncated"
+      ]
+    }
+  }
+}

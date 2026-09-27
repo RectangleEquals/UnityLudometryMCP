@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/coll.set.schema.json",
+  "title": "coll.set",
+  "description": "Sets an item (by index or key) of a collection at a member path.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "CollSetParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "key": {},
+        "value": {}
+      },
+      "required": [
+        "target",
+        "path",
+        "value"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "index"
+          ]
+        },
+        {
+          "required": [
+            "key"
+          ]
+        }
+      ]
+    },
+    "result": {
+      "title": "CollSetResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "$ref": "../common/value.schema.json"
+        },
+        "current": {
+          "$ref": "../common/value.schema.json"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "previous",
+        "current",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

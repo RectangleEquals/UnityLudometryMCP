@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `level`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-30",
+    "kind": "request",
+    "method": "agent.logLevel",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-30",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.level is required.",
+      "data": {
+        "param": "params.level"
+      }
+    }
+  }
+}

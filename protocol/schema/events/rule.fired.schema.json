@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/rule.fired.schema.json",
+  "title": "rule.fired",
+  "description": "A rule fired and all its actions completed.",
+  "$defs": {
+    "params": {
+      "$ref": "../common/rule.schema.json#/$defs/firing"
+    }
+  }
+}

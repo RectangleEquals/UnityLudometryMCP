@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/protocol-version.schema.json",
+  "title": "ProtocolVersionInfo",
+  "description": "Protocol major.minor, versioned independently of the agent and orchestrator releases (it changes only when the wire format does). From 1.0 on, minor versions only add optional fields, methods and event kinds, and a major change is breaking. Before 1.0 (major 0) the protocol is pre-release: peers must match major and minor exactly.",
+  "type": "object",
+  "properties": {
+    "major": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minor": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "major",
+    "minor"
+  ]
+}

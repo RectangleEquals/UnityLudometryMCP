@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `name`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-523",
+    "kind": "request",
+    "method": "vars.delete",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-523",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.name is required.",
+      "data": {
+        "param": "params.name"
+      }
+    }
+  }
+}

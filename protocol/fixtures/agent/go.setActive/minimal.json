@@ -1,0 +1,26 @@
+{
+  "description": "`go.setActive` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-218",
+    "kind": "request",
+    "method": "go.setActive",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "active": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-218",
+    "kind": "response",
+    "result": {
+      "previous": true,
+      "active": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

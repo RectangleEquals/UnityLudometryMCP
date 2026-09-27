@@ -1,0 +1,24 @@
+{
+  "description": "`ui.select` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-491",
+    "kind": "request",
+    "method": "ui.select",
+    "params": {
+      "target": {
+        "h": 481
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-491",
+    "kind": "response",
+    "result": {
+      "handled": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

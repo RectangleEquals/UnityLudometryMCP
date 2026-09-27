@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/static.singletons.schema.json",
+  "title": "static.singletons",
+  "description": "Current instances of singleton candidates (null when not created).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "StaticSingletonsParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        }
+      }
+    },
+    "result": {
+      "title": "StaticSingletonsResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "SingletonInstance",
+            "type": "object",
+            "properties": {
+              "type": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "member": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "instance": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "../common/handle-descriptor.schema.json"
+                  }
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "instance"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

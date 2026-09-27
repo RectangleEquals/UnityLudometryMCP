@@ -1,0 +1,79 @@
+{
+  "description": "An anchor from another build of the assembly (the game was updated).",
+  "request": {
+    "v": 0,
+    "id": "r-247",
+    "kind": "request",
+    "method": "hook.verify",
+    "params": {
+      "method": {
+        "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+        "token": 100663553,
+        "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+      },
+      "trigger": {
+        "kind": "invoke",
+        "target": {
+          "h": 481
+        },
+        "method": {
+          "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+          "token": 100663553,
+          "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+        },
+        "args": [
+          {
+            "t": "list",
+            "count": 3,
+            "items": [
+              1,
+              {
+                "t": "Vector3",
+                "x": 1.5,
+                "y": 0,
+                "z": -2
+              },
+              {
+                "redacted": {
+                  "reason": "maxItems",
+                  "ref": "x7:42",
+                  "size": {
+                    "count": 3,
+                    "length": null,
+                    "estBytes": null
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "assembly": "QUJDRA==",
+        "entryType": "Snippet",
+        "entryMethod": "Run"
+      },
+      "waitFrames": 1,
+      "timeoutMs": 10000
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-247",
+    "kind": "response",
+    "error": {
+      "code": "INDEX_STALE",
+      "message": "Module 5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b is not loaded.",
+      "data": {
+        "anchor": {
+          "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+          "token": 100663553,
+          "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+        },
+        "hint": "Re-run the survey for the current build."
+      }
+    }
+  }
+}

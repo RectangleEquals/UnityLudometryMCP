@@ -1,0 +1,20 @@
+{
+  "description": "`scene.roots` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-424",
+    "kind": "request",
+    "method": "scene.roots",
+    "params": {
+      "scene": null
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-424",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

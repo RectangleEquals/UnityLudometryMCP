@@ -1,0 +1,28 @@
+{
+  "description": "`ui.setText` needs mode Full; the agent is in ReadOnly.",
+  "request": {
+    "v": 0,
+    "id": "r-498",
+    "kind": "request",
+    "method": "ui.setText",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "text": "Craft"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-498",
+    "kind": "response",
+    "error": {
+      "code": "MODE_FORBIDDEN",
+      "message": "ui.setText requires mode Full; the agent is in ReadOnly.",
+      "data": {
+        "requiredMode": "Full",
+        "hint": "Ask the user to raise the agent mode."
+      }
+    }
+  }
+}

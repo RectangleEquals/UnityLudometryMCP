@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/exceptions.monitor.schema.json",
+  "title": "exceptions.monitor",
+  "description": "Configures exception monitoring (logged exceptions; first-chance where the runtime supports it).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ExceptionsMonitorParams",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "firstChance": {
+          "type": "boolean"
+        },
+        "filter": {
+          "title": "ExceptionFilter",
+          "type": "object",
+          "properties": {
+            "typeRegex": {
+              "type": "string"
+            },
+            "assemblyGlobs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    },
+    "result": {
+      "title": "ExceptionsMonitorResult",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "firstChance": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled",
+        "firstChance"
+      ]
+    }
+  }
+}

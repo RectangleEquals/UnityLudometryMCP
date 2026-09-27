@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/annotations.set.schema.json",
+  "title": "annotations.set",
+  "description": "Attaches labels to a target, locator or anchor (shown in the overlay Inspector).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AnnotationsSetParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "anchor": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "labels"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "target"
+          ]
+        },
+        {
+          "required": [
+            "locator"
+          ]
+        },
+        {
+          "required": [
+            "anchor"
+          ]
+        }
+      ]
+    },
+    "result": {
+      "title": "AnnotationsSetResult",
+      "type": "object",
+      "properties": {
+        "annotationId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "annotationId"
+      ]
+    }
+  }
+}

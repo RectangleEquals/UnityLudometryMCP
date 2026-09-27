@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/addressables.keys.schema.json",
+  "title": "addressables.keys",
+  "description": "Addressables keys with their locations.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false,
+    "requires": [
+      "module:addressables"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "AddressablesKeysParams",
+      "type": "object",
+      "properties": {
+        "keyRegex": {
+          "type": "string"
+        },
+        "resourceType": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Continuation cursor from a previous page (session-scoped, expires after 10 minutes)."
+        }
+      }
+    },
+    "result": {
+      "title": "AddressablesKeysResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "AddressableKey",
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "locations": {
+                "type": "array",
+                "items": {
+                  "title": "AddressableLocation",
+                  "type": "object",
+                  "properties": {
+                    "internalId": {
+                      "type": "string"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "resourceType": {
+                      "type": "string"
+                    },
+                    "dependencies": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "primaryKey": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "internalId",
+                    "providerId",
+                    "resourceType",
+                    "dependencies",
+                    "primaryKey"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "key",
+              "locations"
+            ]
+          }
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cursor for the next page; null when this is the last page."
+        },
+        "total": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Total count when known cheaply; null otherwise."
+        }
+      },
+      "required": [
+        "items",
+        "cursor",
+        "total"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Missing the required `target`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-137",
+    "kind": "request",
+    "method": "coll.remove",
+    "params": {
+      "path": [
+        {
+          "name": "items"
+        }
+      ],
+      "index": 1
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-137",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.target is required.",
+      "data": {
+        "param": "params.target"
+      }
+    }
+  }
+}

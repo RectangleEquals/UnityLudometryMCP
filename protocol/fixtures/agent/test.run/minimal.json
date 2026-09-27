@@ -1,0 +1,40 @@
+{
+  "description": "`test.run` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-453",
+    "kind": "request",
+    "method": "test.run",
+    "params": {
+      "assembly": {
+        "base64": "QUJDRA=="
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-453",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "test.run"
+    }
+  },
+  "jobResult": {
+    "totals": {
+      "passed": 1,
+      "failed": 1,
+      "error": 1,
+      "timeout": 1,
+      "skipped": 1
+    },
+    "durationMs": 120,
+    "tests": [],
+    "agentVersion": "0.1.0",
+    "unityVersion": "2021.3.45f1",
+    "frameRange": {
+      "first": 1,
+      "last": 1
+    }
+  }
+}

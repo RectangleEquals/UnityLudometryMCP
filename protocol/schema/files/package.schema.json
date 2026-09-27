@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/package.schema.json",
+  "description": "The agent release manifest `package.json`, verified by the installer before copying files.",
+  "title": "PackageManifest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "apiVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "protocol": {
+      "$ref": "../common/protocol-version.schema.json"
+    },
+    "loader": {
+      "type": "string",
+      "enum": [
+        "bepinex5"
+      ]
+    },
+    "runtime": {
+      "type": "string",
+      "enum": [
+        "mono"
+      ]
+    },
+    "unityMin": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "title": "PackageFile",
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "size"
+        ]
+      },
+      "minItems": 1
+    },
+    "gitCommit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "version",
+    "apiVersion",
+    "protocol",
+    "loader",
+    "runtime",
+    "unityMin",
+    "files",
+    "gitCommit"
+  ]
+}

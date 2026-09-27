@@ -1,0 +1,19 @@
+{
+  "description": "`probe.progress` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "probe.progress",
+    "seq": 7,
+    "params": {
+      "jobId": "j-1",
+      "probeId": "p-118",
+      "index": 1,
+      "total": 1,
+      "status": "example-status"
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

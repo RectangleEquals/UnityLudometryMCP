@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/resources.loadAll.schema.json",
+  "title": "resources.loadAll",
+  "description": "Loads every asset under a Resources path, as a job (it can be heavy).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly+Load",
+    "job": true,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ResourcesLoadAllParams",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      },
+      "required": [
+        "path"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "ResourcesLoadAllJobResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/handle-descriptor.schema.json"
+          }
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "items",
+        "truncated"
+      ]
+    }
+  }
+}

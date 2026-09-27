@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `path`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-436",
+    "kind": "request",
+    "method": "screenshot.camera",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-436",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.path is required.",
+      "data": {
+        "param": "params.path"
+      }
+    }
+  }
+}

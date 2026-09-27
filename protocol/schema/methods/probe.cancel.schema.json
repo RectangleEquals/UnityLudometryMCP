@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/probe.cancel.schema.json",
+  "title": "probe.cancel",
+  "description": "Disarms a waiting probe.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ProbeCancelParams",
+      "type": "object",
+      "properties": {
+        "probeId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "probeId"
+      ]
+    },
+    "result": {
+      "title": "ProbeCancelResult",
+      "type": "object",
+      "properties": {
+        "cancelled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "cancelled"
+      ]
+    }
+  }
+}

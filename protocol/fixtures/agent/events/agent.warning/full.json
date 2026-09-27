@@ -1,0 +1,17 @@
+{
+  "description": "`agent.warning` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "agent.warning",
+    "seq": 7,
+    "params": {
+      "code": "EXAMPLE_CODE",
+      "message": "Example message.",
+      "data": {}
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

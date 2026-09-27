@@ -1,0 +1,24 @@
+{
+  "description": "`obj.destroy` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-299",
+    "kind": "request",
+    "method": "obj.destroy",
+    "params": {
+      "target": {
+        "h": 481
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-299",
+    "kind": "response",
+    "result": {
+      "destroyed": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

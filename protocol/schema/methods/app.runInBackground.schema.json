@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/app.runInBackground.schema.json",
+  "title": "app.runInBackground",
+  "description": "Keeps the game updating while unfocused.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "AppRunInBackgroundParams",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "result": {
+      "title": "AppRunInBackgroundResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "type": "boolean"
+        },
+        "current": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "previous",
+        "current"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `scene`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-429",
+    "kind": "request",
+    "method": "scene.setActive",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-429",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.scene is required.",
+      "data": {
+        "param": "params.scene"
+      }
+    }
+  }
+}

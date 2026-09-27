@@ -1,0 +1,27 @@
+{
+  "description": "`mod.list` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-280",
+    "kind": "request",
+    "method": "mod.list",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-280",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "guid": "com.example.mod",
+          "name": "Player",
+          "version": "1.2.3",
+          "assembly": "QUJDRA==",
+          "source": "loader",
+          "alive": true
+        }
+      ]
+    }
+  }
+}

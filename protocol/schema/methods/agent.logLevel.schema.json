@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/agent.logLevel.schema.json",
+  "title": "agent.logLevel",
+  "description": "Sets the agent's own log verbosity.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AgentLogLevelParams",
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "Debug",
+            "Info",
+            "Warning",
+            "Error"
+          ]
+        }
+      },
+      "required": [
+        "level"
+      ]
+    },
+    "result": {
+      "title": "AgentLogLevelResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "previous",
+        "level"
+      ]
+    }
+  }
+}

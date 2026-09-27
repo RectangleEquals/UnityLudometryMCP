@@ -1,0 +1,18 @@
+{
+  "description": "`ping` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-374",
+    "kind": "request",
+    "method": "ping"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-374",
+    "kind": "response",
+    "result": {
+      "uptimeMs": 65000,
+      "frame": null
+    }
+  }
+}

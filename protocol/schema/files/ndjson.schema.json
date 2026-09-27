@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/ndjson.schema.json",
+  "description": "Every NDJSON output starts with a `header` record and ends with a `footer` record; `sha256` covers all preceding lines (UTF-8, each with its trailing newline).",
+  "$defs": {
+    "header": {
+      "title": "NdjsonHeader",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "header"
+        },
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentVersion": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC timestamp, ISO 8601."
+        },
+        "source": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "rec",
+        "schema",
+        "schemaVersion",
+        "agentVersion",
+        "createdAt"
+      ]
+    },
+    "footer": {
+      "title": "NdjsonFooter",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "footer"
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redactions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "counts",
+        "sha256",
+        "durationMs"
+      ]
+    }
+  }
+}

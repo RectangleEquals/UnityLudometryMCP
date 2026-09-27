@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `requests`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-56",
+    "kind": "request",
+    "method": "batch",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-56",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.requests is required.",
+      "data": {
+        "param": "params.requests"
+      }
+    }
+  }
+}

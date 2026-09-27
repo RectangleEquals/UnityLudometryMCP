@@ -1,0 +1,17 @@
+{
+  "description": "`event.subscribe` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-177",
+    "kind": "request",
+    "method": "event.subscribe"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-177",
+    "kind": "response",
+    "result": {
+      "subscriptionId": "s-1"
+    }
+  }
+}

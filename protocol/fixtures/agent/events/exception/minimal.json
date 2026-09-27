@@ -1,0 +1,13 @@
+{
+  "description": "`exception` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "exception",
+    "seq": 7,
+    "params": {
+      "items": [],
+      "dropped": 1
+    }
+  }
+}

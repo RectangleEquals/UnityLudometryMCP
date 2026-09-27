@@ -1,0 +1,20 @@
+{
+  "description": "`rule.hold` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-407",
+    "kind": "request",
+    "method": "rule.hold",
+    "params": {
+      "ruleId": "r-7"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-407",
+    "kind": "response",
+    "result": {
+      "heldUntilRealtimeMs": 1
+    }
+  }
+}

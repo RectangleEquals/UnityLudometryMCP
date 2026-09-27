@@ -1,0 +1,51 @@
+{
+  "description": "`ui.find` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-487",
+    "kind": "request",
+    "method": "ui.find",
+    "params": {
+      "text": "Craft",
+      "path": "Root/Player",
+      "kind": "survey"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-487",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "h": 481,
+          "path": "Root/Player",
+          "kind": "button",
+          "text": "Craft",
+          "images": [
+            {
+              "sprite": "example-sprite",
+              "texture": "example-texture"
+            }
+          ],
+          "interactable": true,
+          "isOn": true,
+          "value": "example",
+          "options": [
+            "example-option"
+          ],
+          "screenRect": {
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.5,
+            "h": 0.5
+          },
+          "canvas": "Canvas",
+          "sortingOrder": 1,
+          "raycastBlocked": true,
+          "locator": "live://Main/Player#Example.Inventory.items"
+        }
+      ]
+    }
+  }
+}

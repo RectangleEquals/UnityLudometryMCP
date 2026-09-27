@@ -1,0 +1,31 @@
+{
+  "description": "`content.export.start` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-155",
+    "kind": "request",
+    "method": "content.export.start",
+    "params": {
+      "items": [],
+      "outDir": "X:/Example/Output"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-155",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "content.export"
+    }
+  },
+  "jobResult": {
+    "manifest": {
+      "path": "Root/Player",
+      "bytes": 204800,
+      "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c"
+    },
+    "exported": 1,
+    "skipped": 1
+  }
+}

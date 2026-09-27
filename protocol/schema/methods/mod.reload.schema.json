@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/mod.reload.schema.json",
+  "title": "mod.reload",
+  "description": "Hot-reloads a mod plugin by GUID from assembly bytes (dependencies first).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ModReloadParams",
+      "type": "object",
+      "properties": {
+        "assemblies": {
+          "type": "array",
+          "items": {
+            "title": "ModAssembly",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "base64": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "base64"
+            ]
+          },
+          "minItems": 1
+        },
+        "pluginGuid": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "assemblies",
+        "pluginGuid"
+      ]
+    },
+    "result": {
+      "title": "ModReloadResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "title": "PreviousPlugin",
+              "type": "object",
+              "properties": {
+                "assembly": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "loader",
+                    "hotload"
+                  ]
+                },
+                "destroyed": {
+                  "type": "boolean"
+                },
+                "unpatched": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "assembly",
+                "source",
+                "destroyed",
+                "unpatched"
+              ]
+            }
+          ]
+        },
+        "loaded": {
+          "title": "LoadedPlugin",
+          "type": "object",
+          "properties": {
+            "assembly": {
+              "type": "string"
+            },
+            "pluginType": {
+              "type": "string"
+            },
+            "instance": {
+              "$ref": "../common/handle-descriptor.schema.json"
+            }
+          },
+          "required": [
+            "assembly",
+            "pluginType",
+            "instance"
+          ]
+        }
+      },
+      "required": [
+        "previous",
+        "loaded"
+      ]
+    }
+  }
+}

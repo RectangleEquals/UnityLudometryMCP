@@ -1,0 +1,19 @@
+{
+  "description": "`time.resume` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-459",
+    "kind": "request",
+    "method": "time.resume",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-459",
+    "kind": "response",
+    "result": {
+      "timeScale": 0.5,
+      "paused": true
+    }
+  }
+}

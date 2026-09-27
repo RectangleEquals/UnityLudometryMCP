@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `pluginGuid`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-288",
+    "kind": "request",
+    "method": "mod.unload",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-288",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.pluginGuid is required.",
+      "data": {
+        "param": "params.pluginGuid"
+      }
+    }
+  }
+}

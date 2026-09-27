@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.query.start.schema.json",
+  "title": "obj.query.start",
+  "description": "The same query as a job, for large candidate sets.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "$ref": "../methods/obj.query.schema.json#/$defs/params"
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "$ref": "../methods/obj.query.schema.json#/$defs/result"
+    }
+  }
+}

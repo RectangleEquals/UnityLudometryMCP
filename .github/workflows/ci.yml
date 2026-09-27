@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['protocol-v*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  protocol:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: protocol/csharp
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Generated C# is up to date
+        run: python ../codegen/csharp.py --check
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: protocol/csharp/global.json
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Test
+        run: dotnet test -c Release --no-build --logger trx --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: protocol-test-results
+          path: protocol/csharp/TestResults/*.trx
+          if-no-files-found: ignore
+
+  privacy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Privacy check
+        shell: pwsh
+        env:
+          PRIVACY_DENYLIST: ${{ secrets.PRIVACY_DENYLIST }}
+        run: |
+          # One term per line. Fails if any tracked file contains a term (case-insensitive).
+          if ([string]::IsNullOrWhiteSpace($env:PRIVACY_DENYLIST)) { Write-Host "No denylist configured; skipping."; exit 0 }
+          $terms = $env:PRIVACY_DENYLIST -split "`r?`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+          $found = $false
+          foreach ($term in $terms) {
+            $hits = git grep -I -i -l -F -e $term
+            if ($LASTEXITCODE -eq 0 -and $hits) { $found = $true; Write-Host "::error::A denylisted term was found in: $($hits -join ', ')" }
+          }
+          if ($found) { exit 1 }

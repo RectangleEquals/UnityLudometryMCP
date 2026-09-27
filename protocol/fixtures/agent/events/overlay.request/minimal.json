@@ -1,0 +1,12 @@
+{
+  "description": "`overlay.request` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "overlay.request",
+    "seq": 7,
+    "params": {
+      "kind": "openInStaticTool"
+    }
+  }
+}

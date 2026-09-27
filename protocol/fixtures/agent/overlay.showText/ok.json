@@ -1,0 +1,23 @@
+{
+  "description": "`overlay.showText` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-353",
+    "kind": "request",
+    "method": "overlay.showText",
+    "params": {
+      "title": "Example",
+      "text": "Craft",
+      "language": "csharp",
+      "locator": "live://Main/Player#Example.Inventory.items"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-353",
+    "kind": "response",
+    "result": {
+      "shown": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/overlay.picked.schema.json",
+  "title": "overlay.picked",
+  "description": "The user picked an object in the overlay; its name is stored as a session variable.",
+  "$defs": {
+    "params": {
+      "title": "PickedEventParams",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "../common/handle-descriptor.schema.json"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        }
+      },
+      "required": [
+        "name",
+        "target"
+      ]
+    }
+  }
+}

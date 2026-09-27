@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/patch.apply.schema.json",
+  "title": "patch.apply",
+  "description": "Applies a live Harmony patch set from a compiled patch assembly.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "PatchApplyParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "type": "string",
+          "minLength": 1
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "assembly"
+      ]
+    },
+    "result": {
+      "title": "PatchApplyResult",
+      "type": "object",
+      "properties": {
+        "patchSetId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patched": {
+          "type": "array",
+          "items": {
+            "title": "PatchedTarget",
+            "type": "object",
+            "properties": {
+              "target": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "prefixes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "postfixes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "transpilers": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "finalizers": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "target",
+              "prefixes",
+              "postfixes",
+              "transpilers",
+              "finalizers"
+            ]
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "title": "PatchError",
+            "type": "object",
+            "properties": {
+              "target": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        }
+      },
+      "required": [
+        "patchSetId",
+        "patched",
+        "errors"
+      ]
+    }
+  }
+}

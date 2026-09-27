@@ -1,0 +1,17 @@
+{
+  "description": "`handles.releaseAll` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-230",
+    "kind": "request",
+    "method": "handles.releaseAll"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-230",
+    "kind": "response",
+    "result": {
+      "released": 1
+    }
+  }
+}

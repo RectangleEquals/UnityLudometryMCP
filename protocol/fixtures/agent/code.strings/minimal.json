@@ -1,0 +1,20 @@
+{
+  "description": "`code.strings` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-112",
+    "kind": "request",
+    "method": "code.strings",
+    "params": {
+      "regex": "item_.*"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-112",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

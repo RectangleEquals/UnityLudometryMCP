@@ -1,0 +1,27 @@
+{
+  "description": "The target's object was destroyed.",
+  "request": {
+    "v": 0,
+    "id": "r-301",
+    "kind": "request",
+    "method": "obj.destroy",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "immediate": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-301",
+    "kind": "response",
+    "error": {
+      "code": "HANDLE_EXPIRED",
+      "message": "Handle 481 refers to a destroyed object.",
+      "data": {
+        "h": 481
+      }
+    }
+  }
+}

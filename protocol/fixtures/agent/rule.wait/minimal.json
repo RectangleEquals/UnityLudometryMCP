@@ -1,0 +1,20 @@
+{
+  "description": "`rule.wait` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-413",
+    "kind": "request",
+    "method": "rule.wait",
+    "params": {
+      "ruleId": "r-7"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-413",
+    "kind": "response",
+    "result": {
+      "firing": null
+    }
+  }
+}

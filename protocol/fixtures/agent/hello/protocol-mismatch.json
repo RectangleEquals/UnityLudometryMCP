@@ -1,0 +1,32 @@
+{
+  "description": "Incompatible protocol version (pre-1.0: the minor differs); the agent closes the connection after responding.",
+  "request": {
+    "v": 0,
+    "id": "r-545",
+    "kind": "request",
+    "method": "hello",
+    "params": {
+      "token": "3f9a1c0e7b2d4a6f8e1b3c5d7f9a0b2c4d6e8f0a1b3c5d7e9f1a2b4c6d8e0f1a",
+      "client": {
+        "name": "unity-ludometry-mcp",
+        "version": "0.1.0"
+      },
+      "protocol": {
+        "major": 0,
+        "minor": 2
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-545",
+    "kind": "response",
+    "error": {
+      "code": "PROTOCOL_MISMATCH",
+      "message": "Client protocol 0.2 is not compatible with agent protocol 0.1.",
+      "data": {
+        "hint": "Before protocol 1.0, the agent and the orchestrator need the same protocol version. Install matching releases."
+      }
+    }
+  }
+}

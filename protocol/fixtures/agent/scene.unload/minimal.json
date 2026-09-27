@@ -1,0 +1,22 @@
+{
+  "description": "`scene.unload` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-431",
+    "kind": "request",
+    "method": "scene.unload",
+    "params": {
+      "scene": null
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-431",
+    "kind": "response",
+    "result": {
+      "unloaded": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

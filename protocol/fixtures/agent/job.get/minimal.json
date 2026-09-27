@@ -1,0 +1,24 @@
+{
+  "description": "`job.get` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-259",
+    "kind": "request",
+    "method": "job.get",
+    "params": {
+      "jobId": "j-1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-259",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "survey",
+      "state": "queued",
+      "startedAt": null,
+      "finishedAt": null
+    }
+  }
+}

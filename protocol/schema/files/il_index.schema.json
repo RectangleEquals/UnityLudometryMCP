@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/il_index.schema.json",
+  "description": "The runtime cross-reference index (`il.index.start`). Each line is one record; see `ndjson.schema.json` for the header and footer.",
+  "oneOf": [
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/header"
+    },
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/footer"
+    },
+    {
+      "$ref": "#/$defs/call"
+    },
+    {
+      "$ref": "#/$defs/field"
+    },
+    {
+      "$ref": "#/$defs/string"
+    },
+    {
+      "$ref": "#/$defs/alloc"
+    },
+    {
+      "$ref": "#/$defs/typeref"
+    },
+    {
+      "$ref": "#/$defs/error"
+    }
+  ],
+  "$defs": {
+    "call": {
+      "title": "IlCall",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "call"
+        },
+        "caller": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "callee": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "opcode": {
+          "type": "string",
+          "enum": [
+            "call",
+            "callvirt",
+            "newobj",
+            "ldftn",
+            "ldvirtftn"
+          ]
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "rec",
+        "caller",
+        "callee",
+        "opcode",
+        "offset"
+      ],
+      "x-rec": "call"
+    },
+    "field": {
+      "title": "IlFieldAccess",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "field"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "field": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "write",
+            "address"
+          ]
+        },
+        "static": {
+          "type": "boolean"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "rec",
+        "method",
+        "field",
+        "access",
+        "static",
+        "offset"
+      ],
+      "x-rec": "field"
+    },
+    "string": {
+      "title": "IlString",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "string"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "literal": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "rec",
+        "method",
+        "literal",
+        "offset"
+      ],
+      "x-rec": "string"
+    },
+    "alloc": {
+      "title": "IlAlloc",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "alloc"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "opcode": {
+          "type": "string",
+          "enum": [
+            "newobj",
+            "newarr",
+            "box",
+            "initobj"
+          ]
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "rec",
+        "method",
+        "type",
+        "opcode",
+        "offset"
+      ],
+      "x-rec": "alloc"
+    },
+    "typeref": {
+      "title": "IlTypeRef",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "typeref"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "castclass",
+            "isinst",
+            "ldtoken",
+            "sizeof"
+          ]
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "rec",
+        "method",
+        "type",
+        "usage",
+        "offset"
+      ],
+      "x-rec": "typeref"
+    },
+    "error": {
+      "title": "IlIndexError",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "error"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rec",
+        "method",
+        "reason"
+      ],
+      "x-rec": "error"
+    }
+  }
+}

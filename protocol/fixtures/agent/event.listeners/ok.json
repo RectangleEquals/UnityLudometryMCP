@@ -1,0 +1,48 @@
+{
+  "description": "`event.listeners` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-165",
+    "kind": "request",
+    "method": "event.listeners",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "event": {
+        "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+        "token": 100663553,
+        "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-165",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "target": {
+            "h": 481,
+            "type": {
+              "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+              "token": 33554471,
+              "name": "Example.Inventory"
+            },
+            "unity": {
+              "instanceId": -12844,
+              "name": "Player",
+              "destroyed": false
+            }
+          },
+          "method": {
+            "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+            "token": 100663553,
+            "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+          }
+        }
+      ]
+    }
+  }
+}

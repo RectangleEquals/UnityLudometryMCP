@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `method`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-79",
+    "kind": "request",
+    "method": "code.callees",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-79",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.method is required.",
+      "data": {
+        "param": "params.method"
+      }
+    }
+  }
+}

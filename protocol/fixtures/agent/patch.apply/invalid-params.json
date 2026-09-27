@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `assembly`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-360",
+    "kind": "request",
+    "method": "patch.apply",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-360",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.assembly is required.",
+      "data": {
+        "param": "params.assembly"
+      }
+    }
+  }
+}

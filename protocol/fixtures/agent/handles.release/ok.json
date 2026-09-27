@@ -1,0 +1,25 @@
+{
+  "description": "`handles.release` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-226",
+    "kind": "request",
+    "method": "handles.release",
+    "params": {
+      "handles": [
+        12
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-226",
+    "kind": "response",
+    "result": {
+      "released": 1,
+      "unknown": [
+        1
+      ]
+    }
+  }
+}

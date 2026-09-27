@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/activity.get.schema.json",
+  "title": "activity.get",
+  "description": "One Activity entry with its full request and response payloads.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ActivityGetParams",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "result": {
+      "title": "ActivityGetResult",
+      "type": "object",
+      "properties": {
+        "entry": {
+          "$ref": "../methods/activity.list.schema.json#/$defs/result/properties/items/items"
+        },
+        "request": {
+          "type": "object"
+        },
+        "response": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "entry",
+        "request",
+        "response"
+      ]
+    }
+  }
+}

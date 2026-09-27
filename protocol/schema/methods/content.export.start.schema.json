@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/content.export.start.schema.json",
+  "title": "content.export.start",
+  "description": "Exports textures, sprites, audio, meshes, text and data to a caller-chosen directory, with a manifest (`export-<jobId>.ndjson`).",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ContentExportStartParams",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "ExportItem",
+            "type": "object",
+            "properties": {
+              "target": {
+                "$ref": "../common/target.schema.json"
+              },
+              "type": {
+                "type": "string"
+              },
+              "nameRegex": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "outDir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formats": {
+          "title": "ExportFormats",
+          "type": "object",
+          "properties": {
+            "texture": {
+              "type": "string",
+              "enum": [
+                "png"
+              ]
+            },
+            "audio": {
+              "type": "string",
+              "enum": [
+                "wav"
+              ]
+            },
+            "mesh": {
+              "type": "string",
+              "enum": [
+                "obj"
+              ]
+            },
+            "data": {
+              "type": "string",
+              "enum": [
+                "json"
+              ]
+            }
+          }
+        },
+        "overwrite": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "items",
+        "outDir"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "ContentExportStartJobResult",
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "$ref": "../common/output-file.schema.json"
+        },
+        "exported": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/warning.schema.json"
+          },
+          "description": "Non-fatal notes (truncation, exploratory resolution, skipped members)."
+        }
+      },
+      "required": [
+        "manifest",
+        "exported",
+        "skipped"
+      ]
+    }
+  }
+}

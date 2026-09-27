@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/patch.revert.schema.json",
+  "title": "patch.revert",
+  "description": "Reverts a live patch set.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "PatchRevertParams",
+      "type": "object",
+      "properties": {
+        "patchSetId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "patchSetId"
+      ]
+    },
+    "result": {
+      "title": "PatchRevertResult",
+      "type": "object",
+      "properties": {
+        "unpatched": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        }
+      },
+      "required": [
+        "unpatched"
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+* text=auto eol=lf
+
+*.py      text eol=lf
+*.toml    text eol=lf
+*.cs      text eol=lf
+*.csproj  text eol=lf
+*.props   text eol=lf
+*.targets text eol=lf
+*.json    text eol=lf
+*.ndjson  text eol=lf
+*.md      text eol=lf
+*.yml     text eol=lf
+*.ps1     text eol=crlf
+*.sln     text eol=crlf
+
+*.dll     binary
+*.exe     binary
+*.png     binary
+*.jpg     binary
+*.zip     binary
+*.whl     binary
+
+# Generated from the schemas by protocol/codegen/csharp.py (CI verifies they are current)
+protocol/csharp/UnityLudometry.Protocol/Generated/** linguist-generated=true

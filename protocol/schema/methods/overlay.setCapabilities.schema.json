@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.setCapabilities.schema.json",
+  "title": "overlay.setCapabilities",
+  "description": "Declares which cross-tool features the client can fulfil (the overlay shows those buttons).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlaySetCapabilitiesParams",
+      "type": "object",
+      "properties": {
+        "openInStaticTool": {
+          "type": "boolean"
+        },
+        "showSource": {
+          "type": "boolean"
+        },
+        "showAssetOrigin": {
+          "type": "boolean"
+        },
+        "followStaticToolSelection": {
+          "type": "boolean"
+        }
+      }
+    },
+    "result": {
+      "title": "OverlaySetCapabilitiesResult",
+      "type": "object",
+      "properties": {
+        "openInStaticTool": {
+          "type": "boolean"
+        },
+        "showSource": {
+          "type": "boolean"
+        },
+        "showAssetOrigin": {
+          "type": "boolean"
+        },
+        "followStaticToolSelection": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "openInStaticTool",
+        "showSource",
+        "showAssetOrigin",
+        "followStaticToolSelection"
+      ]
+    }
+  }
+}

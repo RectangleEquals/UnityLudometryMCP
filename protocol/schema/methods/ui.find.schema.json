@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.find.schema.json",
+  "title": "ui.find",
+  "description": "UI elements by text, path or kind.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false,
+    "requires": [
+      "module:ugui"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "UiFindParams",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        }
+      }
+    },
+    "result": {
+      "title": "UiFindResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/ui.snapshot.schema.json#/$defs/result/properties/items/items"
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

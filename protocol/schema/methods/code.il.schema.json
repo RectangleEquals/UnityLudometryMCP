@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.il.schema.json",
+  "title": "code.il",
+  "description": "Decoded IL of a method with resolved operands, or an ILDasm-like text listing.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeIlParams",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "resolveOperands": {
+          "type": "boolean"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "text"
+          ]
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    "result": {
+      "title": "CodeIlResult",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "ilSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxStack": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "initLocals": {
+          "type": "boolean"
+        },
+        "locals": {
+          "type": "array",
+          "items": {
+            "title": "IlLocal",
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "index",
+              "type"
+            ]
+          }
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "title": "IlInstruction",
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "opcode": {
+                "type": "string"
+              },
+              "operand": {
+                "description": "`{field|method|type: anchor}`, `{string}`, `{target}`, `{targets}`, a number, or `{token, error}`."
+              }
+            },
+            "required": [
+              "offset",
+              "opcode"
+            ]
+          }
+        },
+        "exceptionClauses": {
+          "type": "array",
+          "items": {
+            "title": "IlExceptionClause",
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "catch",
+                  "filter",
+                  "finally",
+                  "fault"
+                ]
+              },
+              "tryOffset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tryLength": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "handlerOffset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "handlerLength": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "catchType": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "tryOffset",
+              "tryLength",
+              "handlerOffset",
+              "handlerLength"
+            ]
+          }
+        },
+        "text": {
+          "type": "string",
+          "description": "The listing, for `format:text`."
+        }
+      },
+      "required": [
+        "method",
+        "ilSize"
+      ]
+    }
+  }
+}

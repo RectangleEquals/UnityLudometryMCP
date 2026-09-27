@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/probe.run.schema.json",
+  "title": "probe.run",
+  "description": "Executes one probe. The mode needed depends on the kind (`call` needs Full and `consented`).",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ProbeRunParams",
+      "type": "object",
+      "properties": {
+        "probe": {
+          "$ref": "../common/probe.schema.json#/$defs/probe"
+        }
+      },
+      "required": [
+        "probe"
+      ]
+    },
+    "result": {
+      "$ref": "../common/probe.schema.json#/$defs/result"
+    }
+  }
+}

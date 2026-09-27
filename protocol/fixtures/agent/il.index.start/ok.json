@@ -1,0 +1,42 @@
+{
+  "description": "`il.index.start` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-251",
+    "kind": "request",
+    "method": "il.index.start",
+    "params": {
+      "outFile": "X:/Example/Output/example.ndjson",
+      "include": [
+        "example-include"
+      ],
+      "exclude": [
+        "example-exclude"
+      ],
+      "records": [
+        "calls"
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-251",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "il.index"
+    }
+  },
+  "jobResult": {
+    "file": {
+      "path": "Root/Player",
+      "bytes": 204800,
+      "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+      "counts": {
+        "example": 1
+      }
+    },
+    "cached": true,
+    "durationMs": 120
+  }
+}

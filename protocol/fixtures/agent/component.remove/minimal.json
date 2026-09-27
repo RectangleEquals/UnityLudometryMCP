@@ -1,0 +1,24 @@
+{
+  "description": "`component.remove` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-150",
+    "kind": "request",
+    "method": "component.remove",
+    "params": {
+      "target": {
+        "h": 481
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-150",
+    "kind": "response",
+    "result": {
+      "removed": true,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

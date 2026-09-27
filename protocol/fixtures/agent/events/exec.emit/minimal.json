@@ -1,0 +1,12 @@
+{
+  "description": "`exec.emit` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "exec.emit",
+    "seq": 7,
+    "params": {
+      "kind": "survey"
+    }
+  }
+}

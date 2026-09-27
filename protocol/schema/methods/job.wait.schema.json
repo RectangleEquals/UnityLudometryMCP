@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/job.wait.schema.json",
+  "title": "job.wait",
+  "description": "Long-polls until the job finishes or the timeout passes, then returns its state.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "JobWaitParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "jobId"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/info"
+    }
+  }
+}

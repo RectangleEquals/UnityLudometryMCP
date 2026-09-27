@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.ilHashes.schema.json",
+  "title": "code.ilHashes",
+  "description": "Per-method SHA-256 of the IL bytes, for comparing static and running code.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeIlHashesParams",
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "methods"
+      ]
+    },
+    "result": {
+      "title": "CodeIlHashesResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "IlHash",
+            "type": "object",
+            "properties": {
+              "anchor": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "ilHash": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "ilSize": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "anchor",
+              "ilHash",
+              "ilSize"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Player",
+  "version": "1.2.3",
+  "apiVersion": "0.1",
+  "protocol": {
+    "major": 1,
+    "minor": 1
+  },
+  "loader": "bepinex5",
+  "runtime": "mono",
+  "unityMin": "2018.1",
+  "files": [
+    {
+      "path": "Root/Player",
+      "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+      "size": 204800
+    }
+  ],
+  "gitCommit": "0a1b2c3"
+}

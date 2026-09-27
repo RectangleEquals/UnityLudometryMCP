@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/scene.setActive.schema.json",
+  "title": "scene.setActive",
+  "description": "Sets the active scene.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "SceneSetActiveParams",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "description": "Name, build index or handle."
+        }
+      },
+      "required": [
+        "scene"
+      ]
+    },
+    "result": {
+      "title": "SceneSetActiveResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "type": "string"
+        },
+        "active": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "previous",
+        "active"
+      ]
+    }
+  }
+}

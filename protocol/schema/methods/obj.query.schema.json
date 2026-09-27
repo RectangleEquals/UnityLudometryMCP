@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.query.schema.json",
+  "title": "obj.query",
+  "description": "Declarative conditional search with projection, evaluated in budgeted chunks.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjQueryParams",
+      "type": "object",
+      "properties": {
+        "from": {
+          "title": "QuerySource",
+          "type": "object",
+          "properties": {
+            "type": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "scope": {
+              "type": "string",
+              "enum": [
+                "scene",
+                "all",
+                "assets"
+              ]
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/target.schema.json"
+              }
+            },
+            "target": {
+              "$ref": "../common/target.schema.json"
+            },
+            "path": {
+              "$ref": "../common/member-path.schema.json"
+            }
+          },
+          "description": "Candidates: instances of a type, explicit targets, or a collection at a path under a target."
+        },
+        "where": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/condition.schema.json"
+          }
+        },
+        "select": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/member-path.schema.json"
+          }
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "title": "QueryOrder",
+            "type": "object",
+            "properties": {
+              "path": {
+                "$ref": "../common/member-path.schema.json"
+              },
+              "desc": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        }
+      },
+      "required": [
+        "from"
+      ]
+    },
+    "result": {
+      "title": "ObjQueryResult",
+      "type": "object",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "title": "QueryRow",
+            "type": "object",
+            "properties": {
+              "target": {
+                "$ref": "../common/handle-descriptor.schema.json"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "$ref": "../common/value.schema.json"
+                }
+              }
+            },
+            "required": [
+              "target",
+              "values"
+            ]
+          }
+        },
+        "scanned": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "matched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "rows",
+        "scanned",
+        "matched",
+        "errors",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

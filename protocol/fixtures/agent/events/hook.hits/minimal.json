@@ -1,0 +1,13 @@
+{
+  "description": "`hook.hits` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "hook.hits",
+    "seq": 7,
+    "params": {
+      "items": [],
+      "dropped": 1
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/go.path.schema.json",
+  "title": "go.path",
+  "description": "Canonical path and scene of a GameObject (used for locators).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "GoPathParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        }
+      },
+      "required": [
+        "target"
+      ]
+    },
+    "result": {
+      "title": "GoPathResult",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "scene": {
+          "type": "string"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        }
+      },
+      "required": [
+        "path",
+        "scene",
+        "locator"
+      ]
+    }
+  }
+}

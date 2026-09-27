@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/logs.tail.schema.json",
+  "title": "logs.tail",
+  "description": "Entries of the unified log buffer after a sequence number.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "LogsTailParams",
+      "type": "object",
+      "properties": {
+        "sinceSeq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        },
+        "minLevel": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "unity",
+              "loader",
+              "agent"
+            ]
+          }
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "regex": {
+          "type": "string"
+        }
+      }
+    },
+    "result": {
+      "title": "LogsTailResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/log-entry.schema.json"
+          }
+        },
+        "nextSeq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "items",
+        "nextSeq",
+        "dropped"
+      ]
+    }
+  }
+}

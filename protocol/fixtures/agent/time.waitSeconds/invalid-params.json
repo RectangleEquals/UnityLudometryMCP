@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `seconds`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-470",
+    "kind": "request",
+    "method": "time.waitSeconds",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-470",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.seconds is required.",
+      "data": {
+        "param": "params.seconds"
+      }
+    }
+  }
+}

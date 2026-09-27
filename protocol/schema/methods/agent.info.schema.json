@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/agent.info.schema.json",
+  "title": "agent.info",
+  "description": "Versions, runtime, loader, mode, limits and health of the agent.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AgentInfoParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "AgentInfo",
+      "type": "object",
+      "properties": {
+        "agentVersion": {
+          "type": "string"
+        },
+        "gitCommit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "protocol": {
+          "$ref": "../common/protocol-version.schema.json"
+        },
+        "pid": {
+          "type": "integer"
+        },
+        "processName": {
+          "type": "string"
+        },
+        "unityVersion": {
+          "type": "string"
+        },
+        "scriptingBackend": {
+          "type": "string",
+          "enum": [
+            "mono",
+            "il2cpp"
+          ]
+        },
+        "platform": {
+          "type": "string"
+        },
+        "loader": {
+          "title": "LoaderInfo",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "version"
+          ]
+        },
+        "mode": {
+          "$ref": "../common/agent-mode.schema.json"
+        },
+        "transport": {
+          "type": "string",
+          "enum": [
+            "pipe",
+            "tcp"
+          ]
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC timestamp, ISO 8601."
+        },
+        "uptimeMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limits": {
+          "type": "object",
+          "description": "Effective agent caps (config key to value)."
+        },
+        "health": {
+          "title": "AgentHealth",
+          "type": "object",
+          "properties": {
+            "pump": {
+              "title": "PumpHealth",
+              "type": "object",
+              "properties": {
+                "alive": {
+                  "type": "boolean"
+                },
+                "lastTickFrame": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "queueLength": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stalledMs": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "recreatedCount": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "alive",
+                "lastTickFrame",
+                "queueLength",
+                "stalledMs",
+                "recreatedCount"
+              ]
+            },
+            "connections": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "jobsRunning": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "hooksActive": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "patchesActive": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "handles": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "assembliesLoadedByAgent": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "pump"
+          ]
+        }
+      },
+      "required": [
+        "agentVersion",
+        "gitCommit",
+        "protocol",
+        "pid",
+        "processName",
+        "unityVersion",
+        "scriptingBackend",
+        "platform",
+        "loader",
+        "mode",
+        "transport",
+        "startedAt",
+        "uptimeMs",
+        "limits",
+        "health"
+      ]
+    }
+  }
+}

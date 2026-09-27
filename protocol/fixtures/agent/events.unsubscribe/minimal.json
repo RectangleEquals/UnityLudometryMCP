@@ -1,0 +1,17 @@
+{
+  "description": "`events.unsubscribe` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-186",
+    "kind": "request",
+    "method": "events.unsubscribe"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-186",
+    "kind": "response",
+    "result": {
+      "unsubscribed": []
+    }
+  }
+}

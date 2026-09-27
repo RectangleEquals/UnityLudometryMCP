@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.snapshot.schema.json",
+  "title": "ui.snapshot",
+  "description": "UI elements on active canvases (uGUI, TextMeshPro) with texts, images and state.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false,
+    "requires": [
+      "module:ugui"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "UiSnapshotParams",
+      "type": "object",
+      "properties": {
+        "onlyInteractable": {
+          "type": "boolean"
+        },
+        "onlyVisible": {
+          "type": "boolean"
+        },
+        "includeText": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      }
+    },
+    "result": {
+      "title": "UiSnapshotResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "UiElement",
+            "type": "object",
+            "properties": {
+              "h": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "button",
+                  "toggle",
+                  "slider",
+                  "dropdown",
+                  "inputField",
+                  "scrollRect",
+                  "text",
+                  "image",
+                  "other"
+                ]
+              },
+              "text": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "images": {
+                "type": "array",
+                "items": {
+                  "title": "UiImage",
+                  "type": "object",
+                  "properties": {
+                    "sprite": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "texture": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "sprite",
+                    "texture"
+                  ]
+                }
+              },
+              "interactable": {
+                "type": "boolean"
+              },
+              "isOn": {
+                "type": "boolean"
+              },
+              "value": {},
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "screenRect": {
+                "$ref": "../common/capture.schema.json#/$defs/rect"
+              },
+              "canvas": {
+                "type": "string"
+              },
+              "sortingOrder": {
+                "type": "integer"
+              },
+              "raycastBlocked": {
+                "type": "boolean"
+              },
+              "locator": {
+                "$ref": "../common/locator.schema.json"
+              }
+            },
+            "required": [
+              "h",
+              "path",
+              "kind",
+              "text",
+              "interactable",
+              "screenRect",
+              "canvas",
+              "sortingOrder",
+              "raycastBlocked"
+            ]
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "items",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

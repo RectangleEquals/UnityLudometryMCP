@@ -1,0 +1,20 @@
+{
+  "description": "`vars.delete` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-522",
+    "kind": "request",
+    "method": "vars.delete",
+    "params": {
+      "name": "Player"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-522",
+    "kind": "response",
+    "result": {
+      "deleted": true
+    }
+  }
+}

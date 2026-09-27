@@ -1,0 +1,34 @@
+{
+  "description": "`test.list` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-449",
+    "kind": "request",
+    "method": "test.list",
+    "params": {
+      "assembly": {
+        "base64": "QUJDRA=="
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-449",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "test": {
+            "fixture": "InventoryTests",
+            "name": "Player",
+            "category": "mod"
+          },
+          "timeoutMs": 10000,
+          "order": 1,
+          "skip": "example-skip",
+          "requiresScene": "example-requiresScene"
+        }
+      ]
+    }
+  }
+}

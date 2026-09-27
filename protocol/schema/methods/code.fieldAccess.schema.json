@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.fieldAccess.schema.json",
+  "title": "code.fieldAccess",
+  "description": "Methods reading or writing a field.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeFieldAccessParams",
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "write",
+            "address"
+          ]
+        }
+      },
+      "required": [
+        "field"
+      ]
+    },
+    "result": {
+      "title": "CodeFieldAccessResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "FieldAccess",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "access": {
+                "type": "string",
+                "enum": [
+                  "read",
+                  "write",
+                  "address"
+                ]
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "method",
+              "access",
+              "offset"
+            ]
+          }
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Limits that apply to this result (e.g. virtual calls give the declared target; reflection isn't visible)."
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

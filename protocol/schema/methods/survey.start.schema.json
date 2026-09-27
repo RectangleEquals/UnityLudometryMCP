@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/survey.start.schema.json",
+  "title": "survey.start",
+  "description": "Writes the bulk type/member catalogue of the included assemblies as NDJSON (instance counts on the main thread, budgeted).",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "SurveyStartParams",
+      "type": "object",
+      "properties": {
+        "outFile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Assembly-name globs."
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Assembly-name globs."
+        },
+        "serializerMarkers": {
+          "title": "SerializerMarkers",
+          "type": "object",
+          "properties": {
+            "attributes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "baseTypes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "countInstances": {
+          "description": "`false`, `true` (all component/ScriptableObject types) or an array of type anchors."
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Unity message names to detect; defaults to the built-in list."
+        },
+        "force": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "outFile"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "SurveyStartJobResult",
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "../common/output-file.schema.json"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "file",
+        "durationMs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/rule.wait.schema.json",
+  "title": "rule.wait",
+  "description": "Long-polls until the rule's next firing completes, then returns it (null on timeout).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "RuleWaitParams",
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "ruleId"
+      ]
+    },
+    "result": {
+      "title": "RuleWaitResult",
+      "type": "object",
+      "properties": {
+        "firing": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "../common/rule.schema.json#/$defs/firing"
+            }
+          ]
+        }
+      },
+      "required": [
+        "firing"
+      ]
+    }
+  }
+}

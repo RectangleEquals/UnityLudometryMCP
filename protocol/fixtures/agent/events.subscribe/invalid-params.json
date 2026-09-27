@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `kinds`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-184",
+    "kind": "request",
+    "method": "events.subscribe",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-184",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.kinds is required.",
+      "data": {
+        "param": "params.kinds"
+      }
+    }
+  }
+}

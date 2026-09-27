@@ -1,0 +1,26 @@
+{
+  "description": "`probe.result` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-378",
+    "kind": "request",
+    "method": "probe.result",
+    "params": {
+      "probeId": "p-118"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-378",
+    "kind": "response",
+    "result": {
+      "id": "x-1",
+      "status": "ok",
+      "evidence": [],
+      "metrics": {
+        "durationMs": 120,
+        "frames": 2
+      }
+    }
+  }
+}

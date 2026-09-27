@@ -1,0 +1,159 @@
+{
+  "description": "`rule.wait` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-412",
+    "kind": "request",
+    "method": "rule.wait",
+    "params": {
+      "ruleId": "r-7",
+      "timeoutMs": 10000
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-412",
+    "kind": "response",
+    "result": {
+      "firing": {
+        "ruleId": "r-7",
+        "fire": 1,
+        "frame": 3902,
+        "realtimeMs": 64000,
+        "trigger": {
+          "conditionPath": "when.seq[0]",
+          "detail": "example"
+        },
+        "results": {
+          "screenshots": [
+            {
+              "path": "Root/Player",
+              "width": 1568,
+              "height": 882,
+              "originalWidth": 1,
+              "originalHeight": 1,
+              "bytes": 204800,
+              "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+              "frame": 3902,
+              "realtimeMs": 64000,
+              "marks": [],
+              "inline": "example-inline"
+            }
+          ],
+          "snapshot": "example",
+          "hits": [
+            {
+              "seq": 1201,
+              "hookId": "h-1",
+              "jobId": "j-1",
+              "phase": "enter",
+              "method": {
+                "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+                "token": 100663553,
+                "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+              },
+              "frame": 3902,
+              "realtimeUs": 64000123,
+              "threadId": 1,
+              "depth": 1,
+              "instance": {
+                "t": "list",
+                "count": 3,
+                "items": [
+                  1,
+                  {
+                    "t": "Vector3",
+                    "x": 1.5,
+                    "y": 0,
+                    "z": -2
+                  },
+                  {
+                    "redacted": {
+                      "reason": "maxItems",
+                      "ref": "x7:42",
+                      "size": {
+                        "count": 3,
+                        "length": null,
+                        "estBytes": null
+                      },
+                      "range": [
+                        2,
+                        3
+                      ]
+                    }
+                  }
+                ]
+              },
+              "args": [],
+              "result": {
+                "t": "list",
+                "count": 3,
+                "items": [
+                  1,
+                  {
+                    "t": "Vector3",
+                    "x": 1.5,
+                    "y": 0,
+                    "z": -2
+                  },
+                  {
+                    "redacted": {
+                      "reason": "maxItems",
+                      "ref": "x7:42",
+                      "size": {
+                        "count": 3,
+                        "length": null,
+                        "estBytes": null
+                      },
+                      "range": [
+                        2,
+                        3
+                      ]
+                    }
+                  }
+                ]
+              },
+              "exception": {
+                "type": "UnityEngine.Texture2D",
+                "message": "Example message.",
+                "stack": "at Example.Run ()"
+              },
+              "stack": [],
+              "durationUs": 850,
+              "rec": "example-rec"
+            }
+          ],
+          "logs": [
+            {
+              "seq": 1201,
+              "realtimeMs": 64000,
+              "frame": 3902,
+              "source": "unity",
+              "channel": "Unity",
+              "level": "debug",
+              "message": "Example message.",
+              "stack": "at Example.Run ()",
+              "marker": "before-click"
+            }
+          ],
+          "exec": "example",
+          "emitted": [
+            "example"
+          ],
+          "files": [
+            {
+              "path": "Root/Player",
+              "bytes": 204800,
+              "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+              "counts": {
+                "example": 1
+              }
+            }
+          ]
+        },
+        "paused": true,
+        "resumedAtFrame": 1
+      }
+    }
+  }
+}

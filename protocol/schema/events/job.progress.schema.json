@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/job.progress.schema.json",
+  "title": "job.progress",
+  "description": "Throttled progress of a running job.",
+  "$defs": {
+    "params": {
+      "title": "JobProgressEventParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string"
+        },
+        "progress": {
+          "$ref": "../common/job.schema.json#/$defs/progress"
+        }
+      },
+      "required": [
+        "jobId",
+        "kind",
+        "progress"
+      ]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/hook.verify.schema.json",
+  "title": "hook.verify",
+  "description": "Checks whether a patch point fires, and estimates the inlining risk (Mono). An active trigger (invoke, exec, ui.click) needs Full mode.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "HookVerifyParams",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "trigger": {
+          "$ref": "../common/trigger.schema.json"
+        },
+        "waitFrames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    "result": {
+      "title": "HookVerifyResult",
+      "type": "object",
+      "properties": {
+        "fired": {
+          "type": "boolean"
+        },
+        "hits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "firstHit": {
+          "$ref": "../common/instrumentation-record.schema.json"
+        },
+        "ilSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inliningRisk": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "callerCandidates": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        }
+      },
+      "required": [
+        "fired",
+        "hits",
+        "ilSize",
+        "inliningRisk",
+        "reasons"
+      ]
+    }
+  }
+}

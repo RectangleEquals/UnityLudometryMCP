@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.invoke.schema.json",
+  "title": "obj.invoke",
+  "description": "Calls a method. Game exceptions → GAME_EXCEPTION with the inner exception.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjInvokeParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "args": {
+          "type": "array",
+          "items": {}
+        },
+        "typeArgs": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json#/$defs/typeRef"
+          }
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        }
+      },
+      "required": [
+        "target",
+        "method"
+      ]
+    },
+    "result": {
+      "title": "ObjInvokeResult",
+      "type": "object",
+      "properties": {
+        "returnValue": {
+          "$ref": "../common/value.schema.json"
+        },
+        "outArgs": {
+          "type": "object"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "returnValue",
+        "durationMs",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

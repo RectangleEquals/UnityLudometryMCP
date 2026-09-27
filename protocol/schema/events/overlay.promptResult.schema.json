@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/overlay.promptResult.schema.json",
+  "title": "overlay.promptResult",
+  "description": "The user answered (or timed out) an overlay prompt.",
+  "$defs": {
+    "params": {
+      "title": "PromptResultEventParams",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "button": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The pressed button, or `timeout`."
+        }
+      },
+      "required": [
+        "id",
+        "button"
+      ]
+    }
+  }
+}

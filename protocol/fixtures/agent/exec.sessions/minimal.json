@@ -1,0 +1,17 @@
+{
+  "description": "`exec.sessions` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-197",
+    "kind": "request",
+    "method": "exec.sessions"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-197",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

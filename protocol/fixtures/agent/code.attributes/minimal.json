@@ -1,0 +1,20 @@
+{
+  "description": "`code.attributes` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-74",
+    "kind": "request",
+    "method": "code.attributes",
+    "params": {
+      "attribute": "example-attribute"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-74",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

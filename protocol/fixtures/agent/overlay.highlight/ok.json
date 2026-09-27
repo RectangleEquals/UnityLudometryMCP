@@ -1,0 +1,28 @@
+{
+  "description": "`overlay.highlight` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-337",
+    "kind": "request",
+    "method": "overlay.highlight",
+    "params": {
+      "targets": [
+        {
+          "h": 481
+        }
+      ],
+      "label": "Craft button",
+      "color": "#FFAA00",
+      "durationMs": 120
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-337",
+    "kind": "response",
+    "result": {
+      "highlightId": "hl-1",
+      "drawn": 1
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `key`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-20",
+    "kind": "request",
+    "method": "addressables.locate",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-20",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.key is required.",
+      "data": {
+        "param": "params.key"
+      }
+    }
+  }
+}

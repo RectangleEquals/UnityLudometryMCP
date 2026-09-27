@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/hello.schema.json",
+  "title": "hello",
+  "description": "Authenticates the connection and negotiates the protocol. Must be the first request on every connection; returns the `agent.info` payload.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "HelloParams",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "The session token from the agent's discovery file."
+        },
+        "client": {
+          "title": "ClientInfo",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "version"
+          ]
+        },
+        "protocol": {
+          "$ref": "../common/protocol-version.schema.json"
+        }
+      },
+      "required": [
+        "token",
+        "client",
+        "protocol"
+      ]
+    },
+    "result": {
+      "$ref": "../methods/agent.info.schema.json#/$defs/result"
+    }
+  }
+}

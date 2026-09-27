@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.types.schema.json",
+  "title": "code.types",
+  "description": "Filtered type search over loaded assemblies.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeTypesParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "nameRegex": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "baseType": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "implements": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "hasAttribute": {
+          "type": "string"
+        },
+        "isUnityComponent": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Continuation cursor from a previous page (session-scoped, expires after 10 minutes)."
+        }
+      }
+    },
+    "result": {
+      "title": "CodeTypesResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "TypeSummary",
+            "type": "object",
+            "properties": {
+              "anchor": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "class",
+                  "struct",
+                  "interface",
+                  "enum",
+                  "delegate"
+                ]
+              },
+              "base": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "isGeneric": {
+                "type": "boolean"
+              },
+              "isAbstract": {
+                "type": "boolean"
+              },
+              "isSealed": {
+                "type": "boolean"
+              },
+              "attributes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "anchor",
+              "fullName",
+              "kind",
+              "isGeneric",
+              "isAbstract",
+              "isSealed"
+            ]
+          }
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cursor for the next page; null when this is the last page."
+        },
+        "total": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Total count when known cheaply; null otherwise."
+        }
+      },
+      "required": [
+        "items",
+        "cursor",
+        "total"
+      ]
+    }
+  }
+}

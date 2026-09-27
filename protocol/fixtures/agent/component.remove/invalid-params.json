@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `target`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-153",
+    "kind": "request",
+    "method": "component.remove",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-153",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.target is required.",
+      "data": {
+        "param": "params.target"
+      }
+    }
+  }
+}

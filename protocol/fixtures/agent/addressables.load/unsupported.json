@@ -1,0 +1,24 @@
+{
+  "description": "The game lacks module:addressables.",
+  "request": {
+    "v": 0,
+    "id": "r-15",
+    "kind": "request",
+    "method": "addressables.load",
+    "params": {
+      "key": "items/plank"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-15",
+    "kind": "response",
+    "error": {
+      "code": "UNSUPPORTED",
+      "message": "addressables.load needs module:addressables, which this game doesn't have.",
+      "data": {
+        "hint": "Check agent.capabilities modules."
+      }
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/activity.list.schema.json",
+  "title": "activity.list",
+  "description": "The Activity feed: requests, mutations and executions of this session (newest first).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ActivityListParams",
+      "type": "object",
+      "properties": {
+        "mutatingOnly": {
+          "type": "boolean"
+        },
+        "sinceId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      }
+    },
+    "result": {
+      "title": "ActivityListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "ActivityEntry",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "method": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "client",
+                  "overlay",
+                  "rule"
+                ]
+              },
+              "client": {
+                "type": "string"
+              },
+              "mutating": {
+                "type": "boolean"
+              },
+              "startedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "UTC timestamp, ISO 8601."
+              },
+              "durationMs": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "target": {
+                "$ref": "../common/locator.schema.json"
+              },
+              "errorCode": {
+                "type": "string"
+              },
+              "assembly": {
+                "title": "AuditedAssembly",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "sha256"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "method",
+              "source",
+              "mutating",
+              "startedAt",
+              "durationMs"
+            ]
+          }
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "items",
+        "total"
+      ]
+    }
+  }
+}

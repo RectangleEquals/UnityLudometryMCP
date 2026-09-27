@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `target`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-486",
+    "kind": "request",
+    "method": "ui.click",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-486",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.target is required.",
+      "data": {
+        "param": "params.target"
+      }
+    }
+  }
+}

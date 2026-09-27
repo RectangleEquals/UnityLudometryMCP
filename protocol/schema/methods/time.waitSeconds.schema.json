@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.waitSeconds.schema.json",
+  "title": "time.waitSeconds",
+  "description": "Completes after N realtime seconds.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "TimeWaitSecondsParams",
+      "type": "object",
+      "properties": {
+        "seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "seconds"
+      ]
+    },
+    "result": {
+      "title": "TimeWaitSecondsResult",
+      "type": "object",
+      "properties": {
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

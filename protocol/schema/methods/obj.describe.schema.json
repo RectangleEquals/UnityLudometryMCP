@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.describe.schema.json",
+  "title": "obj.describe",
+  "description": "Quick overview: runtime type, Unity info and members with current values at depth 1.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjDescribeParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        }
+      },
+      "required": [
+        "target"
+      ]
+    },
+    "result": {
+      "title": "ObjDescribeResult",
+      "type": "object",
+      "properties": {
+        "descriptor": {
+          "$ref": "../common/handle-descriptor.schema.json"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "title": "DescribedMember",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "anchor": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "value": {
+                "$ref": "../common/value.schema.json"
+              }
+            },
+            "required": [
+              "name",
+              "kind",
+              "value"
+            ]
+          }
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "descriptor",
+        "members",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

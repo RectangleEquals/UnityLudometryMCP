@@ -1,0 +1,22 @@
+{
+  "description": "`hook.hits` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-239",
+    "kind": "request",
+    "method": "hook.hits",
+    "params": {
+      "hookId": "h-1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-239",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "nextSeq": 1,
+      "dropped": 1
+    }
+  }
+}

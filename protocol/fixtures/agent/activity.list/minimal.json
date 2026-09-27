@@ -1,0 +1,18 @@
+{
+  "description": "`activity.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-5",
+    "kind": "request",
+    "method": "activity.list"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-5",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "total": 1
+    }
+  }
+}

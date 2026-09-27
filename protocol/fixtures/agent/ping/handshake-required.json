@@ -1,0 +1,19 @@
+{
+  "description": "Any first request other than hello is refused and the connection closes.",
+  "request": {
+    "v": 0,
+    "id": "r-546",
+    "kind": "request",
+    "method": "ping",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-546",
+    "kind": "response",
+    "error": {
+      "code": "HANDSHAKE_REQUIRED",
+      "message": "The first request on a connection must be hello."
+    }
+  }
+}

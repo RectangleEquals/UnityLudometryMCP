@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/vars.set.schema.json",
+  "title": "vars.set",
+  "description": "Binds a session variable to a handle, a static type, or a JSON value.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "VarsSetParams",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "value": {}
+      },
+      "required": [
+        "name"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "target"
+          ]
+        },
+        {
+          "required": [
+            "value"
+          ]
+        }
+      ]
+    },
+    "result": {
+      "title": "VarsSetResult",
+      "type": "object",
+      "properties": {
+        "variable": {
+          "title": "VariableInfo",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "handle",
+                "static",
+                "value"
+              ]
+            },
+            "descriptor": {
+              "$ref": "../common/handle-descriptor.schema.json"
+            },
+            "static": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "value": {}
+          },
+          "required": [
+            "name",
+            "kind"
+          ]
+        },
+        "replaced": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "variable",
+        "replaced"
+      ]
+    }
+  }
+}

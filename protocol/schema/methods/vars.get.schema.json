@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/vars.get.schema.json",
+  "title": "vars.get",
+  "description": "One session variable.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "VarsGetParams",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "result": {
+      "title": "VarsGetResult",
+      "type": "object",
+      "properties": {
+        "variable": {
+          "$ref": "../methods/vars.set.schema.json#/$defs/result/properties/variable"
+        }
+      },
+      "required": [
+        "variable"
+      ]
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "description": "`value.expand` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-519",
+    "kind": "request",
+    "method": "value.expand",
+    "params": {
+      "ref": "example-ref",
+      "view": {
+        "depth": 1,
+        "maxMembers": 1,
+        "maxItems": 1,
+        "maxString": 1,
+        "properties": true,
+        "nonPublic": true,
+        "enumerate": true,
+        "anchors": true,
+        "unityStructsCompact": true
+      },
+      "range": [
+        0,
+        1
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-519",
+    "kind": "response",
+    "result": {
+      "value": {
+        "t": "list",
+        "count": 3,
+        "items": [
+          1,
+          {
+            "t": "Vector3",
+            "x": 1.5,
+            "y": 0,
+            "z": -2
+          },
+          {
+            "redacted": {
+              "reason": "maxItems",
+              "ref": "x7:42",
+              "size": {
+                "count": 3,
+                "length": null,
+                "estBytes": null
+              },
+              "range": [
+                2,
+                3
+              ]
+            }
+          }
+        ]
+      },
+      "locator": "live://Main/Player#Example.Inventory.items",
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

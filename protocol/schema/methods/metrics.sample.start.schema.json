@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/metrics.sample.start.schema.json",
+  "title": "metrics.sample.start",
+  "description": "Samples metrics into an NDJSON time series.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "MetricsSampleStartParams",
+      "type": "object",
+      "properties": {
+        "everyFrames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outFile": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "everyFrames",
+        "durationMs",
+        "outFile"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "MetricsSampleStartJobResult",
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "../common/output-file.schema.json"
+        },
+        "samples": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "file",
+        "samples"
+      ]
+    }
+  }
+}

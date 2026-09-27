@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/scene.changed.schema.json",
+  "title": "scene.changed",
+  "description": "A scene was loaded or unloaded, or the active scene changed.",
+  "$defs": {
+    "params": {
+      "title": "SceneChangedEventParams",
+      "type": "object",
+      "properties": {
+        "change": {
+          "type": "string",
+          "enum": [
+            "loaded",
+            "unloaded",
+            "activeChanged"
+          ]
+        },
+        "scene": {
+          "$ref": "../common/scene-info.schema.json"
+        },
+        "previousActive": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "single",
+            "additive"
+          ]
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "change",
+        "scene",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

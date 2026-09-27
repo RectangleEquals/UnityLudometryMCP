@@ -1,0 +1,18 @@
+{
+  "description": "`go.tree` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-223",
+    "kind": "request",
+    "method": "go.tree"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-223",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "truncated": true
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "description": "`test.result` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "test.result",
+    "seq": 7,
+    "params": {
+      "jobId": "j-1",
+      "result": {
+        "test": {
+          "fixture": "InventoryTests",
+          "name": "Player",
+          "category": "mod"
+        },
+        "status": "passed",
+        "durationMs": 120,
+        "message": "Example message.",
+        "stack": "at Example.Run ()",
+        "attachments": {
+          "example": {
+            "t": "list",
+            "count": 3,
+            "items": [
+              1,
+              {
+                "t": "Vector3",
+                "x": 1.5,
+                "y": 0,
+                "z": -2
+              },
+              {
+                "redacted": {
+                  "reason": "maxItems",
+                  "ref": "x7:42",
+                  "size": {
+                    "count": 3,
+                    "length": null,
+                    "estBytes": null
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "logs": [
+          {
+            "seq": 1201,
+            "realtimeMs": 64000,
+            "frame": 3902,
+            "source": "unity",
+            "channel": "Unity",
+            "level": "debug",
+            "message": "Example message.",
+            "stack": "at Example.Run ()",
+            "marker": "before-click"
+          }
+        ]
+      }
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

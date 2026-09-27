@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `probe`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-382",
+    "kind": "request",
+    "method": "probe.run",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-382",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.probe is required.",
+      "data": {
+        "param": "params.probe"
+      }
+    }
+  }
+}

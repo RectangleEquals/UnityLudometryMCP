@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/trace.start.schema.json",
+  "title": "trace.start",
+  "description": "Records ordered enter/exit sequences of many methods to NDJSON, with a summary.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "TraceStartParams",
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          },
+          "maxItems": 2000
+        },
+        "include": {
+          "title": "TraceInclude",
+          "type": "object",
+          "properties": {
+            "assemblyGlobs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "typeRegex": {
+              "type": "string"
+            }
+          }
+        },
+        "capture": {
+          "title": "TraceCapture",
+          "type": "object",
+          "properties": {
+            "args": {
+              "type": "boolean"
+            },
+            "result": {
+              "type": "boolean"
+            }
+          }
+        },
+        "threads": {
+          "type": "string",
+          "enum": [
+            "main",
+            "all"
+          ]
+        },
+        "stop": {
+          "title": "TraceStop",
+          "type": "object",
+          "properties": {
+            "durationMs": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "maxRecords": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "onMethod": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "onMethodPhase": {
+              "type": "string",
+              "enum": [
+                "enter",
+                "exit"
+              ]
+            }
+          }
+        },
+        "stream": {
+          "type": "boolean"
+        },
+        "outFile": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "outFile"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "TraceStartJobResult",
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "../common/output-file.schema.json"
+        },
+        "records": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "stopReason": {
+          "type": "string"
+        },
+        "droppedAfterSeq": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "methodsPatched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "methodsFailed": {
+          "type": "array",
+          "items": {
+            "title": "MethodFailure",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "method",
+              "reason"
+            ]
+          }
+        },
+        "summary": {
+          "title": "TraceSummary",
+          "type": "object",
+          "properties": {
+            "sequence": {
+              "type": "array",
+              "items": {
+                "title": "SequenceEntry",
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "$ref": "../common/anchor.schema.json"
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "method",
+                  "count"
+                ]
+              }
+            },
+            "tree": {},
+            "methods": {
+              "type": "array",
+              "items": {
+                "title": "MethodTiming",
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "$ref": "../common/anchor.schema.json"
+                  },
+                  "calls": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "totalMs": {
+                    "type": "number"
+                  },
+                  "meanUs": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "method",
+                  "calls",
+                  "totalMs",
+                  "meanUs"
+                ]
+              }
+            }
+          },
+          "required": [
+            "sequence",
+            "methods"
+          ]
+        }
+      },
+      "required": [
+        "file",
+        "records",
+        "truncated",
+        "stopReason",
+        "droppedAfterSeq",
+        "methodsPatched",
+        "methodsFailed",
+        "summary"
+      ]
+    }
+  }
+}

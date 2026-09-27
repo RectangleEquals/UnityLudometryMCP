@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/discovery.schema.json",
+  "description": "The agent's discovery file `<ProvidersDir>/agent-<pid>.json`, written atomically once it listens and deleted on shutdown.",
+  "title": "DiscoveryFile",
+  "type": "object",
+  "properties": {
+    "provider": {
+      "const": "agent"
+    },
+    "pid": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "processName": {
+      "type": "string"
+    },
+    "processPath": {
+      "type": "string"
+    },
+    "transport": {
+      "type": "string",
+      "enum": [
+        "pipe",
+        "tcp"
+      ]
+    },
+    "pipe": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "port": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "token": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "protocol": {
+      "$ref": "../common/protocol-version.schema.json"
+    },
+    "agentVersion": {
+      "type": "string"
+    },
+    "loader": {
+      "$ref": "../methods/agent.info.schema.json#/$defs/result/properties/loader"
+    },
+    "unityVersion": {
+      "type": "string"
+    },
+    "mode": {
+      "$ref": "../common/agent-mode.schema.json"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp, ISO 8601."
+    }
+  },
+  "required": [
+    "provider",
+    "pid",
+    "processName",
+    "processPath",
+    "transport",
+    "pipe",
+    "port",
+    "token",
+    "protocol",
+    "agentVersion",
+    "loader",
+    "unityVersion",
+    "mode",
+    "startedAt"
+  ]
+}

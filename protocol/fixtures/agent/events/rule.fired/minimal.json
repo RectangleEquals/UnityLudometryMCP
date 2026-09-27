@@ -1,0 +1,21 @@
+{
+  "description": "`rule.fired` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "rule.fired",
+    "seq": 7,
+    "params": {
+      "ruleId": "r-7",
+      "fire": 1,
+      "frame": 3902,
+      "realtimeMs": 64000,
+      "trigger": {
+        "conditionPath": "when.seq[0]"
+      },
+      "results": {},
+      "paused": true,
+      "resumedAtFrame": null
+    }
+  }
+}

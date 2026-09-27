@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/addressables.release.schema.json",
+  "title": "addressables.release",
+  "description": "Releases an Addressables load operation.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly+Load",
+    "job": false,
+    "mutating": true,
+    "requires": [
+      "module:addressables"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "AddressablesReleaseParams",
+      "type": "object",
+      "properties": {
+        "opHandle": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "opHandle"
+      ]
+    },
+    "result": {
+      "title": "AddressablesReleaseResult",
+      "type": "object",
+      "properties": {
+        "released": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "released"
+      ]
+    }
+  }
+}

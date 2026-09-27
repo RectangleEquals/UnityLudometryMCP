@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/member-path.schema.json",
+  "description": "Steps applied left to right from a target. `name` steps are exploratory (resolved against the runtime type and flagged in the result).",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/step"
+  },
+  "$defs": {
+    "step": {
+      "title": "MemberPathStep",
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "../common/anchor.schema.json",
+          "description": "Field or property by anchor."
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Array or IList element."
+        },
+        "key": {
+          "description": "IDictionary lookup; the key is converted to the key type."
+        },
+        "component": {
+          "$ref": "../common/anchor.schema.json",
+          "description": "GetComponent on a GameObject or Component."
+        },
+        "child": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Transform.Find on a GameObject or Component."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exploratory member lookup by name."
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "member"
+          ]
+        },
+        {
+          "required": [
+            "index"
+          ]
+        },
+        {
+          "required": [
+            "key"
+          ]
+        },
+        {
+          "required": [
+            "component"
+          ]
+        },
+        {
+          "required": [
+            "child"
+          ]
+        },
+        {
+          "required": [
+            "name"
+          ]
+        }
+      ]
+    }
+  }
+}

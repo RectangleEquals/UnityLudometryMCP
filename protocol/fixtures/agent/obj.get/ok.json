@@ -1,0 +1,95 @@
+{
+  "description": "`obj.get` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-307",
+    "kind": "request",
+    "method": "obj.get",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "paths": [
+        [
+          {
+            "member": {
+              "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+              "token": 67108865,
+              "name": "items"
+            }
+          }
+        ]
+      ],
+      "view": {
+        "depth": 1,
+        "maxMembers": 1,
+        "maxItems": 1,
+        "maxString": 1,
+        "properties": true,
+        "nonPublic": true,
+        "enumerate": true,
+        "anchors": true,
+        "unityStructsCompact": true
+      },
+      "expected": {}
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-307",
+    "kind": "response",
+    "result": {
+      "values": [
+        {
+          "value": {
+            "t": "list",
+            "count": 3,
+            "items": [
+              1,
+              {
+                "t": "Vector3",
+                "x": 1.5,
+                "y": 0,
+                "z": -2
+              },
+              {
+                "redacted": {
+                  "reason": "maxItems",
+                  "ref": "x7:42",
+                  "size": {
+                    "count": 3,
+                    "length": null,
+                    "estBytes": null
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                }
+              }
+            ]
+          },
+          "locator": "live://Main/Player#Example.Inventory.items",
+          "frame": 3902,
+          "realtimeMs": 64000
+        }
+      ],
+      "expected": [
+        {
+          "path": "Root/Player",
+          "match": true,
+          "expected": "example",
+          "actual": "example"
+        }
+      ],
+      "warnings": [
+        {
+          "code": "EXAMPLE_CODE",
+          "message": "Example message."
+        }
+      ],
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "description": "`trace.records` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "trace.records",
+    "seq": 7,
+    "params": {
+      "jobId": "j-1",
+      "items": [],
+      "dropped": 1
+    }
+  }
+}

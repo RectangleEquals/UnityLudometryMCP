@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/app.info.schema.json",
+  "title": "app.info",
+  "description": "Application and runtime information (incl. the player log and persistent data paths).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AppInfoParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "AppInfoResult",
+      "type": "object",
+      "properties": {
+        "productName": {
+          "type": "string"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "unityVersion": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "dataPath": {
+          "type": "string"
+        },
+        "persistentDataPath": {
+          "type": "string"
+        },
+        "consoleLogPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "isFocused": {
+          "type": "boolean"
+        },
+        "runInBackground": {
+          "type": "boolean"
+        },
+        "screen": {
+          "title": "ScreenInfo",
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fullScreen": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "width",
+            "height",
+            "fullScreen"
+          ]
+        },
+        "qualityLevel": {
+          "type": "integer"
+        },
+        "graphicsDevice": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "productName",
+        "companyName",
+        "version",
+        "unityVersion",
+        "platform",
+        "dataPath",
+        "persistentDataPath",
+        "consoleLogPath",
+        "isFocused",
+        "runInBackground",
+        "screen",
+        "qualityLevel",
+        "graphicsDevice"
+      ]
+    }
+  }
+}

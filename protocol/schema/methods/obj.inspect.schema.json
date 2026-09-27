@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/obj.inspect.schema.json",
+  "title": "obj.inspect",
+  "description": "Encoded value of a target (or a member path under it).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ObjInspectParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "path": {
+          "$ref": "../common/member-path.schema.json"
+        },
+        "view": {
+          "$ref": "../common/view.schema.json"
+        }
+      },
+      "required": [
+        "target"
+      ]
+    },
+    "result": {
+      "title": "ObjInspectResult",
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "../common/value.schema.json"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/warning.schema.json"
+          },
+          "description": "Non-fatal notes (truncation, exploratory resolution, skipped members)."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "value",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

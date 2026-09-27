@@ -1,0 +1,28 @@
+{
+  "description": "`log` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "log",
+    "seq": 7,
+    "params": {
+      "items": [
+        {
+          "seq": 1201,
+          "realtimeMs": 64000,
+          "frame": 3902,
+          "source": "unity",
+          "channel": "Unity",
+          "level": "debug",
+          "message": "Example message.",
+          "stack": "at Example.Run ()",
+          "marker": "before-click"
+        }
+      ],
+      "dropped": 1
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

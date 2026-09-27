@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/app.quit.schema.json",
+  "title": "app.quit",
+  "description": "Quits the application after responding.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "AppQuitParams",
+      "type": "object",
+      "properties": {
+        "exitCode": {
+          "type": "integer"
+        }
+      }
+    },
+    "result": {
+      "title": "AppQuitResult",
+      "type": "object",
+      "properties": {
+        "quitting": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "quitting"
+      ]
+    }
+  }
+}

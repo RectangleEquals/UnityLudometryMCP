@@ -1,0 +1,29 @@
+{
+  "description": "`probe.run` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-381",
+    "kind": "request",
+    "method": "probe.run",
+    "params": {
+      "probe": {
+        "id": "x-1",
+        "kind": "read_statics"
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-381",
+    "kind": "response",
+    "result": {
+      "id": "x-1",
+      "status": "ok",
+      "evidence": [],
+      "metrics": {
+        "durationMs": 120,
+        "frames": 2
+      }
+    }
+  }
+}

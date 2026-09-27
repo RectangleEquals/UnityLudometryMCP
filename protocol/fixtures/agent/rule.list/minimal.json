@@ -1,0 +1,17 @@
+{
+  "description": "`rule.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-411",
+    "kind": "request",
+    "method": "rule.list"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-411",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

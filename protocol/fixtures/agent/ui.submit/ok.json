@@ -1,0 +1,21 @@
+{
+  "description": "`ui.submit` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-511",
+    "kind": "request",
+    "method": "ui.submit",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-511",
+    "kind": "response",
+    "result": {
+      "handled": true,
+      "via": "eventSystem",
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

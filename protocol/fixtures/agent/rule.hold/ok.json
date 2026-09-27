@@ -1,0 +1,21 @@
+{
+  "description": "`rule.hold` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-406",
+    "kind": "request",
+    "method": "rule.hold",
+    "params": {
+      "ruleId": "r-7",
+      "extendMs": 1
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-406",
+    "kind": "response",
+    "result": {
+      "heldUntilRealtimeMs": 1
+    }
+  }
+}

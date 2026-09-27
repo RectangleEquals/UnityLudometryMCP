@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/paging.schema.json",
+  "description": "Paged results. Pass `cursor` back to continue. Cursors are session-scoped and expire after 10 minutes. Paged methods take `limit` + `cursor` and return `items` + `cursor` + `total`.",
+  "$defs": {
+    "request": {
+      "title": "PageRequest",
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string",
+          "description": "Continuation cursor from a previous page (session-scoped, expires after 10 minutes)."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      }
+    },
+    "page": {
+      "title": "Page",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {}
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cursor for the next page; null when this is the last page."
+        },
+        "total": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Total count when known cheaply; null otherwise."
+        }
+      },
+      "required": [
+        "items",
+        "cursor",
+        "total"
+      ]
+    }
+  }
+}

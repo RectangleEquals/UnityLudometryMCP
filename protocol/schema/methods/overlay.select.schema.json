@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.select.schema.json",
+  "title": "overlay.select",
+  "description": "Sets the Inspector's current selection.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlaySelectParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        }
+      },
+      "required": [
+        "target"
+      ]
+    },
+    "result": {
+      "title": "OverlaySelectResult",
+      "type": "object",
+      "properties": {
+        "selected": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "selected"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "description": "`addressables.info` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-7",
+    "kind": "request",
+    "method": "addressables.info"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-7",
+    "kind": "response",
+    "result": {
+      "version": null,
+      "locators": [],
+      "runtimePath": null,
+      "catalogCount": 1
+    }
+  }
+}

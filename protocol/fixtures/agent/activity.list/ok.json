@@ -1,0 +1,39 @@
+{
+  "description": "`activity.list` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-4",
+    "kind": "request",
+    "method": "activity.list",
+    "params": {
+      "mutatingOnly": true,
+      "sinceId": 1,
+      "limit": 50
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-4",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "id": 1,
+          "method": "Run",
+          "source": "client",
+          "client": "example-client",
+          "mutating": true,
+          "startedAt": "2026-09-27T10:00:00.000Z",
+          "durationMs": 120,
+          "target": "live://Main/Player#Example.Inventory.items",
+          "errorCode": "example-errorCode",
+          "assembly": {
+            "name": "Player",
+            "sha256": "example-sha256"
+          }
+        }
+      ],
+      "total": 1
+    }
+  }
+}

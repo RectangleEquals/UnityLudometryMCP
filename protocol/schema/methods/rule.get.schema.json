@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/rule.get.schema.json",
+  "title": "rule.get",
+  "description": "A rule with all its firings.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "RuleGetParams",
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ruleId"
+      ]
+    },
+    "result": {
+      "title": "RuleGetResult",
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "../common/rule.schema.json#/$defs/rule"
+        },
+        "summary": {
+          "$ref": "../common/rule.schema.json#/$defs/summary"
+        },
+        "firings": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/rule.schema.json#/$defs/firing"
+          }
+        }
+      },
+      "required": [
+        "rule",
+        "summary",
+        "firings"
+      ]
+    }
+  }
+}

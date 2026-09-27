@@ -1,0 +1,13 @@
+{
+  "description": "`watch.changes` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "watch.changes",
+    "seq": 7,
+    "params": {
+      "items": [],
+      "dropped": 1
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Missing the required `methods`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-389",
+    "kind": "request",
+    "method": "profile.start",
+    "params": {
+      "durationMs": 120
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-389",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.methods is required.",
+      "data": {
+        "param": "params.methods"
+      }
+    }
+  }
+}

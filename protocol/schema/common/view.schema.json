@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/view.schema.json",
+  "description": "Value-encoding options accepted by every method that returns values. Values above the maximum are clamped by the agent.",
+  "title": "View",
+  "type": "object",
+  "properties": {
+    "depth": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 8,
+      "default": 2
+    },
+    "maxMembers": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000,
+      "default": 64
+    },
+    "maxItems": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000,
+      "default": 64
+    },
+    "maxString": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1048576,
+      "default": 1024
+    },
+    "properties": {
+      "type": "boolean",
+      "description": "Run property getters (each guarded).",
+      "default": false
+    },
+    "nonPublic": {
+      "type": "boolean",
+      "default": true
+    },
+    "enumerate": {
+      "type": "boolean",
+      "description": "Enumerate lazy IEnumerables (may have side effects).",
+      "default": false
+    },
+    "anchors": {
+      "type": "boolean",
+      "description": "Include member anchors.",
+      "default": false
+    },
+    "unityStructsCompact": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

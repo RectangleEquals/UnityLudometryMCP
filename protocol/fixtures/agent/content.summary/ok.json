@@ -1,0 +1,28 @@
+{
+  "description": "`content.summary` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-163",
+    "kind": "request",
+    "method": "content.summary",
+    "params": {
+      "types": [
+        "UnityEngine.Texture2D"
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-163",
+    "kind": "response",
+    "result": {
+      "items": [
+        {
+          "type": "UnityEngine.Texture2D",
+          "count": 3,
+          "estimatedBytes": 1
+        }
+      ]
+    }
+  }
+}

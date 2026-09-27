@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.assembly.schema.json",
+  "title": "code.assembly",
+  "description": "One assembly in detail: modules and decoded custom attributes.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeAssemblyParams",
+      "type": "object",
+      "properties": {
+        "mvid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "mvid"
+          ]
+        },
+        {
+          "required": [
+            "name"
+          ]
+        }
+      ]
+    },
+    "result": {
+      "title": "CodeAssemblyResult",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "$ref": "../common/assembly-summary.schema.json"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "title": "ModuleInfo",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "mvid": {
+                "type": "string"
+              },
+              "scopeName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "mvid"
+            ]
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "title": "AttributeInfo",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "ctorArgs": {
+                "type": "array",
+                "items": {}
+              },
+              "namedArgs": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        }
+      },
+      "required": [
+        "assembly",
+        "modules",
+        "attributes"
+      ]
+    }
+  }
+}

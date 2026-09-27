@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/rules.clear.schema.json",
+  "title": "rules.clear",
+  "description": "Cancels this connection's rules, or all rules.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "RulesClearParams",
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "enum": [
+            "connection",
+            "all"
+          ]
+        }
+      }
+    },
+    "result": {
+      "title": "RulesClearResult",
+      "type": "object",
+      "properties": {
+        "cancelled": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "cancelled"
+      ]
+    }
+  }
+}

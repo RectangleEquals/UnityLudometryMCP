@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `ruleId`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-402",
+    "kind": "request",
+    "method": "rule.cancel",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-402",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.ruleId is required.",
+      "data": {
+        "param": "params.ruleId"
+      }
+    }
+  }
+}

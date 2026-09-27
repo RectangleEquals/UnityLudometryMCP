@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.setText.schema.json",
+  "title": "ui.setText",
+  "description": "Sets an input field's text (firing its events), optionally submitting.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true,
+    "requires": [
+      "module:ugui"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "UiSetTextParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "text": {
+          "type": "string"
+        },
+        "submit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "target",
+        "text"
+      ]
+    },
+    "result": {
+      "title": "UiSetTextResult",
+      "type": "object",
+      "properties": {
+        "handled": {
+          "type": "boolean"
+        },
+        "via": {
+          "type": "string"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "handled",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

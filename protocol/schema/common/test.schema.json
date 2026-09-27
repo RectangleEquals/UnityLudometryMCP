@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/test.schema.json",
+  "description": "In-game test identities, results and totals.",
+  "$defs": {
+    "id": {
+      "title": "TestId",
+      "type": "object",
+      "properties": {
+        "fixture": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "fixture",
+        "name",
+        "category"
+      ]
+    },
+    "result": {
+      "title": "TestResult",
+      "type": "object",
+      "properties": {
+        "test": {
+          "$ref": "#/$defs/id"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "passed",
+            "failed",
+            "error",
+            "timeout",
+            "skipped"
+          ]
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "message": {
+          "type": "string"
+        },
+        "stack": {
+          "type": "string"
+        },
+        "attachments": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "../common/value.schema.json"
+          }
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/log-entry.schema.json"
+          }
+        }
+      },
+      "required": [
+        "test",
+        "status",
+        "durationMs"
+      ]
+    },
+    "totals": {
+      "title": "TestTotals",
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "passed",
+        "failed",
+        "error",
+        "timeout",
+        "skipped"
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "description": "`agent.capabilities` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-25",
+    "kind": "request",
+    "method": "agent.capabilities",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-25",
+    "kind": "response",
+    "result": {
+      "agentVersion": "0.1.0",
+      "apiVersion": "0.1",
+      "protocol": {
+        "major": 1,
+        "minor": 1
+      },
+      "methods": [
+        {
+          "name": "Player",
+          "thread": "any",
+          "minMode": "ReadOnly",
+          "mutating": true,
+          "job": true,
+          "defaultTimeoutMs": 1,
+          "maxTimeoutMs": 1,
+          "requires": [
+            "example-require"
+          ]
+        }
+      ],
+      "eventKinds": [
+        "example-eventKind"
+      ],
+      "modules": [
+        {
+          "name": "Player",
+          "available": true,
+          "version": "1.2.3",
+          "reason": "Example reason."
+        }
+      ],
+      "limits": {}
+    }
+  }
+}

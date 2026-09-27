@@ -1,0 +1,31 @@
+{
+  "description": "`addressables.locate` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-17",
+    "kind": "request",
+    "method": "addressables.locate",
+    "params": {
+      "key": "items/plank",
+      "type": "UnityEngine.Texture2D"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-17",
+    "kind": "response",
+    "result": {
+      "locations": [
+        {
+          "internalId": "{UnityEngine.AddressableAssets.Addressables.RuntimePath}/items.bundle",
+          "providerId": "UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider",
+          "resourceType": "UnityEngine.Texture2D",
+          "dependencies": [
+            "example-dependencie"
+          ],
+          "primaryKey": "items/plank"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "description": "`time.waitFrames` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-467",
+    "kind": "request",
+    "method": "time.waitFrames",
+    "params": {
+      "frames": 2
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-467",
+    "kind": "response",
+    "result": {
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

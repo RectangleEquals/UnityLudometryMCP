@@ -1,0 +1,33 @@
+{
+  "description": "`scene.load` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-419",
+    "kind": "request",
+    "method": "scene.load",
+    "params": {
+      "scene": "example",
+      "mode": "single",
+      "async": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-419",
+    "kind": "response",
+    "result": {
+      "scene": {
+        "handle": 12,
+        "name": "Player",
+        "path": "Root/Player",
+        "buildIndex": 0,
+        "isLoaded": true,
+        "isActive": true,
+        "rootCount": 1,
+        "isDontDestroyOnLoad": true
+      },
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

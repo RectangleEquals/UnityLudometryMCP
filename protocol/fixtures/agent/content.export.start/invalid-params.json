@@ -1,0 +1,25 @@
+{
+  "description": "Missing the required `items`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-156",
+    "kind": "request",
+    "method": "content.export.start",
+    "params": {
+      "outDir": "X:/Example/Output"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-156",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.items is required.",
+      "data": {
+        "param": "params.items"
+      }
+    }
+  }
+}

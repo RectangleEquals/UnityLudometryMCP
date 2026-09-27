@@ -1,0 +1,21 @@
+{
+  "description": "The game lacks module:ugui.",
+  "request": {
+    "v": 0,
+    "id": "r-489",
+    "kind": "request",
+    "method": "ui.find"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-489",
+    "kind": "response",
+    "error": {
+      "code": "UNSUPPORTED",
+      "message": "ui.find needs module:ugui, which this game doesn't have.",
+      "data": {
+        "hint": "Check agent.capabilities modules."
+      }
+    }
+  }
+}

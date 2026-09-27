@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.member.schema.json",
+  "title": "code.member",
+  "description": "One member in detail. Fields: type, constant, readonly, serialization verdict. Methods: signature, parameters, IL size, locals, override chain. Properties/events: accessor anchors.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeMemberParams",
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "member"
+      ]
+    },
+    "result": {
+      "title": "CodeMemberResult",
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "../methods/code.type.schema.json#/$defs/result/properties/members/items"
+        },
+        "fieldType": {
+          "type": "string"
+        },
+        "constantValue": {},
+        "readOnly": {
+          "type": "boolean"
+        },
+        "serialized": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "title": "ParameterInfo",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "hasDefault": {
+                "type": "boolean"
+              },
+              "defaultValue": {},
+              "byRef": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "ref",
+                  "out",
+                  "in"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ]
+          }
+        },
+        "returnType": {
+          "type": "string"
+        },
+        "genericParameters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "baseDefinition": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "isVirtual": {
+          "type": "boolean"
+        },
+        "isAbstract": {
+          "type": "boolean"
+        },
+        "ilSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxStack": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "locals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exceptionClauses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "implFlags": {
+          "type": "string"
+        },
+        "getter": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "setter": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "adder": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "remover": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "raiser": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "backingField": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/code.assembly.schema.json#/$defs/result/properties/attributes/items"
+          }
+        }
+      },
+      "required": [
+        "member"
+      ]
+    }
+  }
+}

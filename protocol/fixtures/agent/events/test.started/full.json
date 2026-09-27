@@ -1,0 +1,20 @@
+{
+  "description": "`test.started` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "test.started",
+    "seq": 7,
+    "params": {
+      "jobId": "j-1",
+      "test": {
+        "fixture": "InventoryTests",
+        "name": "Player",
+        "category": "mod"
+      }
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/events.unsubscribe.schema.json",
+  "title": "events.unsubscribe",
+  "description": "Removes event subscriptions from this connection. Without `kinds`, removes all of them.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "EventsUnsubscribeParams",
+      "type": "object",
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "result": {
+      "title": "EventsUnsubscribeResult",
+      "type": "object",
+      "properties": {
+        "unsubscribed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "unsubscribed"
+      ]
+    }
+  }
+}

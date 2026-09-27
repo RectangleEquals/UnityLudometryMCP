@@ -1,0 +1,20 @@
+{
+  "description": "`addressables.locate` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-18",
+    "kind": "request",
+    "method": "addressables.locate",
+    "params": {
+      "key": "items/plank"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-18",
+    "kind": "response",
+    "result": {
+      "locations": []
+    }
+  }
+}

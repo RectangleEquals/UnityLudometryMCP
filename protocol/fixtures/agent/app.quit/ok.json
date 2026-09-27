@@ -1,0 +1,20 @@
+{
+  "description": "`app.quit` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-48",
+    "kind": "request",
+    "method": "app.quit",
+    "params": {
+      "exitCode": 1
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-48",
+    "kind": "response",
+    "result": {
+      "quitting": true
+    }
+  }
+}

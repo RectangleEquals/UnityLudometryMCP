@@ -1,0 +1,22 @@
+{
+  "description": "`time.resume` needs mode Full; the agent is in ReadOnly.",
+  "request": {
+    "v": 0,
+    "id": "r-460",
+    "kind": "request",
+    "method": "time.resume"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-460",
+    "kind": "response",
+    "error": {
+      "code": "MODE_FORBIDDEN",
+      "message": "time.resume requires mode Full; the agent is in ReadOnly.",
+      "data": {
+        "requiredMode": "Full",
+        "hint": "Ask the user to raise the agent mode."
+      }
+    }
+  }
+}

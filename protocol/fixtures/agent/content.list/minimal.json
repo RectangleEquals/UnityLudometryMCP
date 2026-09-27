@@ -1,0 +1,22 @@
+{
+  "description": "`content.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-158",
+    "kind": "request",
+    "method": "content.list",
+    "params": {
+      "type": "UnityEngine.Texture2D"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-158",
+    "kind": "response",
+    "result": {
+      "items": [],
+      "cursor": null,
+      "total": null
+    }
+  }
+}

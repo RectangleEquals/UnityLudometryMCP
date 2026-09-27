@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/watch.remove.schema.json",
+  "title": "watch.remove",
+  "description": "Removes a watch.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "WatchRemoveParams",
+      "type": "object",
+      "properties": {
+        "watchId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "watchId"
+      ]
+    },
+    "result": {
+      "title": "WatchRemoveResult",
+      "type": "object",
+      "properties": {
+        "changes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "changes"
+      ]
+    }
+  }
+}

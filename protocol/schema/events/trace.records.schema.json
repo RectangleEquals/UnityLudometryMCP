@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/trace.records.schema.json",
+  "title": "trace.records",
+  "description": "Live trace records, when a trace was started with `stream:true`.",
+  "$defs": {
+    "params": {
+      "title": "TraceRecordsEventParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/instrumentation-record.schema.json"
+          }
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "jobId",
+        "items",
+        "dropped"
+      ]
+    }
+  }
+}

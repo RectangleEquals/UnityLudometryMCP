@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/assembly-summary.schema.json",
+  "description": "A loaded assembly. `fileSha256` (of the on-disk file) vs the MVID lets callers detect assemblies patched in memory before load.",
+  "title": "AssemblySummary",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "mvid": {
+      "type": "string"
+    },
+    "location": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fileSha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "loadedFromBytes": {
+      "type": "boolean"
+    },
+    "isDynamic": {
+      "type": "boolean"
+    },
+    "loadedByAgent": {
+      "type": "boolean"
+    },
+    "referencedAssemblies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "typeCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "name",
+    "version",
+    "mvid",
+    "location",
+    "fileSha256",
+    "loadedFromBytes",
+    "isDynamic",
+    "loadedByAgent",
+    "referencedAssemblies",
+    "typeCount"
+  ]
+}

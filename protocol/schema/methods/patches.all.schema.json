@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/patches.all.schema.json",
+  "title": "patches.all",
+  "description": "Every Harmony-patched method in the process, by owner.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "PatchesAllParams",
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string"
+        }
+      }
+    },
+    "result": {
+      "title": "PatchesAllResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "PatchedMethod",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "patches": {
+                "type": "array",
+                "items": {
+                  "$ref": "../methods/patch.inspect.schema.json#/$defs/result/properties/patches/items"
+                }
+              }
+            },
+            "required": [
+              "method",
+              "patches"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

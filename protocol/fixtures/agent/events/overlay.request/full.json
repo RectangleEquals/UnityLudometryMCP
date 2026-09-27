@@ -1,0 +1,34 @@
+{
+  "description": "`overlay.request` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "overlay.request",
+    "seq": 7,
+    "params": {
+      "kind": "openInStaticTool",
+      "target": {
+        "h": 481,
+        "type": {
+          "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+          "token": 33554471,
+          "name": "Example.Inventory"
+        },
+        "unity": {
+          "instanceId": -12844,
+          "name": "Player",
+          "destroyed": false
+        }
+      },
+      "anchor": {
+        "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+        "token": 100663553,
+        "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+      },
+      "locator": "live://Main/Player#Example.Inventory.items"
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

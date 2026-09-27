@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/test.result.schema.json",
+  "title": "test.result",
+  "description": "An in-game test finished.",
+  "$defs": {
+    "params": {
+      "title": "TestResultEventParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "$ref": "../common/test.schema.json#/$defs/result"
+        }
+      },
+      "required": [
+        "jobId",
+        "result"
+      ]
+    }
+  }
+}

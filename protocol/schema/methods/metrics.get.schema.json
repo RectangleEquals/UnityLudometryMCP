@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/metrics.get.schema.json",
+  "title": "metrics.get",
+  "description": "FPS, frame times, memory, GC and process metrics.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "MetricsGetParams",
+      "type": "object",
+      "properties": {
+        "includeObjectCounts": {
+          "type": "boolean"
+        }
+      }
+    },
+    "result": {
+      "title": "Metrics",
+      "type": "object",
+      "properties": {
+        "fps": {
+          "type": "number"
+        },
+        "frameTimeMs": {
+          "title": "FrameTimeStats",
+          "type": "object",
+          "properties": {
+            "mean": {
+              "type": "number"
+            },
+            "p95": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "mean",
+            "p95",
+            "max"
+          ]
+        },
+        "gcTotalMemory": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "monoUsed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "monoHeap": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "totalAllocated": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "totalReserved": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "gcCollections": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "objectCounts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "processWorkingSet": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "processPrivateBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "threadCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uptimeMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        },
+        "rec": {
+          "type": "string",
+          "description": "NDJSON record kind (`sample`) when written to a metrics file."
+        }
+      },
+      "required": [
+        "fps",
+        "frameTimeMs",
+        "gcTotalMemory",
+        "monoUsed",
+        "monoHeap",
+        "totalAllocated",
+        "totalReserved",
+        "gcCollections",
+        "processWorkingSet",
+        "processPrivateBytes",
+        "threadCount",
+        "uptimeMs",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

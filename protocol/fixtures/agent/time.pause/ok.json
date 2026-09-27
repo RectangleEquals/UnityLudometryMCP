@@ -1,0 +1,19 @@
+{
+  "description": "`time.pause` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-457",
+    "kind": "request",
+    "method": "time.pause",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-457",
+    "kind": "response",
+    "result": {
+      "previousTimeScale": 0.5,
+      "paused": true
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.showText.schema.json",
+  "title": "overlay.showText",
+  "description": "Shows text or source in the Inspector's viewer panel.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayShowTextParams",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "csharp",
+            "il",
+            "json",
+            "text"
+          ]
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        }
+      },
+      "required": [
+        "title",
+        "text"
+      ]
+    },
+    "result": {
+      "title": "OverlayShowTextResult",
+      "type": "object",
+      "properties": {
+        "shown": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "shown"
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.callees.schema.json",
+  "title": "code.callees",
+  "description": "Callee tree of a method (runtime IL index).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeCalleesParams",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    "result": {
+      "title": "CodeCalleesResult",
+      "type": "object",
+      "properties": {
+        "root": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/code.callers.schema.json#/$defs/result/properties/items/items"
+          }
+        },
+        "limits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Limits that apply to this result (e.g. virtual calls give the declared target; reflection isn't visible)."
+        }
+      },
+      "required": [
+        "root",
+        "items"
+      ]
+    }
+  }
+}

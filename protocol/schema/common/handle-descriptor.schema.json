@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/handle-descriptor.schema.json",
+  "description": "A live object reference. `h` indexes the agent's session handle table (strong references, LRU-capped). `unity` is present only for UnityEngine.Object instances.",
+  "title": "HandleDescriptor",
+  "type": "object",
+  "properties": {
+    "h": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "type": {
+      "$ref": "../common/anchor.schema.json"
+    },
+    "unity": {
+      "title": "UnityObjectInfo",
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "destroyed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "instanceId",
+        "destroyed"
+      ]
+    }
+  },
+  "required": [
+    "h",
+    "type"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/files/content_scan.schema.json",
+  "description": "The runtime content inventory (`content.scan.start`). Each line is one record; see `ndjson.schema.json` for the header and footer.",
+  "oneOf": [
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/header"
+    },
+    {
+      "$ref": "../files/ndjson.schema.json#/$defs/footer"
+    },
+    {
+      "$ref": "#/$defs/asset"
+    },
+    {
+      "$ref": "#/$defs/addressable"
+    },
+    {
+      "$ref": "#/$defs/bundle"
+    }
+  ],
+  "$defs": {
+    "asset": {
+      "title": "ScanAsset",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "asset"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "instanceId": {
+          "type": "integer"
+        },
+        "summary": {
+          "type": "object"
+        },
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "bundle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "rec",
+        "name",
+        "type",
+        "instanceId",
+        "summary",
+        "locator",
+        "bundle"
+      ],
+      "x-rec": "asset"
+    },
+    "addressable": {
+      "title": "ScanAddressable",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "addressable"
+        },
+        "key": {
+          "type": "string"
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/addressables.keys.schema.json#/$defs/result/properties/items/items/properties/locations/items"
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "key",
+        "locations"
+      ],
+      "x-rec": "addressable"
+    },
+    "bundle": {
+      "title": "ScanBundle",
+      "type": "object",
+      "properties": {
+        "rec": {
+          "const": "bundle"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isStreamedSceneAssetBundle": {
+          "type": "boolean"
+        },
+        "assetNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scenePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "rec",
+        "name",
+        "isStreamedSceneAssetBundle"
+      ],
+      "x-rec": "bundle"
+    }
+  }
+}

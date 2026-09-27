@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.strings.schema.json",
+  "title": "code.strings",
+  "description": "Methods using string literals that match.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeStringsParams",
+      "type": "object",
+      "properties": {
+        "regex": {
+          "type": "string"
+        },
+        "literal": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "regex"
+          ]
+        },
+        {
+          "required": [
+            "literal"
+          ]
+        }
+      ]
+    },
+    "result": {
+      "title": "CodeStringsResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "StringUse",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "literal": {
+                "type": "string"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "method",
+              "literal",
+              "offset"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "description": "Missing the required `token`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-233",
+    "kind": "request",
+    "method": "hello",
+    "params": {
+      "client": {
+        "name": "Player",
+        "version": "1.2.3"
+      },
+      "protocol": {
+        "major": 1,
+        "minor": 1
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-233",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.token is required.",
+      "data": {
+        "param": "params.token"
+      }
+    }
+  }
+}

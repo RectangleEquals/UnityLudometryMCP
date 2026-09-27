@@ -1,0 +1,27 @@
+{
+  "description": "`go.setActive` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-217",
+    "kind": "request",
+    "method": "go.setActive",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "active": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-217",
+    "kind": "response",
+    "result": {
+      "previous": true,
+      "active": true,
+      "locator": "live://Main/Player#Example.Inventory.items",
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

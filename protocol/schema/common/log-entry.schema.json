@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/log-entry.schema.json",
+  "description": "One entry of the agent's unified log buffer (Unity, the loader and the agent itself).",
+  "title": "LogEntry",
+  "type": "object",
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Global log sequence across sources."
+    },
+    "realtimeMs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "frame": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "unity",
+        "loader",
+        "agent"
+      ]
+    },
+    "channel": {
+      "type": "string",
+      "description": "Loader log source name, or `Unity`."
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "debug",
+        "info",
+        "warning",
+        "error",
+        "exception",
+        "fatal"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "description": "Capped at 8 KiB."
+    },
+    "stack": {
+      "type": "string",
+      "description": "Errors and exceptions only; capped at 16 KiB."
+    },
+    "marker": {
+      "type": "string",
+      "description": "Set on entries inserted by `logs.mark`."
+    }
+  },
+  "required": [
+    "seq",
+    "realtimeMs",
+    "frame",
+    "source",
+    "channel",
+    "level",
+    "message"
+  ]
+}

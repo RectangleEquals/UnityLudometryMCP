@@ -1,0 +1,49 @@
+{
+  "description": "`rule.add` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-398",
+    "kind": "request",
+    "method": "rule.add",
+    "params": {
+      "id": "x-1",
+      "when": {
+        "scene": {
+          "loaded": "example-loaded",
+          "active": "example-active",
+          "unloaded": "example-unloaded"
+        },
+        "simultaneous": true,
+        "withinMs": 1,
+        "forMs": 1,
+        "n": 1
+      },
+      "then": [
+        {
+          "pause": {
+            "audio": true
+          }
+        }
+      ],
+      "fire": {
+        "mode": "once",
+        "maxFires": 1,
+        "cooldownMs": 1
+      },
+      "expiresMs": 1,
+      "outDir": "X:/Example/Output",
+      "persistent": true,
+      "pauseImmediately": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-398",
+    "kind": "response",
+    "result": {
+      "ruleId": "r-7",
+      "requiredMode": "ReadOnly",
+      "armedAtFrame": 1
+    }
+  }
+}

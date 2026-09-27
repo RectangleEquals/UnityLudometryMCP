@@ -1,0 +1,36 @@
+{
+  "description": "`rule.get` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-404",
+    "kind": "request",
+    "method": "rule.get",
+    "params": {
+      "ruleId": "r-7"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-404",
+    "kind": "response",
+    "result": {
+      "rule": {
+        "when": {
+          "scene": {}
+        },
+        "then": [
+          {
+            "pause": {}
+          }
+        ]
+      },
+      "summary": {
+        "id": "x-1",
+        "state": "armed",
+        "fires": 1,
+        "lastFire": null
+      },
+      "firings": []
+    }
+  }
+}

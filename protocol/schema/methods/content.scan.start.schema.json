@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/content.scan.start.schema.json",
+  "title": "content.scan.start",
+  "description": "Writes one NDJSON inventory of everything visible at runtime: loaded assets, Addressables keys, bundles.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ContentScanStartParams",
+      "type": "object",
+      "properties": {
+        "outFile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "includeAddressablesKeys": {
+          "type": "boolean"
+        },
+        "includeBundles": {
+          "type": "boolean"
+        },
+        "includeResourcesLoaded": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "outFile"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "ContentScanStartJobResult",
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "../common/output-file.schema.json"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "file",
+        "durationMs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/job.list.schema.json",
+  "title": "job.list",
+  "description": "Jobs of this agent session, optionally filtered by state.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "JobListParams",
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "../common/job.schema.json#/$defs/state"
+        }
+      }
+    },
+    "result": {
+      "title": "JobListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/job.schema.json#/$defs/info"
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

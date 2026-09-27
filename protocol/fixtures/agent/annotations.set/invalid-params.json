@@ -1,0 +1,27 @@
+{
+  "description": "Missing the required `labels`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-45",
+    "kind": "request",
+    "method": "annotations.set",
+    "params": {
+      "target": {
+        "h": 481
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-45",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.labels is required.",
+      "data": {
+        "param": "params.labels"
+      }
+    }
+  }
+}

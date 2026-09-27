@@ -1,0 +1,16 @@
+{
+  "description": "`overlay.promptResult` (every optional field).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "overlay.promptResult",
+    "seq": 7,
+    "params": {
+      "id": "x-1",
+      "button": "Done"
+    },
+    "context": {
+      "task": "t-42"
+    }
+  }
+}

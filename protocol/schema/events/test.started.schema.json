@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/test.started.schema.json",
+  "title": "test.started",
+  "description": "An in-game test started.",
+  "$defs": {
+    "params": {
+      "title": "TestStartedEventParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "test": {
+          "$ref": "../common/test.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "jobId",
+        "test"
+      ]
+    }
+  }
+}

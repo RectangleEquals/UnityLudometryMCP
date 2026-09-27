@@ -1,0 +1,25 @@
+{
+  "description": "`overlay.highlight` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-338",
+    "kind": "request",
+    "method": "overlay.highlight",
+    "params": {
+      "targets": [
+        {
+          "h": 481
+        }
+      ]
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-338",
+    "kind": "response",
+    "result": {
+      "highlightId": "hl-1",
+      "drawn": 1
+    }
+  }
+}

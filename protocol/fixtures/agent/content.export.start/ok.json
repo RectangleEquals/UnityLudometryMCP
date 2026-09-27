@@ -1,0 +1,55 @@
+{
+  "description": "`content.export.start` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-154",
+    "kind": "request",
+    "method": "content.export.start",
+    "params": {
+      "items": [
+        {
+          "target": {
+            "h": 481
+          },
+          "type": "UnityEngine.Texture2D",
+          "nameRegex": "Player.*"
+        }
+      ],
+      "outDir": "X:/Example/Output",
+      "formats": {
+        "texture": "png",
+        "audio": "wav",
+        "mesh": "obj",
+        "data": "json"
+      },
+      "overwrite": true
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-154",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "content.export"
+    }
+  },
+  "jobResult": {
+    "manifest": {
+      "path": "Root/Player",
+      "bytes": 204800,
+      "sha256": "50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c",
+      "counts": {
+        "example": 1
+      }
+    },
+    "exported": 1,
+    "skipped": 1,
+    "warnings": [
+      {
+        "code": "EXAMPLE_CODE",
+        "message": "Example message."
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/patch.list.schema.json",
+  "title": "patch.list",
+  "description": "Active live patch sets.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "PatchListParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "PatchListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "PatchSetInfo",
+            "type": "object",
+            "properties": {
+              "patchSetId": {
+                "type": "string"
+              },
+              "targets": {
+                "type": "array",
+                "items": {
+                  "$ref": "../common/anchor.schema.json"
+                }
+              },
+              "appliedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "UTC timestamp, ISO 8601."
+              },
+              "owner": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "patchSetId",
+              "targets",
+              "appliedAt",
+              "owner"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

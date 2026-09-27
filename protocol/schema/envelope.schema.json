@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/envelope.schema.json",
+  "title": "Envelope",
+  "description": "Every frame carries one envelope: a request, a response (with either `result` or `error`) or an event. `v` is the protocol major version. `context` is an optional opaque object a client attaches to a request; the agent echoes it unchanged on the response and on every event the request produces.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/response"
+    },
+    {
+      "$ref": "#/$defs/event"
+    }
+  ],
+  "$defs": {
+    "v": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Protocol major version."
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Client-chosen, unique among the connection's in-flight requests."
+    },
+    "method": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*)*$"
+    },
+    "context": {
+      "type": "object"
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/v"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "method": {
+          "$ref": "#/$defs/method"
+        },
+        "params": {
+          "type": "object"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Per-request timeout, capped by the method's maximum."
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        }
+      },
+      "required": [
+        "v",
+        "id",
+        "kind",
+        "method"
+      ]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/v"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "const": "response"
+        },
+        "result": {},
+        "error": {
+          "$ref": "common/error.schema.json"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        }
+      },
+      "required": [
+        "v",
+        "id",
+        "kind"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "result"
+          ],
+          "not": {
+            "required": [
+              "error"
+            ]
+          }
+        },
+        {
+          "required": [
+            "error"
+          ],
+          "not": {
+            "required": [
+              "result"
+            ]
+          }
+        }
+      ]
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/v"
+        },
+        "kind": {
+          "const": "event"
+        },
+        "method": {
+          "$ref": "#/$defs/method"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Per connection, increasing across all events. A gap means dropped event batches."
+        },
+        "params": {
+          "type": "object"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        }
+      },
+      "required": [
+        "v",
+        "kind",
+        "method",
+        "seq",
+        "params"
+      ]
+    }
+  }
+}

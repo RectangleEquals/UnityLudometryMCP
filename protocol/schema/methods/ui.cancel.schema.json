@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.cancel.schema.json",
+  "title": "ui.cancel",
+  "description": "Sends Cancel to the selected object.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true,
+    "requires": [
+      "module:ugui"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "UiCancelParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "UiCancelResult",
+      "type": "object",
+      "properties": {
+        "handled": {
+          "type": "boolean"
+        },
+        "via": {
+          "type": "string"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "handled",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

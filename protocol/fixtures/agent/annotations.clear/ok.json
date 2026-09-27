@@ -1,0 +1,20 @@
+{
+  "description": "`annotations.clear` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-35",
+    "kind": "request",
+    "method": "annotations.clear",
+    "params": {
+      "annotationId": "a-1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-35",
+    "kind": "response",
+    "result": {
+      "cleared": 1
+    }
+  }
+}

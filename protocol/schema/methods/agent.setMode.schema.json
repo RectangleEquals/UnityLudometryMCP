@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/agent.setMode.schema.json",
+  "title": "agent.setMode",
+  "description": "Lowers the agent mode at runtime. Raising is refused (it needs a config change and a restart).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AgentSetModeParams",
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "../common/agent-mode.schema.json"
+        }
+      },
+      "required": [
+        "mode"
+      ]
+    },
+    "result": {
+      "title": "AgentSetModeResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "$ref": "../common/agent-mode.schema.json"
+        },
+        "mode": {
+          "$ref": "../common/agent-mode.schema.json"
+        }
+      },
+      "required": [
+        "previous",
+        "mode"
+      ]
+    }
+  }
+}

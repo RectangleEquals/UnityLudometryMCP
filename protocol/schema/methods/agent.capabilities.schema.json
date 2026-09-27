@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/agent.capabilities.schema.json",
+  "title": "agent.capabilities",
+  "description": "What this agent build supports: every method with its execution flags, the event kinds, optional modules detected in this game, the Api version and the effective limits. Authoritative: clients check it rather than assume.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "AgentCapabilitiesParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "AgentCapabilities",
+      "type": "object",
+      "properties": {
+        "agentVersion": {
+          "type": "string"
+        },
+        "apiVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        },
+        "protocol": {
+          "$ref": "../common/protocol-version.schema.json"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "title": "MethodCapability",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "thread": {
+                "type": "string",
+                "enum": [
+                  "any",
+                  "main",
+                  "mixed"
+                ]
+              },
+              "minMode": {
+                "$ref": "../common/agent-mode.schema.json"
+              },
+              "mutating": {
+                "type": "boolean"
+              },
+              "job": {
+                "type": "boolean"
+              },
+              "defaultTimeoutMs": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "maxTimeoutMs": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "requires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Capability tags, e.g. `module:addressables`."
+              }
+            },
+            "required": [
+              "name",
+              "thread",
+              "minMode",
+              "mutating",
+              "job"
+            ]
+          }
+        },
+        "eventKinds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "title": "ModuleCapability",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "available": {
+                "type": "boolean"
+              },
+              "version": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "available",
+              "version"
+            ]
+          },
+          "description": "Optional modules: ugui, tmp, addressables, imageConversion, profiler, firstChanceExceptions, …"
+        },
+        "limits": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "agentVersion",
+        "apiVersion",
+        "protocol",
+        "methods",
+        "eventKinds",
+        "modules",
+        "limits"
+      ]
+    }
+  }
+}

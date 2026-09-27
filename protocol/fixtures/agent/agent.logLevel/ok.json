@@ -1,0 +1,21 @@
+{
+  "description": "`agent.logLevel` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-29",
+    "kind": "request",
+    "method": "agent.logLevel",
+    "params": {
+      "level": "Debug"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-29",
+    "kind": "response",
+    "result": {
+      "previous": "example-previous",
+      "level": "example-level"
+    }
+  }
+}

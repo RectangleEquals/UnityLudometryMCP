@@ -1,0 +1,26 @@
+{
+  "description": "`ui.setValue` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-502",
+    "kind": "request",
+    "method": "ui.setValue",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "value": "example"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-502",
+    "kind": "response",
+    "result": {
+      "handled": true,
+      "via": "eventSystem",
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

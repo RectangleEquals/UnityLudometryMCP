@@ -1,0 +1,17 @@
+{
+  "description": "`app.quit` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-49",
+    "kind": "request",
+    "method": "app.quit"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-49",
+    "kind": "response",
+    "result": {
+      "quitting": true
+    }
+  }
+}

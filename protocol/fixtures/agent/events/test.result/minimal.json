@@ -1,0 +1,21 @@
+{
+  "description": "`test.result` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "test.result",
+    "seq": 7,
+    "params": {
+      "jobId": "j-1",
+      "result": {
+        "test": {
+          "fixture": "InventoryTests",
+          "name": "Player",
+          "category": null
+        },
+        "status": "passed",
+        "durationMs": 120
+      }
+    }
+  }
+}

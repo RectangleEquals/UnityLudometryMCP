@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/expected-match.schema.json",
+  "description": "Comparison of an expected value (supplied by the caller, e.g. from shipped asset data) with the live value at a path.",
+  "title": "ExpectedMatch",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The path key as given in `expected`."
+    },
+    "match": {
+      "type": "boolean"
+    },
+    "expected": {},
+    "actual": {}
+  },
+  "required": [
+    "path",
+    "match",
+    "expected",
+    "actual"
+  ]
+}

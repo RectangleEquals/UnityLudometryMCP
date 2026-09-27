@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/probe.schema.json",
+  "description": "Probes: one uniform request/result shape over the agent's primitives, recorded directly as evidence by the orchestrator.",
+  "$defs": {
+    "probe": {
+      "title": "Probe",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "read_statics",
+            "find_instances",
+            "read_members",
+            "query",
+            "content",
+            "watch",
+            "hook_verify",
+            "trace",
+            "call"
+          ]
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          }
+        },
+        "params": {
+          "type": "object",
+          "description": "Kind-specific parameters (those of the underlying method)."
+        },
+        "limits": {
+          "title": "ProbeLimits",
+          "type": "object",
+          "properties": {
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "requiresGameplay": {
+          "type": "boolean"
+        },
+        "consented": {
+          "type": "boolean",
+          "description": "Required true for `call` probes."
+        },
+        "outDir": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ]
+    },
+    "evidence": {
+      "title": "ProbeEvidence",
+      "type": "object",
+      "properties": {
+        "locator": {
+          "$ref": "../common/locator.schema.json"
+        },
+        "excerpt": {}
+      },
+      "required": [
+        "locator"
+      ]
+    },
+    "result": {
+      "title": "ProbeResult",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "partial",
+            "failed",
+            "needs_trigger",
+            "stale"
+          ]
+        },
+        "result": {},
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "metrics": {
+          "title": "ProbeMetrics",
+          "type": "object",
+          "properties": {
+            "durationMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "frames": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "durationMs",
+            "frames"
+          ]
+        },
+        "error": {
+          "$ref": "../common/error.schema.json"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "evidence",
+        "metrics"
+      ]
+    }
+  }
+}

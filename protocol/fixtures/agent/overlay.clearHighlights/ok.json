@@ -1,0 +1,20 @@
+{
+  "description": "`overlay.clearHighlights` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-335",
+    "kind": "request",
+    "method": "overlay.clearHighlights",
+    "params": {
+      "highlightId": "hl-1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-335",
+    "kind": "response",
+    "result": {
+      "cleared": 1
+    }
+  }
+}

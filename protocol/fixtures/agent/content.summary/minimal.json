@@ -1,0 +1,17 @@
+{
+  "description": "`content.summary` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-164",
+    "kind": "request",
+    "method": "content.summary"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-164",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

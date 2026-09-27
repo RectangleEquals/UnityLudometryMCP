@@ -1,0 +1,18 @@
+{
+  "description": "`overlay.setState` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-352",
+    "kind": "request",
+    "method": "overlay.setState"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-352",
+    "kind": "response",
+    "result": {
+      "state": "running",
+      "tab": "Inspector"
+    }
+  }
+}

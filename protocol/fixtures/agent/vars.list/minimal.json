@@ -1,0 +1,17 @@
+{
+  "description": "`vars.list` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-528",
+    "kind": "request",
+    "method": "vars.list"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-528",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

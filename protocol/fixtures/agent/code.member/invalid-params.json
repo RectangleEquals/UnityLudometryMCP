@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `member`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-107",
+    "kind": "request",
+    "method": "code.member",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-107",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.member is required.",
+      "data": {
+        "param": "params.member"
+      }
+    }
+  }
+}

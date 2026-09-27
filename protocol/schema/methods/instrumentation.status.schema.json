@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/instrumentation.status.schema.json",
+  "title": "instrumentation.status",
+  "description": "Everything active (hooks, traces, profiles, watches, subscriptions) with costs.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "InstrumentationStatusParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "InstrumentationStatusResult",
+      "type": "object",
+      "properties": {
+        "hooks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "traces": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "profiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "watches": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "subscriptions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "patchedMethods": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hitsPerSecond": {
+          "type": "number"
+        },
+        "bufferedRecords": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "hooks",
+        "traces",
+        "profiles",
+        "watches",
+        "subscriptions",
+        "patchedMethods",
+        "hitsPerSecond",
+        "bufferedRecords"
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/job.cancel.schema.json",
+  "title": "job.cancel",
+  "description": "Cancels a job. Partial output files are deleted.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "JobCancelParams",
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "jobId"
+      ]
+    },
+    "result": {
+      "title": "JobCancelResult",
+      "type": "object",
+      "properties": {
+        "cancelled": {
+          "type": "boolean"
+        },
+        "state": {
+          "$ref": "../common/job.schema.json#/$defs/state"
+        }
+      },
+      "required": [
+        "cancelled",
+        "state"
+      ]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/mod.list.schema.json",
+  "title": "mod.list",
+  "description": "Loader-loaded and hot-loaded plugins.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ModListParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "ModListResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "PluginInfo",
+            "type": "object",
+            "properties": {
+              "guid": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "assembly": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "loader",
+                  "hotload"
+                ]
+              },
+              "alive": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "guid",
+              "name",
+              "version",
+              "assembly",
+              "source",
+              "alive"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

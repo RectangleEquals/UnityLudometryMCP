@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `type`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-68",
+    "kind": "request",
+    "method": "code.allocations",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-68",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.type is required.",
+      "data": {
+        "param": "params.type"
+      }
+    }
+  }
+}

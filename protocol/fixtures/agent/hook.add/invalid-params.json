@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `method`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-237",
+    "kind": "request",
+    "method": "hook.add",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-237",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.method is required.",
+      "data": {
+        "param": "params.method"
+      }
+    }
+  }
+}

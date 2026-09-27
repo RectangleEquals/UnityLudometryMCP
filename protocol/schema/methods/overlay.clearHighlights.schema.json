@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.clearHighlights.schema.json",
+  "title": "overlay.clearHighlights",
+  "description": "Removes highlights (all, or one by id).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayClearHighlightsParams",
+      "type": "object",
+      "properties": {
+        "highlightId": {
+          "type": "string"
+        }
+      }
+    },
+    "result": {
+      "title": "OverlayClearHighlightsResult",
+      "type": "object",
+      "properties": {
+        "cleared": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "cleared"
+      ]
+    }
+  }
+}

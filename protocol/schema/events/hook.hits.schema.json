@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/hook.hits.schema.json",
+  "title": "hook.hits",
+  "description": "Batched hook records. Also pullable with `hook.hits`.",
+  "$defs": {
+    "params": {
+      "title": "HookHitsEventParams",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/instrumentation-record.schema.json"
+          }
+        },
+        "dropped": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Items dropped under back-pressure since the previous batch."
+        }
+      },
+      "required": [
+        "items",
+        "dropped"
+      ]
+    }
+  }
+}

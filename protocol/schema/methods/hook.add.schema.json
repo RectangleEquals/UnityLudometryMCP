@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/hook.add.schema.json",
+  "title": "hook.add",
+  "description": "Adds a hook on a method with capture, conditions, sampling and caps.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "HookAddParams",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "enter",
+              "exit",
+              "throw"
+            ]
+          }
+        },
+        "capture": {
+          "title": "HookCapture",
+          "type": "object",
+          "properties": {
+            "instance": {
+              "type": "boolean"
+            },
+            "args": {
+              "type": "boolean"
+            },
+            "result": {
+              "type": "boolean"
+            },
+            "stack": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32
+            },
+            "depth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2
+            },
+            "retain": {
+              "type": "boolean"
+            }
+          }
+        },
+        "sample": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxHits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ring": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "persistent": {
+          "type": "boolean"
+        },
+        "condition": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/condition.schema.json"
+          }
+        },
+        "force": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method"
+      ]
+    },
+    "result": {
+      "title": "HookAddResult",
+      "type": "object",
+      "properties": {
+        "hookId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patched": {
+          "title": "PatchedParts",
+          "type": "object",
+          "properties": {
+            "prefix": {
+              "type": "boolean"
+            },
+            "postfix": {
+              "type": "boolean"
+            },
+            "finalizer": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "prefix",
+            "postfix",
+            "finalizer"
+          ]
+        }
+      },
+      "required": [
+        "hookId",
+        "patched"
+      ]
+    }
+  }
+}

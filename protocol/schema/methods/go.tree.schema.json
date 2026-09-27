@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/go.tree.schema.json",
+  "title": "go.tree",
+  "description": "GameObject hierarchy under a scene or a target.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "GoTreeParams",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "description": "Name, build index, or `ddol`."
+        },
+        "root": {
+          "$ref": "../common/target.schema.json"
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16
+        },
+        "includeInactive": {
+          "type": "boolean"
+        },
+        "includeComponents": {
+          "type": "boolean"
+        },
+        "filter": {
+          "title": "GameObjectFilter",
+          "type": "object",
+          "properties": {
+            "nameRegex": {
+              "type": "string"
+            },
+            "tag": {
+              "type": "string"
+            },
+            "layer": {
+              "type": "integer"
+            },
+            "componentType": {
+              "$ref": "../common/anchor.schema.json"
+            }
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items to return."
+        }
+      }
+    },
+    "result": {
+      "title": "GoTreeResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "GameObjectNode",
+            "type": "object",
+            "properties": {
+              "h": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "activeSelf": {
+                "type": "boolean"
+              },
+              "activeInHierarchy": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "string"
+              },
+              "layer": {
+                "type": "integer"
+              },
+              "components": {
+                "type": "array",
+                "items": {
+                  "title": "ComponentInfo",
+                  "type": "object",
+                  "properties": {
+                    "h": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "type": {
+                      "$ref": "../common/anchor.schema.json"
+                    },
+                    "enabled": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "h",
+                    "type",
+                    "enabled"
+                  ]
+                }
+              },
+              "childCount": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "children": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/result/properties/items/items"
+                }
+              }
+            },
+            "required": [
+              "h",
+              "name",
+              "path",
+              "activeSelf",
+              "activeInHierarchy",
+              "tag",
+              "layer",
+              "childCount"
+            ]
+          }
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "items",
+        "truncated"
+      ]
+    }
+  }
+}

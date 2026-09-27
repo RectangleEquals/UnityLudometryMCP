@@ -1,0 +1,22 @@
+{
+  "description": "`value.expand` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-520",
+    "kind": "request",
+    "method": "value.expand",
+    "params": {
+      "ref": "example-ref"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-520",
+    "kind": "response",
+    "result": {
+      "value": 3,
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

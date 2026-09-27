@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.notify.schema.json",
+  "title": "overlay.notify",
+  "description": "Shows a toast to the user.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayNotifyParams",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ]
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "text"
+      ]
+    },
+    "result": {
+      "title": "OverlayNotifyResult",
+      "type": "object",
+      "properties": {
+        "shown": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "shown"
+      ]
+    }
+  }
+}

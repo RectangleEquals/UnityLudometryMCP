@@ -1,0 +1,29 @@
+{
+  "description": "`obj.query.start` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-325",
+    "kind": "request",
+    "method": "obj.query.start",
+    "params": {
+      "from": {}
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-325",
+    "kind": "response",
+    "result": {
+      "jobId": "j-1",
+      "kind": "query"
+    }
+  },
+  "jobResult": {
+    "rows": [],
+    "scanned": 1,
+    "matched": 1,
+    "errors": 1,
+    "frame": 3902,
+    "realtimeMs": 64000
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "`ui.find` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-488",
+    "kind": "request",
+    "method": "ui.find"
+  },
+  "response": {
+    "v": 0,
+    "id": "r-488",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

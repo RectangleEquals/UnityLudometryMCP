@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.prompt.schema.json",
+  "title": "overlay.prompt",
+  "description": "Asks the user to do something in-game; the answer arrives as `overlay.promptResult`.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayPromptParams",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "buttons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attachProbe": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "message"
+      ]
+    },
+    "result": {
+      "title": "OverlayPromptResult",
+      "type": "object",
+      "properties": {
+        "shown": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "shown"
+      ]
+    }
+  }
+}

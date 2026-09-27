@@ -1,0 +1,21 @@
+{
+  "description": "`hook.remove` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-243",
+    "kind": "request",
+    "method": "hook.remove",
+    "params": {
+      "hookId": "h-1"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-243",
+    "kind": "response",
+    "result": {
+      "hits": 1,
+      "dropped": 1
+    }
+  }
+}

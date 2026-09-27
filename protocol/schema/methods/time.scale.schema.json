@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.scale.schema.json",
+  "title": "time.scale",
+  "description": "Sets Time.timeScale (0 pauses gameplay that respects it).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "TimeScaleParams",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "result": {
+      "title": "TimeScaleResult",
+      "type": "object",
+      "properties": {
+        "previous": {
+          "type": "number"
+        },
+        "current": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "previous",
+        "current"
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/rule.cancel.schema.json",
+  "title": "rule.cancel",
+  "description": "Cancels a rule (and releases a pause it holds).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "RuleCancelParams",
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ruleId"
+      ]
+    },
+    "result": {
+      "title": "RuleCancelResult",
+      "type": "object",
+      "properties": {
+        "cancelled": {
+          "type": "boolean"
+        },
+        "resumed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "cancelled",
+        "resumed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.step.schema.json",
+  "title": "time.step",
+  "description": "With the game paused, runs exactly N frames at the previous time scale, then pauses again.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "TimeStepParams",
+      "type": "object",
+      "properties": {
+        "frames": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "result": {
+      "title": "TimeStepResult",
+      "type": "object",
+      "properties": {
+        "frames": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "required": [
+        "frames"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `hookId`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-240",
+    "kind": "request",
+    "method": "hook.hits",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-240",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.hookId is required.",
+      "data": {
+        "param": "params.hookId"
+      }
+    }
+  }
+}

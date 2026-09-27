@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/bundles.loaded.schema.json",
+  "title": "bundles.loaded",
+  "description": "Loaded AssetBundles with asset names and scene paths.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "BundlesLoadedParams",
+      "type": "object",
+      "properties": {
+        "includeAssetNames": {
+          "type": "boolean"
+        }
+      }
+    },
+    "result": {
+      "title": "BundlesLoadedResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "BundleInfo",
+            "type": "object",
+            "properties": {
+              "h": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "isStreamedSceneAssetBundle": {
+                "type": "boolean"
+              },
+              "assetNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "scenePaths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "h",
+              "name",
+              "isStreamedSceneAssetBundle"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

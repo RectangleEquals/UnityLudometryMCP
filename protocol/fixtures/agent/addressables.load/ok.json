@@ -1,0 +1,39 @@
+{
+  "description": "`addressables.load` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-12",
+    "kind": "request",
+    "method": "addressables.load",
+    "params": {
+      "key": "items/plank",
+      "type": "UnityEngine.Texture2D",
+      "timeoutMs": 10000
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-12",
+    "kind": "response",
+    "result": {
+      "opHandle": 1,
+      "items": [
+        {
+          "h": 481,
+          "type": {
+            "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+            "token": 33554471,
+            "name": "Example.Inventory"
+          },
+          "unity": {
+            "instanceId": -12844,
+            "name": "Player",
+            "destroyed": false
+          }
+        }
+      ],
+      "frame": 3902,
+      "realtimeMs": 64000
+    }
+  }
+}

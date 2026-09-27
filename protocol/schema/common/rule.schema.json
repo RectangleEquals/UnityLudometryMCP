@@ -1,0 +1,849 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/rule.schema.json",
+  "description": "Rules: when a combination of conditions happens, run actions in order (pause, wait, capture, snapshot, resume, …). A rule needs the highest mode any of its conditions or actions need.",
+  "$defs": {
+    "rule": {
+      "title": "Rule",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Client-chosen id; the agent assigns one when absent."
+        },
+        "when": {
+          "$ref": "#/$defs/condition"
+        },
+        "then": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          },
+          "minItems": 1
+        },
+        "fire": {
+          "title": "RuleFire",
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "once",
+                "repeat"
+              ]
+            },
+            "maxFires": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "cooldownMs": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "expiresMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outDir": {
+          "type": "string",
+          "description": "Required if any action writes files."
+        },
+        "persistent": {
+          "type": "boolean",
+          "description": "Keep the rule when the owning connection disconnects."
+        },
+        "pauseImmediately": {
+          "type": "boolean",
+          "description": "Pause inside a main-thread hook callback when that hook completes the condition."
+        }
+      },
+      "required": [
+        "when",
+        "then"
+      ]
+    },
+    "condition": {
+      "title": "RuleCondition",
+      "type": "object",
+      "properties": {
+        "scene": {
+          "title": "SceneCondition",
+          "type": "object",
+          "properties": {
+            "loaded": {
+              "type": "string"
+            },
+            "active": {
+              "type": "string"
+            },
+            "unloaded": {
+              "type": "string"
+            }
+          },
+          "description": "Name or regex."
+        },
+        "delay": {
+          "title": "DelayCondition",
+          "type": "object",
+          "properties": {
+            "realtimeMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "gameTimeMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "frames": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "value": {
+          "title": "ValueCondition",
+          "type": "object",
+          "properties": {
+            "target": {
+              "$ref": "../common/target.schema.json"
+            },
+            "path": {
+              "$ref": "../common/member-path.schema.json"
+            },
+            "op": {
+              "$ref": "../common/condition.schema.json#/properties/op"
+            },
+            "value": {},
+            "changed": {
+              "type": "boolean"
+            },
+            "everyFrames": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "target",
+            "path"
+          ]
+        },
+        "hook": {
+          "title": "HookCondition",
+          "type": "object",
+          "properties": {
+            "method": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "phase": {
+              "type": "string",
+              "enum": [
+                "enter",
+                "exit",
+                "throw"
+              ]
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "where": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/condition.schema.json"
+              }
+            }
+          },
+          "required": [
+            "method"
+          ]
+        },
+        "event": {
+          "title": "EventCondition",
+          "type": "object",
+          "properties": {
+            "target": {
+              "$ref": "../common/target.schema.json"
+            },
+            "event": {
+              "$ref": "../common/anchor.schema.json"
+            }
+          },
+          "required": [
+            "event"
+          ]
+        },
+        "log": {
+          "title": "LogCondition",
+          "type": "object",
+          "properties": {
+            "regex": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minLevel": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "regex"
+          ]
+        },
+        "ui": {
+          "title": "UiCondition",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string",
+              "enum": [
+                "appears",
+                "disappears",
+                "interactable"
+              ]
+            }
+          },
+          "required": [
+            "state"
+          ]
+        },
+        "exception": {
+          "title": "ExceptionCondition",
+          "type": "object",
+          "properties": {
+            "typeRegex": {
+              "type": "string"
+            },
+            "messageRegex": {
+              "type": "string"
+            }
+          }
+        },
+        "prompt": {
+          "title": "PromptCondition",
+          "type": "object",
+          "properties": {
+            "promptId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "button": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "promptId"
+          ]
+        },
+        "pick": {
+          "title": "PickCondition",
+          "type": "object",
+          "properties": {}
+        },
+        "predicate": {
+          "title": "PredicateCondition",
+          "type": "object",
+          "properties": {
+            "assembly": {
+              "type": "string",
+              "minLength": 1,
+              "description": "base64"
+            },
+            "entryType": {
+              "type": "string",
+              "minLength": 1
+            },
+            "method": {
+              "type": "string",
+              "minLength": 1
+            },
+            "everyFrames": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "assembly",
+            "entryType",
+            "method"
+          ],
+          "description": "A compiled `bool Check(IAgentContext)` (Full mode)."
+        },
+        "all": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "simultaneous": {
+          "type": "boolean"
+        },
+        "any": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "seq": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "withinMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "not": {
+          "$ref": "#/$defs/condition"
+        },
+        "forMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "count": {
+          "$ref": "#/$defs/condition"
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "description": "Exactly one condition kind or combinator (`all`, `any`, `seq`, `not`, `count`) per object.",
+      "oneOf": [
+        {
+          "required": [
+            "scene"
+          ]
+        },
+        {
+          "required": [
+            "delay"
+          ]
+        },
+        {
+          "required": [
+            "value"
+          ]
+        },
+        {
+          "required": [
+            "hook"
+          ]
+        },
+        {
+          "required": [
+            "event"
+          ]
+        },
+        {
+          "required": [
+            "log"
+          ]
+        },
+        {
+          "required": [
+            "ui"
+          ]
+        },
+        {
+          "required": [
+            "exception"
+          ]
+        },
+        {
+          "required": [
+            "prompt"
+          ]
+        },
+        {
+          "required": [
+            "pick"
+          ]
+        },
+        {
+          "required": [
+            "predicate"
+          ]
+        },
+        {
+          "required": [
+            "all"
+          ]
+        },
+        {
+          "required": [
+            "any"
+          ]
+        },
+        {
+          "required": [
+            "seq"
+          ]
+        },
+        {
+          "required": [
+            "not"
+          ]
+        },
+        {
+          "required": [
+            "count"
+          ]
+        }
+      ]
+    },
+    "action": {
+      "title": "RuleAction",
+      "type": "object",
+      "properties": {
+        "pause": {
+          "title": "PauseAction",
+          "type": "object",
+          "properties": {
+            "audio": {
+              "type": "boolean"
+            }
+          }
+        },
+        "waitFrames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "waitMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "screenshot": {
+          "$ref": "../common/capture.schema.json#/$defs/options"
+        },
+        "snapshot": {
+          "title": "SnapshotAction",
+          "type": "object",
+          "properties": {
+            "targets": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/target.schema.json"
+              }
+            },
+            "paths": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/member-path.schema.json"
+              }
+            },
+            "view": {
+              "$ref": "../common/view.schema.json"
+            }
+          },
+          "required": [
+            "targets",
+            "paths"
+          ]
+        },
+        "hits": {
+          "title": "HitsAction",
+          "type": "object",
+          "properties": {
+            "since": {
+              "type": "string",
+              "enum": [
+                "armed",
+                "lastFire"
+              ]
+            }
+          }
+        },
+        "logs": {
+          "title": "LogsAction",
+          "type": "object",
+          "properties": {
+            "since": {
+              "type": "string",
+              "enum": [
+                "armed",
+                "lastFire"
+              ]
+            },
+            "minLevel": {
+              "type": "string"
+            }
+          }
+        },
+        "mark": {
+          "title": "MarkAction",
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "label"
+          ]
+        },
+        "notify": {
+          "title": "NotifyAction",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "level": {
+              "type": "string"
+            },
+            "durationMs": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "text"
+          ]
+        },
+        "highlight": {
+          "title": "HighlightAction",
+          "type": "object",
+          "properties": {
+            "targets": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/target.schema.json"
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            },
+            "durationMs": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "targets"
+          ]
+        },
+        "exec": {
+          "title": "ExecAction",
+          "type": "object",
+          "properties": {
+            "assembly": {
+              "type": "string",
+              "minLength": 1
+            },
+            "entryType": {
+              "type": "string"
+            },
+            "entryMethod": {
+              "type": "string"
+            },
+            "args": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "assembly"
+          ]
+        },
+        "uiClick": {
+          "title": "UiClickAction",
+          "type": "object",
+          "properties": {
+            "target": {
+              "$ref": "../common/target.schema.json"
+            }
+          },
+          "required": [
+            "target"
+          ]
+        },
+        "invoke": {
+          "title": "InvokeAction",
+          "type": "object",
+          "properties": {
+            "target": {
+              "$ref": "../common/target.schema.json"
+            },
+            "method": {
+              "$ref": "../common/anchor.schema.json"
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/value.schema.json"
+              }
+            }
+          },
+          "required": [
+            "target",
+            "method"
+          ]
+        },
+        "resume": {
+          "title": "ResumeAction",
+          "type": "object",
+          "properties": {
+            "afterMs": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "stayPaused": {
+          "title": "StayPausedAction",
+          "type": "object",
+          "properties": {}
+        },
+        "emit": {
+          "title": "EmitAction",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload": {}
+          },
+          "required": [
+            "kind"
+          ]
+        }
+      },
+      "description": "Exactly one action per object, executed in order when the rule fires.",
+      "oneOf": [
+        {
+          "required": [
+            "pause"
+          ]
+        },
+        {
+          "required": [
+            "waitFrames"
+          ]
+        },
+        {
+          "required": [
+            "waitMs"
+          ]
+        },
+        {
+          "required": [
+            "screenshot"
+          ]
+        },
+        {
+          "required": [
+            "snapshot"
+          ]
+        },
+        {
+          "required": [
+            "hits"
+          ]
+        },
+        {
+          "required": [
+            "logs"
+          ]
+        },
+        {
+          "required": [
+            "mark"
+          ]
+        },
+        {
+          "required": [
+            "notify"
+          ]
+        },
+        {
+          "required": [
+            "highlight"
+          ]
+        },
+        {
+          "required": [
+            "exec"
+          ]
+        },
+        {
+          "required": [
+            "uiClick"
+          ]
+        },
+        {
+          "required": [
+            "invoke"
+          ]
+        },
+        {
+          "required": [
+            "resume"
+          ]
+        },
+        {
+          "required": [
+            "stayPaused"
+          ]
+        },
+        {
+          "required": [
+            "emit"
+          ]
+        }
+      ]
+    },
+    "firing": {
+      "title": "RuleFiring",
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fire": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        },
+        "trigger": {
+          "title": "RuleTrigger",
+          "type": "object",
+          "properties": {
+            "conditionPath": {
+              "type": "string"
+            },
+            "detail": {}
+          },
+          "required": [
+            "conditionPath"
+          ]
+        },
+        "results": {
+          "title": "RuleResults",
+          "type": "object",
+          "properties": {
+            "screenshots": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/capture.schema.json#/$defs/result"
+              }
+            },
+            "snapshot": {},
+            "hits": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/instrumentation-record.schema.json"
+              }
+            },
+            "logs": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/log-entry.schema.json"
+              }
+            },
+            "exec": {},
+            "emitted": {
+              "type": "array",
+              "items": {}
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "$ref": "../common/output-file.schema.json"
+              }
+            }
+          }
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "resumedAtFrame": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      },
+      "required": [
+        "ruleId",
+        "fire",
+        "frame",
+        "realtimeMs",
+        "trigger",
+        "results",
+        "paused",
+        "resumedAtFrame"
+      ]
+    },
+    "summary": {
+      "title": "RuleSummary",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "armed",
+            "fired",
+            "expired",
+            "cancelled",
+            "suspended"
+          ]
+        },
+        "fires": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lastFire": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "conditionsProgress": {},
+        "requiredMode": {
+          "$ref": "../common/agent-mode.schema.json"
+        }
+      },
+      "required": [
+        "id",
+        "state",
+        "fires",
+        "lastFire"
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.pause.schema.json",
+  "title": "time.pause",
+  "description": "Pauses (time scale 0, remembering the previous value).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "TimePauseParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "TimePauseResult",
+      "type": "object",
+      "properties": {
+        "previousTimeScale": {
+          "type": "number"
+        },
+        "paused": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "previousTimeScale",
+        "paused"
+      ]
+    }
+  }
+}

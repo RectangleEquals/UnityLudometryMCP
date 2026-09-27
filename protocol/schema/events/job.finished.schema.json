@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/job.finished.schema.json",
+  "title": "job.finished",
+  "description": "A job finished (succeeded, failed or cancelled). The same state is pullable with `job.get`.",
+  "$defs": {
+    "params": {
+      "title": "JobFinishedEventParams",
+      "type": "object",
+      "properties": {
+        "job": {
+          "$ref": "../common/job.schema.json#/$defs/info"
+        }
+      },
+      "required": [
+        "job"
+      ]
+    }
+  }
+}

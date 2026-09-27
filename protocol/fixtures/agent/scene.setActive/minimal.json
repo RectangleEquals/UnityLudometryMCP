@@ -1,0 +1,21 @@
+{
+  "description": "`scene.setActive` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-427",
+    "kind": "request",
+    "method": "scene.setActive",
+    "params": {
+      "scene": null
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-427",
+    "kind": "response",
+    "result": {
+      "previous": "example-previous",
+      "active": "example-active"
+    }
+  }
+}

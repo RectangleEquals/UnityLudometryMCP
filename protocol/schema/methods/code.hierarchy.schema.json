@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/code.hierarchy.schema.json",
+  "title": "code.hierarchy",
+  "description": "Base chain (up) or subtypes among loaded types (down).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "CodeHierarchyParams",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "../common/anchor.schema.json"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down"
+          ]
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        }
+      },
+      "required": [
+        "type",
+        "direction"
+      ]
+    },
+    "result": {
+      "title": "CodeHierarchyResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "HierarchyNode",
+            "type": "object",
+            "properties": {
+              "type": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "depth": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "parent": {
+                "$ref": "../common/anchor.schema.json"
+              }
+            },
+            "required": [
+              "type",
+              "depth"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

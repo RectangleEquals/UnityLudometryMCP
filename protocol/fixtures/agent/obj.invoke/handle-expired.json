@@ -1,0 +1,48 @@
+{
+  "description": "The target's object was destroyed.",
+  "request": {
+    "v": 0,
+    "id": "r-319",
+    "kind": "request",
+    "method": "obj.invoke",
+    "params": {
+      "target": {
+        "h": 481
+      },
+      "method": {
+        "mvid": "5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b",
+        "token": 100663553,
+        "name": "Example.Inventory::AddItem(System.String,System.Int32)"
+      },
+      "args": [
+        "example"
+      ],
+      "typeArgs": [
+        "System.Int32"
+      ],
+      "view": {
+        "depth": 1,
+        "maxMembers": 1,
+        "maxItems": 1,
+        "maxString": 1,
+        "properties": true,
+        "nonPublic": true,
+        "enumerate": true,
+        "anchors": true,
+        "unityStructsCompact": true
+      }
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-319",
+    "kind": "response",
+    "error": {
+      "code": "HANDLE_EXPIRED",
+      "message": "Handle 481 refers to a destroyed object.",
+      "data": {
+        "h": 481
+      }
+    }
+  }
+}

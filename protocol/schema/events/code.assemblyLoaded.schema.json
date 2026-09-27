@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/code.assemblyLoaded.schema.json",
+  "title": "code.assemblyLoaded",
+  "description": "An assembly was loaded after start (lazy loading, Addressables-loaded code, mods).",
+  "$defs": {
+    "params": {
+      "title": "AssemblyLoadedEventParams",
+      "type": "object",
+      "properties": {
+        "assembly": {
+          "$ref": "../common/assembly-summary.schema.json"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "assembly",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

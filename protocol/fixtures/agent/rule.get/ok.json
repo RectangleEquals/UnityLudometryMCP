@@ -1,0 +1,80 @@
+{
+  "description": "`rule.get` with every optional field.",
+  "request": {
+    "v": 0,
+    "id": "r-403",
+    "kind": "request",
+    "method": "rule.get",
+    "params": {
+      "ruleId": "r-7"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-403",
+    "kind": "response",
+    "result": {
+      "rule": {
+        "id": "x-1",
+        "when": {
+          "scene": {
+            "loaded": "example-loaded",
+            "active": "example-active",
+            "unloaded": "example-unloaded"
+          },
+          "simultaneous": true,
+          "withinMs": 1,
+          "forMs": 1,
+          "n": 1
+        },
+        "then": [
+          {
+            "pause": {
+              "audio": true
+            }
+          }
+        ],
+        "fire": {
+          "mode": "once",
+          "maxFires": 1,
+          "cooldownMs": 1
+        },
+        "expiresMs": 1,
+        "outDir": "X:/Example/Output",
+        "persistent": true,
+        "pauseImmediately": true
+      },
+      "summary": {
+        "id": "x-1",
+        "state": "armed",
+        "fires": 1,
+        "lastFire": 1,
+        "conditionsProgress": "example",
+        "requiredMode": "ReadOnly"
+      },
+      "firings": [
+        {
+          "ruleId": "r-7",
+          "fire": 1,
+          "frame": 3902,
+          "realtimeMs": 64000,
+          "trigger": {
+            "conditionPath": "when.seq[0]",
+            "detail": "example"
+          },
+          "results": {
+            "screenshots": [],
+            "snapshot": "example",
+            "hits": [],
+            "logs": [],
+            "exec": "example",
+            "emitted": [],
+            "files": []
+          },
+          "paused": true,
+          "resumedAtFrame": 1
+        }
+      ]
+    }
+  }
+}

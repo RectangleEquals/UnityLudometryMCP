@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `id`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-64",
+    "kind": "request",
+    "method": "cancel",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-64",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.id is required.",
+      "data": {
+        "param": "params.id"
+      }
+    }
+  }
+}

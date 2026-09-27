@@ -1,0 +1,20 @@
+{
+  "description": "`logs.search` with required fields only.",
+  "request": {
+    "v": 0,
+    "id": "r-272",
+    "kind": "request",
+    "method": "logs.search",
+    "params": {
+      "regex": "item_.*"
+    }
+  },
+  "response": {
+    "v": 0,
+    "id": "r-272",
+    "kind": "response",
+    "result": {
+      "items": []
+    }
+  }
+}

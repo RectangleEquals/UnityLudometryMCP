@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/profile.start.schema.json",
+  "title": "profile.start",
+  "description": "Per-method timing statistics over a time window, plus a per-frame summary.",
+  "x-method": {
+    "thread": "any",
+    "minMode": "ReadOnly",
+    "job": true,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "ProfileStartParams",
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/anchor.schema.json"
+          },
+          "minItems": 1
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outFile": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "methods",
+        "durationMs"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "ProfileStartJobResult",
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "title": "MethodProfile",
+            "type": "object",
+            "properties": {
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              },
+              "calls": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "totalMs": {
+                "type": "number"
+              },
+              "meanUs": {
+                "type": "number"
+              },
+              "p50Us": {
+                "type": "number"
+              },
+              "p95Us": {
+                "type": "number"
+              },
+              "maxUs": {
+                "type": "number"
+              },
+              "byThread": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "method",
+              "calls",
+              "totalMs",
+              "meanUs",
+              "p50Us",
+              "p95Us",
+              "maxUs"
+            ]
+          }
+        },
+        "frames": {
+          "title": "FrameTimeSummary",
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "meanMs": {
+              "type": "number"
+            },
+            "p95Ms": {
+              "type": "number"
+            },
+            "maxMs": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "count",
+            "meanMs",
+            "p95Ms",
+            "maxMs"
+          ]
+        },
+        "file": {
+          "$ref": "../common/output-file.schema.json"
+        }
+      },
+      "required": [
+        "methods",
+        "frames"
+      ]
+    }
+  }
+}

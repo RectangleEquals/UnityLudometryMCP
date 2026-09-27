@@ -1,0 +1,18 @@
+{
+  "description": "`job.finished` (required fields only).",
+  "event": {
+    "v": 0,
+    "kind": "event",
+    "method": "job.finished",
+    "seq": 7,
+    "params": {
+      "job": {
+        "jobId": "j-1",
+        "kind": "survey",
+        "state": "queued",
+        "startedAt": null,
+        "finishedAt": null
+      }
+    }
+  }
+}

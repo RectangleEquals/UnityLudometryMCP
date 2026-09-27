@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `session`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-195",
+    "kind": "request",
+    "method": "exec.sessionClose",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-195",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.session is required.",
+      "data": {
+        "param": "params.session"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/screenshot.capture.schema.json",
+  "title": "screenshot.capture",
+  "description": "Captures the screen (or one camera) to a caller-chosen path, with vision options: scale, crop, annotate, burst, inline bytes.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "$ref": "../common/capture.schema.json#/$defs/options"
+    },
+    "result": {
+      "title": "ScreenshotCaptureResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/capture.schema.json#/$defs/result"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

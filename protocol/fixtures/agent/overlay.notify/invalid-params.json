@@ -1,0 +1,23 @@
+{
+  "description": "Missing the required `text`.",
+  "requestValid": false,
+  "request": {
+    "v": 0,
+    "id": "r-342",
+    "kind": "request",
+    "method": "overlay.notify",
+    "params": {}
+  },
+  "response": {
+    "v": 0,
+    "id": "r-342",
+    "kind": "response",
+    "error": {
+      "code": "INVALID_PARAMS",
+      "message": "params.text is required.",
+      "data": {
+        "param": "params.text"
+      }
+    }
+  }
+}

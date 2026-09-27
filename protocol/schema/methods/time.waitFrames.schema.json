@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/time.waitFrames.schema.json",
+  "title": "time.waitFrames",
+  "description": "Completes after N frames (blocks the request, not the game).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "TimeWaitFramesParams",
+      "type": "object",
+      "properties": {
+        "frames": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "frames"
+      ]
+    },
+    "result": {
+      "title": "TimeWaitFramesResult",
+      "type": "object",
+      "properties": {
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/event.listeners.schema.json",
+  "title": "event.listeners",
+  "description": "The current invocation list of a C# event (via its backing delegate field).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "EventListenersParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        },
+        "event": {
+          "$ref": "../common/anchor.schema.json"
+        }
+      },
+      "required": [
+        "event"
+      ]
+    },
+    "result": {
+      "title": "EventListenersResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "Listener",
+            "type": "object",
+            "properties": {
+              "target": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "../common/handle-descriptor.schema.json"
+                  }
+                ]
+              },
+              "method": {
+                "$ref": "../common/anchor.schema.json"
+              }
+            },
+            "required": [
+              "target",
+              "method"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

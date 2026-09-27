@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/target.schema.json",
+  "description": "Where a read, write or invoke starts: exactly one of an object handle, a named variable, the static members of a type, or a GameObject by scene path.",
+  "title": "Target",
+  "type": "object",
+  "properties": {
+    "h": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "var": {
+      "type": "string",
+      "minLength": 1
+    },
+    "static": {
+      "$ref": "../common/anchor.schema.json"
+    },
+    "gameObject": {
+      "title": "GameObjectRef",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scene": {
+          "type": "string",
+          "description": "Scene name, or `ddol` for DontDestroyOnLoad."
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "required": [
+        "h"
+      ]
+    },
+    {
+      "required": [
+        "var"
+      ]
+    },
+    {
+      "required": [
+        "static"
+      ]
+    },
+    {
+      "required": [
+        "gameObject"
+      ]
+    }
+  ]
+}
