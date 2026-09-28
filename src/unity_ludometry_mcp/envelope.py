@@ -1,7 +1,8 @@
 """The result envelope every tool returns.
 
-`{ok, data | error, evidence, redactions, advisories, notices, limits, depth, task_id}`. Empty parts are left out, so a
-simple result costs few tokens; `ok` and either `data` or `error` are always present.
+`{ok, data | error, evidence, redactions, advisories, notices, limits, target, project, depth, task_id}`. Empty parts
+are left out, so a simple result costs few tokens; `ok` and either `data` or `error` are always present. `target` and
+`project` name the ones the tool used.
 """
 
 from dataclasses import dataclass, field
@@ -26,6 +27,8 @@ class Result:
     limits_hit: list[str] = field(default_factory=list)
     depth: Depth | None = None
     task_id: str | None = None
+    target: str | None = None
+    project: str | None = None
 
     def add_evidence(self, locator: str, source: str, excerpt: str | None = None) -> "Result":
         item: dict[str, Any] = {"locator": locator, "source": source}
@@ -55,6 +58,10 @@ class Result:
                 out[name] = value
         if self.limits_applied or self.limits_hit:
             out["limits"] = {"applied": self.limits_applied, "hit": self.limits_hit}
+        if self.target is not None:
+            out["target"] = self.target
+        if self.project is not None:
+            out["project"] = self.project
         if self.depth is not None:
             out["depth"] = self.depth
         if self.task_id is not None:

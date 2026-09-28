@@ -1,6 +1,7 @@
 """MCP tools, one module per tool group. Each module that has tools defines `register(app)`.
 
-Tools are plain async functions `fn(call: ToolCall, **params)` declared with `@ulm_tool(...)`. The decorator handles
+Tools are functions `fn(call: ToolCall, **params)` declared with `@ulm_tool(...)`: async for I/O-bound work that awaits
+(providers, tasks), plain functions for quick local work (the profile store's small files). The decorator handles
 everything tools share: MCP annotations, the `user_confirmed` consent parameter, the target/project parameters and their
 resolution, running long operations as tasks, notices, the token budget, and turning errors into `ok:false` results.
 """
@@ -36,7 +37,9 @@ CONSENT_RULE = (
 TARGET_DESCRIPTION = "Target key. Defaults to the active target."
 PROJECT_DESCRIPTION = "Project name. Defaults to the active project."
 
-Scope = Literal["none", "target", "project"]
+# none: no target needed · target: a target · project: a target and project · target_or_project: a target, and the
+# project too when one is open or named.
+Scope = Literal["none", "target", "project", "target_or_project"]
 ProgressFn = Callable[[float, float | None, str | None], Awaitable[None]]
 
 current_context: contextvars.ContextVar[Context | None] = contextvars.ContextVar("ulm_current_context", default=None)
@@ -124,7 +127,7 @@ class ToolCall:
         return await ask_user(self.ctx, self.session, question, kind=kind, options=options)
 
 
-ToolFn = Callable[..., Awaitable[Any]]
+ToolFn = Callable[..., Any]
 
 
 @dataclass(frozen=True)
@@ -206,9 +209,9 @@ def _signature(spec: ToolSpec) -> inspect.Signature:
     original = list(inspect.signature(spec.fn).parameters.values())[1:]
     extra: list[inspect.Parameter] = []
     keyword = inspect.Parameter.KEYWORD_ONLY
-    if spec.scope in ("target", "project"):
+    if spec.scope != "none":
         extra.append(inspect.Parameter("target", keyword, default=None, annotation=Annotated[str | None, Field(description=TARGET_DESCRIPTION)]))
-    if spec.scope == "project":
+    if spec.scope in ("project", "target_or_project"):
         extra.append(inspect.Parameter("project", keyword, default=None, annotation=Annotated[str | None, Field(description=PROJECT_DESCRIPTION)]))
     if spec.needs_confirmation:
         extra.append(inspect.Parameter("user_confirmed", keyword, default=False, annotation=Annotated[bool, Field(description=CONFIRM_DESCRIPTION)]))
@@ -221,7 +224,7 @@ def _resolve_scope(spec: ToolSpec, session: Session, kwargs: dict[str, Any]) -> 
     if spec.scope == "none":
         return None, None
     target_key = kwargs.pop("target", None)
-    project_key = kwargs.pop("project", None) if spec.scope == "project" else None
+    project_key = kwargs.pop("project", None) if spec.scope in ("project", "target_or_project") else None
     target = session.resolve_target(target_key)
     if target is None:
         raise UlmError(
@@ -231,9 +234,9 @@ def _resolve_scope(spec: ToolSpec, session: Session, kwargs: dict[str, Any]) -> 
             ["target"],
         )
     project = None
-    if spec.scope == "project":
+    if spec.scope in ("project", "target_or_project"):
         project = session.resolve_project(target, project_key)
-        if project is None:
+        if project is None and (spec.scope == "project" or project_key):
             raise UlmError(PROJECT_NOT_OPEN, "No project is open.", "Open or create a project first, or pass `project`.", ["project"])
     return target, project
 
@@ -293,7 +296,7 @@ def _make_handler(spec: ToolSpec) -> Callable[..., Awaitable[dict[str, Any]]]:
             elif spec.long_running:
                 result = _start_task(spec, call)
             else:
-                result = as_result(await spec.fn(call, **kwargs))
+                result = as_result(await _run(spec.fn, call, kwargs))
         except UlmError as e:
             result = e.to_result()
         except Exception as e:
@@ -327,20 +330,36 @@ async def _mirror_logs(ctx: Context, session: Session, logs: list[ClientLog]) ->
                 break
 
 
+async def _run(fn: ToolFn, call: ToolCall, kwargs: Mapping[str, Any]) -> Any:
+    value = fn(call, **kwargs)
+    return await value if inspect.isawaitable(value) else value
+
+
 def _start_task(spec: ToolSpec, call: ToolCall) -> Result:
     async def body(progress: ProgressFn) -> Any:
         call._progress = progress
-        return await spec.fn(call, **call.args)
+        return await _run(spec.fn, call, call.args)
 
     task = call.session.tasks.start(spec.name, body, call.target.key if call.target else None, call.project.key if call.project else None)
     return Result(data={"task_id": task.task_id, "state": task.state.value, "hint": "Call task_wait with this task_id for the result."}, task_id=task.task_id)
 
 
 def finish(session: Session, result: Result, target: Ref | None = None, project: Ref | None = None) -> dict[str, Any]:
-    """Attaches pending notices, applies the token budget, and serializes the envelope."""
+    """Attaches pending notices, applies the token budget, and serializes the envelope.
+
+    This never fails the call: if the scopes can't be read (a damaged profile, an invalid ULM_HOME), the shipped
+    limit and no spill folder are used, and the problem is logged.
+    """
     result.notices.extend(session.events.drain_notices())
-    max_tokens = session.limit("response.max_tokens", target, project).value
-    session.budget.fit(result, max_tokens, session.spill_dir(target, project))
+    result.target = target.key if target else None
+    result.project = project.key if project else None
+    try:
+        max_tokens = session.limit("response.max_tokens", target, project).value
+        spill_dir = session.spill_dir(target, project)
+    except Exception:
+        log.warning("Couldn't read the limit scopes; using the shipped response limit.", exc_info=True)
+        max_tokens, spill_dir = session.limits.resolve("response.max_tokens").value, None
+    session.budget.fit(result, max_tokens, spill_dir)
     return result.to_json()
 
 

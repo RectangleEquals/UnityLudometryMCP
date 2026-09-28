@@ -28,7 +28,9 @@ async def tool_json(app: FastMCP[Any], name: str) -> dict[str, Any]:
 
 FLAGS = [
     dict(read_only=r, destructive=d, idempotent=i, needs_confirmation=c, long_running=lr, scope=s)
-    for r, d, i, c, lr, s in itertools.product([False, True], [False, True], [False, True], [False, True], [False, True], ["none", "target", "project"])
+    for r, d, i, c, lr, s in itertools.product(
+        [False, True], [False, True], [False, True], [False, True], [False, True], ["none", "target", "project", "target_or_project"]
+    )
     if not (r and d) and not (c and r)
 ]
 
@@ -52,8 +54,8 @@ async def test_flags_become_annotations_parameters_and_description(flags: dict[s
     }
     properties = tool["inputSchema"]["properties"]
     expected = {"amount"} | ({"user_confirmed"} if flags["needs_confirmation"] else set())
-    expected |= {"target"} if flags["scope"] in ("target", "project") else set()
-    expected |= {"project"} if flags["scope"] == "project" else set()
+    expected |= {"target"} if flags["scope"] != "none" else set()
+    expected |= {"project"} if flags["scope"] in ("project", "target_or_project") else set()
     assert set(properties) == expected
     assert tool["inputSchema"]["required"] == ["amount"]
     if flags["needs_confirmation"]:
@@ -154,7 +156,7 @@ async def test_scope_resolution(tmp_path: pathlib.Path) -> None:
     assert no_target is not None and no_target["error"]["code"] == "TARGET_NOT_OPEN"
     assert missing is not None and "'missing'" in missing["error"]["message"]
     assert no_project is not None and no_project["error"]["code"] == "PROJECT_NOT_OPEN"
-    assert ok == {"ok": True, "data": {"target": "game-1234abcd", "project": "other-mod"}}
+    assert ok == {"ok": True, "data": {"target": "game-1234abcd", "project": "other-mod"}, "target": "game-1234abcd", "project": "other-mod"}
 
 
 @ulm_tool(group="core", title="Fails", read_only=True)

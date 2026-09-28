@@ -3,8 +3,9 @@
 UnityLudometryMCP is an MCP server. Your MCP client (for example Claude Code) starts it and talks to it over stdio, so
 you register it once and don't run it by hand.
 
-> **Pre-release.** The server currently offers its basic tools (status, tool groups, tasks, events). The rest of the
-> orchestrator is being built. The [tool reference](tools.md) lists what's there.
+> **Pre-release.** The server currently offers its basic tools: status, settings, tool groups, tasks, events, and
+> managing ULM's own records of games, projects and output folders. Opening a game for analysis comes next. The
+> [tool reference](tools.md) lists what's there.
 
 ## Requirements
 
@@ -65,6 +66,8 @@ All of the server's own data will live in one folder, the **profile root**:
 `%LOCALAPPDATA%\UnityLudometryMCP` by default (see [configuration](configuration.md) to change it). Anything else it
 writes goes only to locations you choose.
 
-Today the server writes only its log (`logs\` in the profile root) and, when a result is too large to return in one
-piece, the full result next to it. To remove the server, unregister it from your client
-(`claude mcp remove unity-ludometry-mcp`), then delete the clone and the profile root.
+Inside the profile root the server keeps its log (`logs\`), its settings (`settings.json`, once you change one) and a
+folder per game and project (`targets\`). Outside it, it writes only to folders you chose ([configuration](configuration.md)
+explains them). To remove the server, unregister it from your client (`claude mcp remove unity-ludometry-mcp`), then
+delete the clone and the profile root. (Once ULM can install things into a game, remove those from each game first:
+the profile holds the records needed to restore it.)

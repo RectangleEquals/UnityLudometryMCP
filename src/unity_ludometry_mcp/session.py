@@ -15,6 +15,7 @@ import mcp.types as mt
 from mcp_types.version import MODERN_PROTOCOL_VERSIONS
 
 from .budget import Budget
+from .errors import SETUP_REQUIRED, UlmError
 from .events import EventStore
 from .limits.registry import LimitRegistry, Resolved, Scope
 from .profiles.paths import resolve_profile_root
@@ -23,6 +24,8 @@ from .tasks import TaskManager
 if TYPE_CHECKING:
     from fastmcp import Context
     from mcp.server.session import ServerSession
+
+    from .profiles.store import ProfileStore
 
 log = logging.getLogger(__name__)
 
@@ -201,31 +204,74 @@ TargetResolver = Callable[[str | None], Ref | None]
 ProjectResolver = Callable[[Ref, str | None], Ref | None]
 
 
-def _no_target(_: str | None) -> Ref | None:
-    return None
-
-
-def _no_project(_: Ref, __: str | None) -> Ref | None:
-    return None
-
-
 class Session:
     """Everything tools share for the life of the server."""
 
-    def __init__(self, limits: LimitRegistry | None = None, groups: ToolGroups | None = None, budget: Budget | None = None):
+    def __init__(
+        self,
+        limits: LimitRegistry | None = None,
+        groups: ToolGroups | None = None,
+        budget: Budget | None = None,
+        store: "ProfileStore | None" = None,
+    ):
         self.client = ClientSupport()
         self.groups = groups or ToolGroups.from_env()
         self.tasks = TaskManager()
         self.events = EventStore()
         self.limits = limits or LimitRegistry.load()
         self.budget = budget or Budget()
-        # Hooks the profile store and consent features plug into.
-        self.resolve_target: TargetResolver = _no_target
-        self.resolve_project: ProjectResolver = _no_project
+        self._store = store
+        # Hooks (replaceable, e.g. in tests); the defaults use the profile store.
+        self.resolve_target: TargetResolver = self._resolve_target
+        self.resolve_project: ProjectResolver = self._resolve_project
         self.consent_granted: Callable[[str, Mapping[str, Any]], bool] = lambda tool, args: False
-        self.limit_scopes: Callable[[Ref | None, Ref | None], dict[Scope, dict[str, Any]]] = lambda target, project: {}
+        self.limit_scopes: Callable[[Ref | None, Ref | None], dict[Scope, dict[str, Any]]] = self._limit_scopes
         self._server_session: ServerSession | None = None
         self.groups.bind_notifier(self._send_tool_list_changed)
+
+    @property
+    def store(self) -> "ProfileStore":
+        """The profile store in the profile root (SETUP_REQUIRED if ULM_HOME is invalid)."""
+        if self._store is None:
+            from .profiles.store import ProfileStore
+
+            try:
+                root = resolve_profile_root().path
+            except ValueError as e:
+                raise UlmError(SETUP_REQUIRED, str(e), "Fix or unset ULM_HOME in the MCP client's server entry.", ["ULM_HOME"]) from None
+            self._store = ProfileStore(root)
+        return self._store
+
+    def _resolve_target(self, key: str | None) -> Ref | None:
+        store = self.store
+        key = key or store.active()[0]
+        if key is None:
+            return None
+        target = store.open_target(key)
+        return Ref(target.key, target.root)
+
+    def _resolve_project(self, target: Ref, key: str | None) -> Ref | None:
+        store = self.store
+        if key is None:
+            active_target, key = store.active()
+            if active_target != target.key or key is None:
+                return None
+        project = store.open_project(target.key, key)
+        return Ref(project.key, project.root, project.artifacts_dir)
+
+    def _limit_scopes(self, target: Ref | None, project: Ref | None) -> dict[Scope, dict[str, Any]]:
+        store = self.store
+        scopes: dict[Scope, dict[str, Any]] = {}
+        settings_limits = store.settings.load().limits
+        if settings_limits:
+            scopes["settings"] = dict(settings_limits)
+        if target is not None:
+            facts = store.open_target(target.key).facts.section("limits")
+            scopes["target"] = {name: fact.value for name, fact in facts.items()}
+            if project is not None:
+                facts = store.open_project(target.key, project.key).facts.section("limits")
+                scopes["project"] = {name: fact.value for name, fact in facts.items()}
+        return scopes
 
     def observe(self, ctx: "Context") -> None:
         """Called at the start of every request: records client support and the session to notify."""

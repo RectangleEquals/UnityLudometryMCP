@@ -23,3 +23,10 @@
   saved to a file, and every left-out part listed); the limit registry (`rules/limits.json`, precedence); tool groups
   with `tools_enable` / `tools_disable` (`ULM_TOOL_GROUPS=all` lists everything); the `ulm://status` and
   `ulm://guide/{topic}` resources; the daily server log in the profile root and warnings mirrored to the client.
+- The profile store: machine settings (`config_get` / `config_set`, with release pins for the agent, the dnSpy bridge
+  and BepInEx 5 x64/x86); targets and projects with provenance-ranked facts (`target_list`, `target_info`,
+  `target_set_fact`, `target_remove`, `project_open`, `project_list`, `project_info`, `project_set_fact`,
+  `project_close`, `project_remove`); derived manifests; ledgers of every file ULM writes or installs outside the
+  profile; user-chosen output paths, validated and never inside the game (`paths_get`, `paths_set`, `exports_list`,
+  `exports_clean`). Removing a target or project is refused while ULM still has files installed or deployed in the
+  game. Results now say which target and project they used. New error code `INVALID_ARGUMENT`.

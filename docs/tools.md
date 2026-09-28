@@ -32,6 +32,199 @@ Stop listing the tools of some groups, to save context. The core group always st
 |---|---|---|---|
 | `groups` | list of string | yes | Tool groups: core, code, assets, runtime, instrument, live_act, mods. |
 
+## `config_get`
+
+**Get machine settings** · group `core` · read-only, repeatable
+
+The machine settings (settings.json in the profile root): tool install paths, release pins and machine-wide defaults. Output folders aren't settings; see paths_get. Also shows the .NET SDK found on this machine.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `key` | string | no | One setting; all when omitted. |
+
+## `config_set`
+
+**Change a machine setting** · group `core` · changes things, repeatable
+
+Change one machine setting. Install paths are only what the user tells you (never guess one); output folders are set with paths_set instead. Limits set here are this machine's defaults for every game.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `key` | string | yes | A machine setting: dotnet_path, dnspy_path, assetstudio_cli_path, agent_package, dnspy_bridge_package, loader_pins.bepinex5, coverage_overrides, log_level, or limits.<limit>, advisor.<name>, ui.<name>. |
+| `value` | object | yes | The new value; null clears it. |
+
+## `target_list`
+
+**List targets** · group `core` · read-only, repeatable
+
+The games ULM has a profile for, with their projects, and which ones are active.
+
+_No parameters._
+
+## `target_info`
+
+**Describe a target** · group `core` · read-only, repeatable
+
+Everything known about a target: its facts with provenance (source user > runtime > static > research > default), builds, analysis depth, optional providers and projects.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `target` | string | no | Target key. Defaults to the active target. |
+
+## `target_set_fact`
+
+**Set a target fact** · group `core` · changes things, repeatable
+
+Record something the user told you about the game, as a `user` fact (it outranks everything ULM found itself). Only record what the user actually said.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | The fact, as '<section>.<name>' (e.g. identity.company). |
+| `value` | object | yes | The value. |
+| `note` | string | no | Why, or where the value comes from. |
+| `target` | string | no | Target key. Defaults to the active target. |
+
+## `target_remove`
+
+**Remove a target** · group `core` · changes things
+
+Delete a target's profile: its facts, knowledge and projects. Refused while ULM's runtime or mods are still installed in the game. The game itself is never touched, and exported files stay unless delete_exports is set.
+
+This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `key` | string | yes | The target key (target_list shows them). |
+| `delete_exports` | boolean | no | Also delete files ULM exported for it (only ones unchanged since). |
+| `user_confirmed` | boolean | no | Set only if the user explicitly approved this specific action in this conversation. |
+
+## `project_open`
+
+**Open a project** · group `core` · changes things, repeatable
+
+Open a project (a piece of work on the target, usually a mod), creating it if it's new, and make it the active project. Creating one only adds a folder to ULM's profile.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | The project's name (e.g. 'Faster crafting'). |
+| `target` | string | no | Target key. Defaults to the active target. |
+
+## `project_list`
+
+**List projects** · group `core` · read-only, repeatable
+
+The projects of a target.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `target` | string | no | Target key. Defaults to the active target. |
+
+## `project_info`
+
+**Describe a project** · group `core` · read-only, repeatable
+
+A project's facts with provenance, its mod status and whether it needs review after a game update.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `target` | string | no | Target key. Defaults to the active target. |
+| `project` | string | no | Project name. Defaults to the active project. |
+
+## `project_set_fact`
+
+**Set a project fact** · group `core` · changes things, repeatable
+
+Record something the user decided about the project (e.g. identity.goal, mod.name) as a `user` fact. Only record what the user actually said.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | The fact, as '<section>.<name>' (e.g. identity.company). |
+| `value` | object | yes | The value. |
+| `note` | string | no | Why, or where the value comes from. |
+| `target` | string | no | Target key. Defaults to the active target. |
+| `project` | string | no | Project name. Defaults to the active project. |
+
+## `project_close`
+
+**Close the project** · group `core` · changes things, repeatable
+
+Stop working on the active project (the target stays active). Nothing is deleted.
+
+_No parameters._
+
+## `project_remove`
+
+**Remove a project** · group `core` · changes things
+
+Delete a project's profile (its facts, notes and knowledge). Refused while the mod is deployed in the game. Files it exported are listed, not deleted.
+
+This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | The project's name (e.g. 'Faster crafting'). |
+| `target` | string | no | Target key. Defaults to the active target. |
+| `user_confirmed` | boolean | no | Set only if the user explicitly approved this specific action in this conversation. |
+
+## `paths_get`
+
+**Get output paths** · group `core` · read-only, repeatable
+
+Where ULM writes for the user: each output folder, and whether it's set on the project, the target, or is a default inside ULM's profile. Unset folders (null) are asked for when first needed.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `target` | string | no | Target key. Defaults to the active target. |
+| `project` | string | no | Project name. Defaults to the active project. |
+
+## `paths_set`
+
+**Set an output path** · group `core` · changes things
+
+Set an output folder the user chose. Only ever use a folder the user named; never pick one yourself. The folder must be absolute, outside the game install and writable; it's created now.
+
+This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `scope` | string | yes | Set it for the whole target, or for the project only. |
+| `key` | string | yes | The path: paths.asset_export, paths.decompiled_code, paths.mod_project, paths.mod_export, paths.artifacts, paths.cache. |
+| `path` | string | yes | The folder, exactly as the user gave it (absolute). |
+| `move_existing` | boolean | no | Move the files ULM already exported there to the new folder. |
+| `allow_overlap` | boolean | no | The user accepted that this folder overlaps another output folder. |
+| `target` | string | no | Target key. Defaults to the active target. |
+| `project` | string | no | Project name. Defaults to the active project. |
+| `user_confirmed` | boolean | no | Set only if the user explicitly approved this specific action in this conversation. |
+
+## `exports_list`
+
+**List exported files** · group `core` · read-only, repeatable
+
+The files ULM exported to the user's folders (from the exports ledger), and whether each is still unchanged.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `scope` | string | no | Whose exports: the target's or the project's (default: the project's when one is open). |
+| `filter` | string | no | Only files whose path contains this text. |
+| `target` | string | no | Target key. Defaults to the active target. |
+| `project` | string | no | Project name. Defaults to the active project. |
+
+## `exports_clean`
+
+**Delete exported files** · group `core` · changes things
+
+Delete files ULM exported (only those listed in its exports ledger, and only if unchanged since; changed files are kept and reported). Nothing else in the folders is touched.
+
+This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `scope` | string | no | Whose exports: the target's or the project's (default: the project's when one is open). |
+| `filter` | string | no | Only files whose path contains this text. |
+| `target` | string | no | Target key. Defaults to the active target. |
+| `project` | string | no | Project name. Defaults to the active project. |
+| `user_confirmed` | boolean | no | Set only if the user explicitly approved this specific action in this conversation. |
+
 ## `task_get`
 
 **Get a task** · group `core` · read-only, repeatable

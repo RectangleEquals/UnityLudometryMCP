@@ -101,6 +101,829 @@
         'idempotentHint': True,
         'openWorldHint': False,
         'readOnlyHint': True,
+        'title': 'Get machine settings',
+      }),
+      'description': '''
+        The machine settings (settings.json in the profile root): tool install paths, release pins and machine-wide
+        defaults. Output folders aren't settings; see paths_get. Also shows the .NET SDK found on this machine.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'key': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'One setting; all when omitted.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'config_get',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Get machine settings',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Change a machine setting',
+      }),
+      'description': '''
+        Change one machine setting. Install paths are only what the user tells you (never guess one); output folders are
+        set with paths_set instead. Limits set here are this machine's defaults for every game.
+      ''',
+      'inputSchema': dict({
+        '$defs': dict({
+          'JsonValue': dict({
+          }),
+        }),
+        'additionalProperties': False,
+        'properties': dict({
+          'key': dict({
+            'description': 'A machine setting: dotnet_path, dnspy_path, assetstudio_cli_path, agent_package, dnspy_bridge_package, loader_pins.bepinex5, coverage_overrides, log_level, or limits.<limit>, advisor.<name>, ui.<name>.',
+            'minLength': 1,
+            'type': 'string',
+          }),
+          'value': dict({
+            '$ref': '#/$defs/JsonValue',
+            'description': 'The new value; null clears it.',
+          }),
+        }),
+        'required': list([
+          'key',
+          'value',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'config_set',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Change a machine setting',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'List targets',
+      }),
+      'description': 'The games ULM has a profile for, with their projects, and which ones are active.',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+        }),
+        'type': 'object',
+      }),
+      'name': 'target_list',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'List targets',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Describe a target',
+      }),
+      'description': '''
+        Everything known about a target: its facts with provenance (source user > runtime > static > research >
+        default), builds, analysis depth, optional providers and projects.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'target_info',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Describe a target',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Set a target fact',
+      }),
+      'description': '''
+        Record something the user told you about the game, as a `user` fact (it outranks everything ULM found itself).
+        Only record what the user actually said.
+      ''',
+      'inputSchema': dict({
+        '$defs': dict({
+          'JsonValue': dict({
+          }),
+        }),
+        'additionalProperties': False,
+        'properties': dict({
+          'name': dict({
+            'description': "The fact, as '<section>.<name>' (e.g. identity.company).",
+            'minLength': 3,
+            'type': 'string',
+          }),
+          'note': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Why, or where the value comes from.',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+          'value': dict({
+            '$ref': '#/$defs/JsonValue',
+            'description': 'The value.',
+          }),
+        }),
+        'required': list([
+          'name',
+          'value',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'target_set_fact',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Set a target fact',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': False,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Remove a target',
+      }),
+      'description': '''
+        Delete a target's profile: its facts, knowledge and projects. Refused while ULM's runtime or mods are still
+        installed in the game. The game itself is never touched, and exported files stay unless delete_exports is set.
+        
+        This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'delete_exports': dict({
+            'default': False,
+            'description': 'Also delete files ULM exported for it (only ones unchanged since).',
+            'type': 'boolean',
+          }),
+          'key': dict({
+            'description': 'The target key (target_list shows them).',
+            'minLength': 1,
+            'type': 'string',
+          }),
+          'user_confirmed': dict({
+            'default': False,
+            'description': 'Set only if the user explicitly approved this specific action in this conversation.',
+            'type': 'boolean',
+          }),
+        }),
+        'required': list([
+          'key',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'target_remove',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Remove a target',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Open a project',
+      }),
+      'description': '''
+        Open a project (a piece of work on the target, usually a mod), creating it if it's new, and make it the active
+        project. Creating one only adds a folder to ULM's profile.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'name': dict({
+            'description': "The project's name (e.g. 'Faster crafting').",
+            'maxLength': 80,
+            'minLength': 1,
+            'type': 'string',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+        }),
+        'required': list([
+          'name',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'project_open',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Open a project',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'List projects',
+      }),
+      'description': 'The projects of a target.',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'project_list',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'List projects',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Describe a project',
+      }),
+      'description': "A project's facts with provenance, its mod status and whether it needs review after a game update.",
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'project': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Project name. Defaults to the active project.',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'project_info',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Describe a project',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Set a project fact',
+      }),
+      'description': '''
+        Record something the user decided about the project (e.g. identity.goal, mod.name) as a `user` fact. Only
+        record what the user actually said.
+      ''',
+      'inputSchema': dict({
+        '$defs': dict({
+          'JsonValue': dict({
+          }),
+        }),
+        'additionalProperties': False,
+        'properties': dict({
+          'name': dict({
+            'description': "The fact, as '<section>.<name>' (e.g. identity.company).",
+            'minLength': 3,
+            'type': 'string',
+          }),
+          'note': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Why, or where the value comes from.',
+          }),
+          'project': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Project name. Defaults to the active project.',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+          'value': dict({
+            '$ref': '#/$defs/JsonValue',
+            'description': 'The value.',
+          }),
+        }),
+        'required': list([
+          'name',
+          'value',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'project_set_fact',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Set a project fact',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Close the project',
+      }),
+      'description': 'Stop working on the active project (the target stays active). Nothing is deleted.',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+        }),
+        'type': 'object',
+      }),
+      'name': 'project_close',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Close the project',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': False,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Remove a project',
+      }),
+      'description': '''
+        Delete a project's profile (its facts, notes and knowledge). Refused while the mod is deployed in the game.
+        Files it exported are listed, not deleted.
+        
+        This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'name': dict({
+            'description': "The project's name (e.g. 'Faster crafting').",
+            'maxLength': 80,
+            'minLength': 1,
+            'type': 'string',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+          'user_confirmed': dict({
+            'default': False,
+            'description': 'Set only if the user explicitly approved this specific action in this conversation.',
+            'type': 'boolean',
+          }),
+        }),
+        'required': list([
+          'name',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'project_remove',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Remove a project',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Get output paths',
+      }),
+      'description': '''
+        Where ULM writes for the user: each output folder, and whether it's set on the project, the target, or is a
+        default inside ULM's profile. Unset folders (null) are asked for when first needed.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'project': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Project name. Defaults to the active project.',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'paths_get',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Get output paths',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': False,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Set an output path',
+      }),
+      'description': '''
+        Set an output folder the user chose. Only ever use a folder the user named; never pick one yourself. The folder
+        must be absolute, outside the game install and writable; it's created now.
+        
+        This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'allow_overlap': dict({
+            'default': False,
+            'description': 'The user accepted that this folder overlaps another output folder.',
+            'type': 'boolean',
+          }),
+          'key': dict({
+            'description': 'The path: paths.asset_export, paths.decompiled_code, paths.mod_project, paths.mod_export, paths.artifacts, paths.cache.',
+            'type': 'string',
+          }),
+          'move_existing': dict({
+            'default': False,
+            'description': 'Move the files ULM already exported there to the new folder.',
+            'type': 'boolean',
+          }),
+          'path': dict({
+            'description': 'The folder, exactly as the user gave it (absolute).',
+            'minLength': 1,
+            'type': 'string',
+          }),
+          'project': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Project name. Defaults to the active project.',
+          }),
+          'scope': dict({
+            'description': 'Set it for the whole target, or for the project only.',
+            'enum': list([
+              'target',
+              'project',
+            ]),
+            'type': 'string',
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+          'user_confirmed': dict({
+            'default': False,
+            'description': 'Set only if the user explicitly approved this specific action in this conversation.',
+            'type': 'boolean',
+          }),
+        }),
+        'required': list([
+          'scope',
+          'key',
+          'path',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'paths_set',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Set an output path',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'List exported files',
+      }),
+      'description': "The files ULM exported to the user's folders (from the exports ledger), and whether each is still unchanged.",
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'filter': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Only files whose path contains this text.',
+          }),
+          'project': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Project name. Defaults to the active project.',
+          }),
+          'scope': dict({
+            'anyOf': list([
+              dict({
+                'enum': list([
+                  'target',
+                  'project',
+                ]),
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': "Whose exports: the target's or the project's (default: the project's when one is open).",
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'exports_list',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'List exported files',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': False,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Delete exported files',
+      }),
+      'description': '''
+        Delete files ULM exported (only those listed in its exports ledger, and only if unchanged since; changed files
+        are kept and reported). Nothing else in the folders is touched.
+        
+        This changes something. Before calling it, tell the user in plain words what will happen and set user_confirmed only after they explicitly say yes; never decide for them.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'filter': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Only files whose path contains this text.',
+          }),
+          'project': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Project name. Defaults to the active project.',
+          }),
+          'scope': dict({
+            'anyOf': list([
+              dict({
+                'enum': list([
+                  'target',
+                  'project',
+                ]),
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': "Whose exports: the target's or the project's (default: the project's when one is open).",
+          }),
+          'target': dict({
+            'anyOf': list([
+              dict({
+                'type': 'string',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Target key. Defaults to the active target.',
+          }),
+          'user_confirmed': dict({
+            'default': False,
+            'description': 'Set only if the user explicitly approved this specific action in this conversation.',
+            'type': 'boolean',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'exports_clean',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Delete exported files',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
         'title': 'Get a task',
       }),
       'description': "A task's state and progress, and its result once it has finished.",

@@ -6,7 +6,7 @@ from fastmcp import FastMCP
 from pydantic import Field
 
 from .. import __version__
-from ..errors import NOT_FOUND, UlmError
+from ..errors import INVALID_ARGUMENT, UlmError
 from ..profiles.paths import resolve_profile_root
 from ..protocol import PROTOCOL_TEXT
 from ..session import GROUPS, Session
@@ -62,7 +62,7 @@ async def tools_disable(call: ToolCall, groups: Groups) -> dict[str, Any]:
 
 
 def _invalid(message: str) -> Exception:
-    return UlmError(NOT_FOUND, message, "Check the group names.")
+    return UlmError(INVALID_ARGUMENT, message, "Check the group names.")
 
 
 def register(app: FastMCP[Any]) -> None:

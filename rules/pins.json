@@ -1,3 +1,20 @@
 {
-  "$comment": "Default release pins: the agent package, the dnSpy bridge and BepInEx 5. Not filled in yet."
+  "$comment": "Default release pins, copied into settings.json on first run (the user can update them there). A package pin is {version, url or path, sha256}; the loader pin has one download per Windows architecture, since 32-bit and 64-bit games need different builds. null = no release to pin yet.",
+  "agent_package": null,
+  "dnspy_bridge_package": null,
+  "loader_pins": {
+    "bepinex5": {
+      "version": "5.4.23.5",
+      "variants": {
+        "win_x64": {
+          "url": "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.5/BepInEx_win_x64_5.4.23.5.zip",
+          "sha256": "82f9878551030f54657792c0740d9d51a09500eeae1fba21106b0c441e6732c4"
+        },
+        "win_x86": {
+          "url": "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.5/BepInEx_win_x86_5.4.23.5.zip",
+          "sha256": "37651c79e40d6f909572a4f461ac25350bb3ef8fe7fbd29f1aa8791a33b84c82"
+        }
+      }
+    }
+  }
 }

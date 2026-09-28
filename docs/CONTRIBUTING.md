@@ -53,6 +53,11 @@ uv run python tools/codegen.py --check
   tasks (`long_running`), notices, the token budget, and error mapping: raise `UlmError` for expected failures.
   Return data or a `Result` (`envelope.py`). Then regenerate the tool reference (`uv run python tools/codegen.py`).
 - The limits (`rules/limits.json`) are read through `call.limit(key)`, which applies the precedence rules.
+- Tools that only touch the profile store's small files can be plain `def` functions; tools that wait on providers or
+  run tasks are `async`.
+- The profile store (`profiles/`) never hardcodes a machine path: folders come from `platformdirs`, `ULM_HOME` or the
+  user (`tests/unit/test_no_hardcoded_paths.py` checks the code). Every file written outside the profile is recorded
+  in a ledger (`profiles/ledgers.py`); tests never touch the real profile root (`ULM_HOME` points at a temp folder).
 - Never print to stdout in the server: over stdio, stdout carries the MCP messages. Log through `logging` (stderr).
 - `tests/fakes/agent.py` is a fake agent that speaks the real protocol, answers from the golden fixtures and validates
   every request against the schemas. Use it for anything that talks to the agent.
