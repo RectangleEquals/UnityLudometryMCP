@@ -20,5 +20,6 @@
 *.zip     binary
 *.whl     binary
 
-# Generated from the schemas by protocol/codegen/csharp.py (CI verifies they are current)
+# Generated from the schemas by protocol/codegen (csharp.py, python.py); CI verifies they are current
 protocol/csharp/UnityLudometry.Protocol/Generated/** linguist-generated=true
+src/unity_ludometry_mcp/protocol/generated/** linguist-generated=true

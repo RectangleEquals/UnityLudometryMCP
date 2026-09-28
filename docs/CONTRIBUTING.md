@@ -1,14 +1,31 @@
 # Contributing to UnityLudometryMCP
 
-Thanks for your interest! The project is pre-release. Today the repository contains the shared protocol; the Python
-orchestrator is under construction, and this guide grows with it.
+Thanks for your interest! The project is pre-release. Today the repository contains the shared protocol and the start of
+the Python orchestrator (its protocol layer and agent client); this guide grows with it.
 
 ## Repository layout
 
 | Path | What it is |
 |---|---|
 | `protocol/` | The schema-first protocol shared with the in-game agent. See [its README](../protocol/README.md). |
+| `src/unity_ludometry_mcp/` | The Python orchestrator: `protocol/` (generated models in `protocol/generated/`, strict JSON, framing, envelopes, transports), `providers/` (discovery, agent client), `errors.py`. |
+| `tests/` | Python tests: `protocol/` (models vs fixtures, codec, framing, the client against the fake agent), `unit/`, and `fakes/` (a fake agent that speaks the real protocol). |
 | `docs/` | Documentation. |
+
+## Building and testing the Python orchestrator
+
+Requirements: Python 3.13 and [uv](https://docs.astral.sh/uv/).
+
+```
+uv sync --group dev
+uv run ruff check
+uv run pytest
+```
+
+- `uv.lock` pins every dependency; CI installs with `uv sync --locked`.
+- Tests marked `windows` use real named pipes and run only on Windows (CI runs on Windows).
+- `tests/fakes/agent.py` is a fake agent that speaks the real protocol, answers from the golden fixtures and validates
+  every request against the schemas. Use it for anything that talks to the agent.
 
 ## Building and testing the protocol
 
@@ -17,6 +34,7 @@ message types after a schema change.
 
 ```
 python protocol/codegen/csharp.py      # after changing schemas
+python protocol/codegen/python.py
 cd protocol/csharp
 dotnet build -c Release
 dotnet test -c Release
@@ -30,7 +48,8 @@ Warnings are errors. The tests check:
 - that schemas, fixtures, registries, constants and error codes cover each other, and that the package has no
   dependencies.
 
-CI also fails if the generated C# doesn't match the schemas (`python protocol/codegen/csharp.py --check`).
+CI also fails if the generated C# or Python doesn't match the schemas (`python protocol/codegen/csharp.py --check`,
+`python protocol/codegen/python.py --check`).
 
 ## Rules for the protocol package
 
@@ -38,7 +57,7 @@ CI also fails if the generated C# doesn't match the schemas (`python protocol/co
   other mods, where any extra DLL could conflict. PolySharp adds modern C# syntax at compile time only.
 - Everything on the wire is defined by a schema first, following the authoring rules in the protocol README. Add
   fixtures for every new case, including the relevant errors.
-- Never edit `csharp/UnityLudometry.Protocol/Generated/`; regenerate it.
+- Never edit `csharp/UnityLudometry.Protocol/Generated/` or `src/unity_ludometry_mcp/protocol/generated/`; regenerate them.
 - Schema descriptions and code comments must stand on their own. Explain the reason where it's needed.
 - Follow the versioning rules in the protocol README. Before 1.0, any wire change needs a new protocol version.
 

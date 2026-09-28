@@ -12,16 +12,21 @@ your AI assistant can query and act on, with your consent at every step that cha
 - [`protocol/`](protocol/README.md): the schema-first protocol spoken between the orchestrator and the agent: JSON Schemas
   for every method, event and exchanged file, golden fixtures, and the zero-dependency C# package
   `UnityLudometry.Protocol` (with message types generated from the schemas) that the agent uses.
+- `src/unity_ludometry_mcp/`: the start of the Python orchestrator: the protocol layer (models generated from the
+  schemas, strict JSON, framing, envelopes, named-pipe/TCP transports), agent discovery and the agent client.
 - [`docs/`](docs/README.md): documentation, including how to contribute.
 
-The Python MCP server (`unity-ludometry-mcp`) follows. This README will then cover installation and how to register the
+The MCP server itself (`unity-ludometry-mcp`) follows. This README will then cover installation and how to register the
 server with an MCP client.
 
-## Building the protocol package
-Requirements: the .NET SDK pinned in `protocol/csharp/global.json` (10.0.x). Python 3.10+ is only needed to regenerate
-the C# message types after a schema change (`python protocol/codegen/csharp.py`).
+## Building and testing
+Requirements: Python 3.13 with [uv](https://docs.astral.sh/uv/), and the .NET SDK pinned in
+`protocol/csharp/global.json` (10.0.x) for the C# protocol package.
 
 ```
+uv sync --group dev
+uv run pytest
+
 cd protocol/csharp
 dotnet build -c Release
 dotnet test -c Release

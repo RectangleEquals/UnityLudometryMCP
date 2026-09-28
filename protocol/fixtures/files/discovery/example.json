@@ -8,7 +8,7 @@
   "port": 51234,
   "token": "3f9a1c0e7b2d4a6f8e1b3c5d7f9a0b2c4d6e8f0a1b3c5d7e9f1a2b4c6d8e0f1a",
   "protocol": {
-    "major": 1,
+    "major": 0,
     "minor": 1
   },
   "agentVersion": "0.1.0",

@@ -14,7 +14,7 @@
       "agentVersion": "0.1.0",
       "gitCommit": null,
       "protocol": {
-        "major": 1,
+        "major": 0,
         "minor": 1
       },
       "pid": 12345,

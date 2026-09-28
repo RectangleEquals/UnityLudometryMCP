@@ -12,7 +12,7 @@
         "version": "1.2.3"
       },
       "protocol": {
-        "major": 1,
+        "major": 0,
         "minor": 1
       }
     }
@@ -25,7 +25,7 @@
       "agentVersion": "0.1.0",
       "gitCommit": "0a1b2c3",
       "protocol": {
-        "major": 1,
+        "major": 0,
         "minor": 1
       },
       "pid": 12345,

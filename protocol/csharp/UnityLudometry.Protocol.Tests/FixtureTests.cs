@@ -90,6 +90,59 @@ public sealed class FixtureTests
     }
 
     [Fact]
+    public void Fixtures_name_the_current_protocol_version()
+    {
+        // Example data must be semantically right, not just valid; only the mismatch fixture differs on purpose.
+        var wrong = new List<string>();
+
+        void Walk(JsonValue? value, string where)
+        {
+            switch (value)
+            {
+                case JsonObject o:
+                    if (o["major"] is JsonNumber major && o["minor"] is JsonNumber minor
+                        && !(major.TryGetInt32(out var a) && a == ProtocolVersion.Major && minor.TryGetInt32(out var b) && b == ProtocolVersion.Minor))
+                    {
+                        wrong.Add($"{where}: {major.RawText}.{minor.RawText}");
+                    }
+
+                    foreach (var property in o)
+                    {
+                        Walk(property.Value, where);
+                    }
+
+                    break;
+                case JsonArray array:
+                    foreach (var item in array)
+                    {
+                        Walk(item, where);
+                    }
+
+                    break;
+            }
+        }
+
+        foreach (var fixture in Fixtures.Values.Where(f => f.Id != "hello/protocol-mismatch"))
+        {
+            Walk(fixture.Request, fixture.Id);
+            Walk(fixture.Response, fixture.Id);
+            Walk(fixture.JobResult, fixture.Id);
+            Walk(fixture.Event, fixture.Id);
+        }
+
+        foreach (var file in FileFixtures.Load(ProtocolFiles.FileFixturesDirectory))
+        {
+            var lines = file.IsNdjson ? FileFixtures.Lines(file) : new[] { System.Text.Encoding.UTF8.GetString(file.Bytes) };
+            foreach (var line in lines)
+            {
+                Walk(JsonValue.Parse(line), file.Id);
+            }
+        }
+
+        Assert.True(wrong.Count == 0, string.Join(Environment.NewLine, wrong));
+    }
+
+    [Fact]
     public void Fixtures_use_the_current_protocol_major()
     {
         foreach (var fixture in Fixtures.Values)

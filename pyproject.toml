@@ -1,0 +1,50 @@
+[project]
+name = "unity-ludometry-mcp"
+version = "0.1.0.dev0"
+description = "Local MCP server for understanding Unity games and building mods."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "RectangleEquals" }]
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.11,<3",
+]
+
+[project.urls]
+Repository = "https://github.com/RectangleEquals/UnityLudometryMCP"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4",
+    "pytest-asyncio>=1.2",
+    "ruff>=0.13",
+    "jsonschema>=4.25",
+]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unity_ludometry_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = ["--import-mode=importlib"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "windows: needs Windows named pipes",
+    "slow: slow tests",
+]
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py313"
+src = ["src", "tests", "protocol/codegen"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "ASYNC", "SIM", "RUF"]

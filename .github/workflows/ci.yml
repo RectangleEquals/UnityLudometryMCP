@@ -46,6 +46,27 @@ jobs:
           path: protocol/csharp/TestResults/*.trx
           if-no-files-found: ignore
 
+  python:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install
+        run: uv sync --locked --group dev
+
+      - name: Lint
+        run: uv run ruff check
+
+      - name: Generated Python models are up to date
+        run: uv run python protocol/codegen/python.py --check
+
+      - name: Test
+        run: uv run pytest
+
   privacy:
     runs-on: windows-latest
     steps:

@@ -19,7 +19,7 @@ in `csharp/` (and the orchestrator's Python models) is generated from or tested 
 | `schema/files/` | Exchanged files: the discovery file, the release `package.json`, and the NDJSON outputs (`ndjson` header/footer plus survey, IL index, content scan, trace, export manifest, metrics records) |
 | `schema/bridge/` | Methods and events of static-analysis bridges (added later) |
 | `fixtures/agent/`, `fixtures/files/` | Golden fixtures (see below) |
-| `codegen/csharp.py` | Generates the C# message types and registries from the schemas |
+| `codegen/` | Generators for the C# message types and the Python models (sharing one schema reader) |
 | `csharp/` | `UnityLudometry.Protocol` (netstandard2.0, zero dependencies), `UnityLudometry.Protocol.Conformance` (fixture replay for consumers' tests), `UnityLudometry.Protocol.Tests` |
 
 ## Transport and framing
@@ -55,6 +55,13 @@ These keep the schemas, the generated code and the fixtures consistent; the gene
 - Other unions, untyped values and fixed-length arrays become raw JSON values in generated code.
 - Descriptions are self-contained.
 
+## Generated Python models
+
+`python protocol/codegen/python.py` regenerates `src/unity_ludometry_mcp/protocol/generated/`: one pydantic model per
+titled object (strict validation, snake_case fields with the JSON names as aliases, unknown properties kept, canonical
+`to_json()`), plus `METHODS`, `EVENTS` and `FILES`. Integer fields accept integral numbers in the 64-bit range (e.g.
+`5.0`), the same rule as the C# package. CI fails if the models don't match the schemas (`--check`).
+
 ## Generated C# types
 
 `python protocol/codegen/csharp.py` (Python 3.10+, standard library only) regenerates
@@ -81,9 +88,10 @@ has examples. Each fixture must validate against the schemas and round-trip thro
 
 The protocol is changed only in this repository.
 1. Change or add the schemas (following the authoring rules), and add fixtures for every new case.
-2. Regenerate the C# types (`python protocol/codegen/csharp.py`) and the Python models.
-3. `dotnet test` in `csharp/` must pass. It checks schema validity, every `$ref`, every fixture, and that schemas,
-   fixtures, registries, constants and error codes cover each other.
+2. Regenerate the C# types and the Python models (`python protocol/codegen/csharp.py`, `python protocol/codegen/python.py`).
+3. `dotnet test` in `csharp/` and `uv run pytest` must pass. They check schema validity, every `$ref`, every fixture
+   (shape and the protocol version it names), and that schemas, fixtures, registries, constants and error codes cover
+   each other.
 4. Tag a new version. Consumers then bump their protocol submodule.
 
 ## Using the C# package from another repository

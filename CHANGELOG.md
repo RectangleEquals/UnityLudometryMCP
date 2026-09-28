@@ -6,3 +6,8 @@
   NDJSON outputs); golden fixtures for every method, event and file; the zero-dependency C# package
   `UnityLudometry.Protocol` with message types and registries generated from the schemas (`protocol/codegen`), the
   `UnityLudometry.Protocol.Conformance` library, and tests.
+- Protocol `0.1.0-dev.2`: fixtures that named the protocol version now name 0.1 (the wire format is unchanged); tests on
+  both sides check it. The schema reader is shared by the C# and the new Python generator.
+- Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,
+  named-pipe/TCP transports), agent discovery, the agent client (handshake, requests, events, jobs, reconnect), the error
+  model, and a fake agent for tests.
