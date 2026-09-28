@@ -5,31 +5,44 @@ and build mods for them. It combines optional static-analysis tools, online rese
 ([UnityRuntimeAnalysisAgent](https://github.com/RectangleEquals/UnityRuntimeAnalysisAgent)) into one knowledge base that
 your AI assistant can query and act on, with your consent at every step that changes anything.
 
-> **Status: pre-release (v0.1 in development).** The orchestrator itself is under construction. What exists today is the
-> shared **protocol** between the orchestrator and the in-game agent: [`protocol/`](protocol/README.md).
+> **Status: pre-release (v0.1 in development).** The MCP server runs and can be registered with your client, but it
+> offers only `server_status` so far. The rest of the orchestrator is being built.
 
 ## What's here now
+- The MCP server `unity-ludometry-mcp` (stdio) with the `server_status` tool.
 - [`protocol/`](protocol/README.md): the schema-first protocol spoken between the orchestrator and the agent: JSON Schemas
   for every method, event and exchanged file, golden fixtures, and the zero-dependency C# package
   `UnityLudometry.Protocol` (with message types generated from the schemas) that the agent uses.
-- `src/unity_ludometry_mcp/`: the start of the Python orchestrator: the protocol layer (models generated from the
-  schemas, strict JSON, framing, envelopes, named-pipe/TCP transports), agent discovery and the agent client.
-- [`docs/`](docs/README.md): documentation, including how to contribute.
+- `src/unity_ludometry_mcp/`: the Python orchestrator: the protocol layer (models generated from the schemas, strict
+  JSON, framing, envelopes, named-pipe/TCP transports), agent discovery, the agent client, and the package layout the
+  rest of the orchestrator grows into.
+- [`docs/`](docs/README.md): documentation.
 
-The MCP server itself (`unity-ludometry-mcp`) follows. This README will then cover installation and how to register the
-server with an MCP client.
+## Requirements
+Windows, Python 3.13 with [uv](https://docs.astral.sh/uv/), and the [.NET SDK](https://dotnet.microsoft.com/download)
+(10.0 or newer). Later, optionally: dnSpyEx and the AssetStudio command-line tool, for static analysis.
+
+## Install and register
+There are no releases yet; run the server from a clone and register it with your MCP client as `unity-ludometry-mcp`.
+In Claude Code:
+
+```
+git clone https://github.com/RectangleEquals/UnityLudometryMCP
+cd UnityLudometryMCP
+uv sync
+claude mcp add unity-ludometry-mcp -- uv run --directory <path to your clone> unity-ludometry-mcp
+```
+
+[Getting started](docs/getting-started.md) has the JSON form for other clients, what gets written where (the profile
+root, otherwise only folders you choose; today nothing at all) and how to remove everything.
+[Configuration](docs/configuration.md) lists the environment variables.
 
 ## Building and testing
-Requirements: Python 3.13 with [uv](https://docs.astral.sh/uv/), and the .NET SDK pinned in
-`protocol/csharp/global.json` (10.0.x) for the C# protocol package.
+See [CONTRIBUTING](docs/CONTRIBUTING.md). In short:
 
 ```
 uv sync --group dev
 uv run pytest
-
-cd protocol/csharp
-dotnet build -c Release
-dotnet test -c Release
 ```
 
 ## About the use of AI in this project

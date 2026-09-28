@@ -9,13 +9,30 @@ def test_every_agent_error_code_is_mapped() -> None:
 
 def test_mapping_follows_the_contract() -> None:
     cases = {
-        "BAD_TOKEN": errors.PROVIDER_UNAVAILABLE, "HANDSHAKE_REQUIRED": errors.PROVIDER_UNAVAILABLE, "PROTOCOL_MISMATCH": errors.PROVIDER_UNAVAILABLE,
-        "MODE_FORBIDDEN": errors.MODE_FORBIDDEN, "UNSUPPORTED": errors.CAPABILITY_UNAVAILABLE, "INDEX_STALE": errors.INDEX_STALE,
-        "NOT_FOUND": errors.NOT_FOUND, "AMBIGUOUS": errors.AMBIGUOUS, "HANDLE_EXPIRED": errors.HANDLE_EXPIRED, "REF_EXPIRED": errors.REF_EXPIRED,
-        "GAME_EXCEPTION": errors.GAME_EXCEPTION, "PATCH_FAILED": errors.PROVIDER_FAILED, "EXEC_FAILED": errors.PROVIDER_FAILED,
-        "DUPLICATE_ASSEMBLY": errors.INTERNAL, "BUSY": errors.PROVIDER_FAILED, "TIMEOUT": errors.TIMEOUT, "CANCELLED": errors.CANCELLED,
-        "MAIN_THREAD_UNAVAILABLE": errors.TIMEOUT, "IO_FAILED": errors.PROVIDER_FAILED, "INTERNAL": errors.PROVIDER_FAILED,
-        "INVALID_FRAME": errors.INTERNAL, "FRAME_TOO_LARGE": errors.INTERNAL, "METHOD_NOT_FOUND": errors.INTERNAL, "INVALID_PARAMS": errors.INTERNAL,
+        "BAD_TOKEN": errors.PROVIDER_UNAVAILABLE,
+        "HANDSHAKE_REQUIRED": errors.PROVIDER_UNAVAILABLE,
+        "PROTOCOL_MISMATCH": errors.PROVIDER_UNAVAILABLE,
+        "MODE_FORBIDDEN": errors.MODE_FORBIDDEN,
+        "UNSUPPORTED": errors.CAPABILITY_UNAVAILABLE,
+        "INDEX_STALE": errors.INDEX_STALE,
+        "NOT_FOUND": errors.NOT_FOUND,
+        "AMBIGUOUS": errors.AMBIGUOUS,
+        "HANDLE_EXPIRED": errors.HANDLE_EXPIRED,
+        "REF_EXPIRED": errors.REF_EXPIRED,
+        "GAME_EXCEPTION": errors.GAME_EXCEPTION,
+        "PATCH_FAILED": errors.PROVIDER_FAILED,
+        "EXEC_FAILED": errors.PROVIDER_FAILED,
+        "DUPLICATE_ASSEMBLY": errors.INTERNAL,
+        "BUSY": errors.PROVIDER_FAILED,
+        "TIMEOUT": errors.TIMEOUT,
+        "CANCELLED": errors.CANCELLED,
+        "MAIN_THREAD_UNAVAILABLE": errors.TIMEOUT,
+        "IO_FAILED": errors.PROVIDER_FAILED,
+        "INTERNAL": errors.PROVIDER_FAILED,
+        "INVALID_FRAME": errors.INTERNAL,
+        "FRAME_TOO_LARGE": errors.INTERNAL,
+        "METHOD_NOT_FOUND": errors.INTERNAL,
+        "INVALID_PARAMS": errors.INTERNAL,
     }
     for agent_code, ulm_code in cases.items():
         mapped = errors.map_agent_error({"code": agent_code, "message": "m"}, "obj.get")

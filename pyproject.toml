@@ -8,8 +8,14 @@ license-files = ["LICENSE"]
 authors = [{ name = "RectangleEquals" }]
 requires-python = ">=3.13"
 dependencies = [
+    "fastmcp>=4.0.10,<4.1",
+    "pillow>=12.3,<13",
+    "platformdirs>=4.12,<5",
     "pydantic>=2.11,<3",
 ]
+
+[project.scripts]
+unity-ludometry-mcp = "unity_ludometry_mcp.__main__:main"
 
 [project.urls]
 Repository = "https://github.com/RectangleEquals/UnityLudometryMCP"
@@ -20,6 +26,9 @@ dev = [
     "pytest-asyncio>=1.2",
     "ruff>=0.13",
     "jsonschema>=4.25",
+    "hypothesis>=6.168",
+    "syrupy>=6.1",
+    "mypy>=2.3",
 ]
 
 [build-system]
@@ -29,15 +38,23 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/unity_ludometry_mcp"]
 
+# Shipped defaults, templates and the protocol schemas, loaded at runtime through importlib.resources.
+[tool.hatch.build.targets.wheel.force-include]
+"rules" = "unity_ludometry_mcp/_data/rules"
+"templates" = "unity_ludometry_mcp/_data/templates"
+"protocol/schema" = "unity_ludometry_mcp/_data/protocol/schema"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["tests"]
-addopts = ["--import-mode=importlib"]
+addopts = ["--import-mode=importlib", "-m", "not dotnet and not integration_real"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 markers = [
     "windows: needs Windows named pipes",
     "slow: slow tests",
+    "dotnet: needs the .NET SDK (run with -m dotnet)",
+    "integration_real: needs a real game and agent (run with -m integration_real and ULM_TEST_SETTINGS)",
 ]
 filterwarnings = ["error"]
 
@@ -46,5 +63,32 @@ line-length = 160
 target-version = "py313"
 src = ["src", "tests", "protocol/codegen"]
 
+[tool.ruff.format]
+# Generated code is checked for freshness against its generator instead.
+exclude = ["src/unity_ludometry_mcp/protocol/generated/**"]
+
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "ASYNC", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.13"
+mypy_path = "src"
+packages = ["unity_ludometry_mcp"]
+plugins = ["pydantic.mypy"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
+
+# Strict for the packages that hold the orchestrator's state and rules.
+[[tool.mypy.overrides]]
+module = [
+    "unity_ludometry_mcp.profiles.*",
+    "unity_ludometry_mcp.data.*",
+    "unity_ludometry_mcp.pipeline.*",
+    "unity_ludometry_mcp.advisor.*",
+    "unity_ludometry_mcp.limits.*",
+    "unity_ludometry_mcp.consent.*",
+    "unity_ludometry_mcp.protocol.*",
+]
+strict = true

@@ -7,7 +7,7 @@ on every event the request produces. Unknown envelope properties are kept in `ex
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Literal, overload
 
 from . import json_codec
 from .errors import INVALID_FRAME, ProtocolException
@@ -90,6 +90,10 @@ def _fail(message: str) -> ProtocolException:
     return ProtocolException(INVALID_FRAME, f"Invalid envelope: {message}")
 
 
+@overload
+def _int(d: dict[str, Any], key: str, required: Literal[True]) -> int: ...
+@overload
+def _int(d: dict[str, Any], key: str, required: Literal[False]) -> int | None: ...
 def _int(d: dict[str, Any], key: str, required: bool) -> int | None:
     value = d.get(key, _MISSING)
     if value is _MISSING:
@@ -108,6 +112,10 @@ def _str(d: dict[str, Any], key: str) -> str:
     return value
 
 
+@overload
+def _obj(d: dict[str, Any], key: str, required: Literal[True]) -> dict[str, Any]: ...
+@overload
+def _obj(d: dict[str, Any], key: str, required: Literal[False]) -> dict[str, Any] | None: ...
 def _obj(d: dict[str, Any], key: str, required: bool) -> dict[str, Any] | None:
     value = d.get(key, _MISSING)
     if value is _MISSING and not required:

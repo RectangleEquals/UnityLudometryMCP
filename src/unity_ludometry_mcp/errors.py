@@ -33,12 +33,34 @@ ESTOPPED = "ESTOPPED"
 PROVIDER_FAILED = "PROVIDER_FAILED"
 INTERNAL = "INTERNAL"
 
-CODES = frozenset({
-    SETUP_REQUIRED, TARGET_NOT_OPEN, PROJECT_NOT_OPEN, STATIC_PENDING, INDEX_STALE, PROVIDER_UNAVAILABLE,
-    CAPABILITY_UNAVAILABLE, GAME_NOT_RUNNING, AGENT_NOT_CONNECTED, MODE_FORBIDDEN, CONSENT_REQUIRED, LIMIT_ADVISORY,
-    NOT_FOUND, AMBIGUOUS, HANDLE_EXPIRED, REF_EXPIRED, GAME_EXCEPTION, BUILD_FAILED, TEST_FAILED, TIMEOUT, CANCELLED,
-    ESTOPPED, PROVIDER_FAILED, INTERNAL,
-})
+CODES = frozenset(
+    {
+        SETUP_REQUIRED,
+        TARGET_NOT_OPEN,
+        PROJECT_NOT_OPEN,
+        STATIC_PENDING,
+        INDEX_STALE,
+        PROVIDER_UNAVAILABLE,
+        CAPABILITY_UNAVAILABLE,
+        GAME_NOT_RUNNING,
+        AGENT_NOT_CONNECTED,
+        MODE_FORBIDDEN,
+        CONSENT_REQUIRED,
+        LIMIT_ADVISORY,
+        NOT_FOUND,
+        AMBIGUOUS,
+        HANDLE_EXPIRED,
+        REF_EXPIRED,
+        GAME_EXCEPTION,
+        BUILD_FAILED,
+        TEST_FAILED,
+        TIMEOUT,
+        CANCELLED,
+        ESTOPPED,
+        PROVIDER_FAILED,
+        INTERNAL,
+    }
+)
 
 
 @dataclass
@@ -70,8 +92,11 @@ class UlmError(Exception):
 _AGENT_MAP: dict[str, tuple[str, str, bool]] = {
     "BAD_TOKEN": (PROVIDER_UNAVAILABLE, "The agent rejected the session token; re-read its discovery file (the game may have restarted).", False),
     "HANDSHAKE_REQUIRED": (PROVIDER_UNAVAILABLE, "The connection wasn't authenticated; reconnect.", False),
-    "PROTOCOL_MISMATCH": (PROVIDER_UNAVAILABLE,
-                          "The agent speaks a different protocol version; install matching releases of the orchestrator and the agent.", False),
+    "PROTOCOL_MISMATCH": (
+        PROVIDER_UNAVAILABLE,
+        "The agent speaks a different protocol version; install matching releases of the orchestrator and the agent.",
+        False,
+    ),
     "MODE_FORBIDDEN": (MODE_FORBIDDEN, "The agent's mode doesn't allow this; ask the user whether to raise it (runtime_set_mode).", False),
     "UNSUPPORTED": (CAPABILITY_UNAVAILABLE, "This game or runtime lacks the optional module this needs (see agent.capabilities).", False),
     "INDEX_STALE": (INDEX_STALE, "The code reference is from another build; check for a build change and refresh the survey.", False),

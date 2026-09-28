@@ -9,6 +9,7 @@ Rules (the schema authoring rules of the protocol README):
 - Common types with hand-written counterparts: agent-mode → `mode`, error → `error`, value → raw JSON.
 - A property that may be null must be required (canonical form: always written; absent optional properties are omitted).
 """
+
 from __future__ import annotations
 
 import json
@@ -59,10 +60,10 @@ def resolve(ref: str, base_uri: str) -> tuple[str, dict]:
 # ---------------------------------------------------------------- type model
 @dataclass
 class IrType:
-    kind: str                 # string | long | double | bool | mode | json | object | class | error | list
-    name: str = ""            # class name
+    kind: str  # string | long | double | bool | mode | json | object | class | error | list
+    name: str = ""  # class name
     item: IrType | None = None
-    nullable: bool = False     # schema allows JSON null
+    nullable: bool = False  # schema allows JSON null
 
 
 @dataclass
@@ -83,7 +84,7 @@ class ClassDef:
     @property
     def group(self) -> str:
         """The schema folder the class comes from: common, methods, events, files."""
-        return self.origin[len(BASE):].split("#")[0].split("/")[0]
+        return self.origin[len(BASE) :].split("#")[0].split("/")[0]
 
 
 @dataclass
@@ -108,7 +109,7 @@ class EventEntry:
 @dataclass
 class FileEntry:
     schema: str
-    rec: str          # NDJSON record kind, or "" for single-document files
+    rec: str  # NDJSON record kind, or "" for single-document files
     type: IrType
 
 
@@ -206,9 +207,9 @@ def build() -> Model:
     events: list[EventEntry] = []
     files: list[FileEntry] = []
     for uri, doc in DOCS.items():
-        rel = uri[len(BASE):]
+        rel = uri[len(BASE) :]
         if rel.startswith("methods/"):
-            name = rel[len("methods/"):-len(".schema.json")]
+            name = rel[len("methods/") : -len(".schema.json")]
             if doc.get("title") != name:
                 raise SchemaError(f"{rel}: title must be the method name")
             defs = doc["$defs"]
@@ -218,13 +219,13 @@ def build() -> Model:
                     raise SchemaError(f"{rel}: $defs/{k} must be an object type")
             methods.append(MethodEntry(name, pascal(name), doc["x-method"], types["params"], types["result"], types.get("jobResult"), doc["description"]))
         elif rel.startswith("events/"):
-            kind = rel[len("events/"):-len(".schema.json")]
+            kind = rel[len("events/") : -len(".schema.json")]
             t = b.map_type(doc["$defs"]["params"], f"{uri}#/$defs/params")
             if t.kind != "class":
                 raise SchemaError(f"{rel}: params must be an object type")
             events.append(EventEntry(kind, pascal(kind), t, doc["description"]))
         elif rel.startswith("files/"):
-            name = rel[len("files/"):-len(".schema.json")]
+            name = rel[len("files/") : -len(".schema.json")]
             if "properties" in doc:
                 files.append(FileEntry(name, "", b.map_type(doc, uri + "#")))
             for def_name, node in doc.get("$defs", {}).items():

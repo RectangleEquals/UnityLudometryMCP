@@ -15,8 +15,8 @@ FILE_FIXTURES = PROTOCOL / "fixtures" / "files"
 
 @dataclass(frozen=True)
 class FixtureCase:
-    id: str                      # e.g. "hello/ok", "events/log/full"
-    group: str                   # method name, event kind, or "_generic"
+    id: str  # e.g. "hello/ok", "events/log/full"
+    group: str  # method name, event kind, or "_generic"
     is_event: bool
     description: str
     request_valid: bool
@@ -42,14 +42,25 @@ def load_agent_fixtures() -> list[FixtureCase]:
         unknown = set(d) - {"description", "requestValid", "request", "response", "jobResult", "event"}
         if unknown:
             raise ValueError(f"fixture {rel} has unknown properties: {sorted(unknown)}")
-        cases.append(FixtureCase(rel, parts[1] if is_event else parts[0], is_event, d["description"], d.get("requestValid", True),
-                                 d.get("request"), d.get("response"), d.get("jobResult"), d.get("event")))
+        cases.append(
+            FixtureCase(
+                rel,
+                parts[1] if is_event else parts[0],
+                is_event,
+                d["description"],
+                d.get("requestValid", True),
+                d.get("request"),
+                d.get("response"),
+                d.get("jobResult"),
+                d.get("event"),
+            )
+        )
     return cases
 
 
 @dataclass(frozen=True)
 class FileFixture:
-    id: str                      # e.g. "survey/example.ndjson"
+    id: str  # e.g. "survey/example.ndjson"
     schema: str
     is_ndjson: bool
     data: bytes

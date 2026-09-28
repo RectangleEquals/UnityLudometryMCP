@@ -55,8 +55,7 @@ def memory_pair() -> tuple[Streams, Streams]:
     transport_a.peer_transport, transport_b.peer_transport = transport_b, transport_a
     proto_a.connection_made(transport_a)
     proto_b.connection_made(transport_b)
-    return ((reader_a, asyncio.StreamWriter(transport_a, proto_a, reader_a, loop)),
-            (reader_b, asyncio.StreamWriter(transport_b, proto_b, reader_b, loop)))
+    return ((reader_a, asyncio.StreamWriter(transport_a, proto_a, reader_a, loop)), (reader_b, asyncio.StreamWriter(transport_b, proto_b, reader_b, loop)))
 
 
 class ScriptedPeer:

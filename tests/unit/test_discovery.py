@@ -9,10 +9,23 @@ from unity_ludometry_mcp.providers import discovery
 
 
 def write(directory: pathlib.Path, pid: int, process_path: str, **overrides: object) -> pathlib.Path:
-    info = {"provider": "agent", "pid": pid, "processName": "ExampleGame", "processPath": process_path, "transport": "pipe",
-            "pipe": f"ulm-agent-{pid}", "port": None, "token": "ab" * 32, "protocol": {"major": 0, "minor": 1}, "agentVersion": "0.1.0",
-            "loader": {"name": "BepInEx", "version": "5.4.23.5"}, "unityVersion": "2021.3.45f1", "mode": "ReadOnly",
-            "startedAt": "2026-09-27T10:00:00.000Z", **overrides}
+    info = {
+        "provider": "agent",
+        "pid": pid,
+        "processName": "ExampleGame",
+        "processPath": process_path,
+        "transport": "pipe",
+        "pipe": f"ulm-agent-{pid}",
+        "port": None,
+        "token": "ab" * 32,
+        "protocol": {"major": 0, "minor": 1},
+        "agentVersion": "0.1.0",
+        "loader": {"name": "BepInEx", "version": "5.4.23.5"},
+        "unityVersion": "2021.3.45f1",
+        "mode": "ReadOnly",
+        "startedAt": "2026-09-27T10:00:00.000Z",
+        **overrides,
+    }
     path = directory / f"agent-{pid}.json"
     path.write_bytes(json_codec.dumps(info))
     return path

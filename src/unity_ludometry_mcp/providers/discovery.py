@@ -14,6 +14,7 @@ import pathlib
 import sys
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
+from typing import Any
 
 from pydantic import ValidationError
 
@@ -24,7 +25,7 @@ from ..protocol.generated.models import DiscoveryFile
 POLL_INTERVAL_S = 0.5
 
 
-def _kernel32():  # pragma: no cover - Windows only
+def _kernel32() -> Any:  # pragma: no cover - Windows only
     from ctypes import wintypes
 
     k = ctypes.WinDLL("kernel32", use_last_error=True)
@@ -92,8 +93,7 @@ def _read(path: pathlib.Path) -> DiscoveryFile | None:
         return None  # being written, or not a valid discovery file
 
 
-def scan(providers_dir: str | os.PathLike[str], *, install_dir: str | os.PathLike[str] | None = None,
-         remove_stale: bool = True) -> list[DiscoveredAgent]:
+def scan(providers_dir: str | os.PathLike[str], *, install_dir: str | os.PathLike[str] | None = None, remove_stale: bool = True) -> list[DiscoveredAgent]:
     """Live agents in `providers_dir`, optionally only those whose game runs from `install_dir`.
 
     Files of dead processes are removed when `remove_stale` (never files of live processes, never unreadable files).
@@ -117,8 +117,9 @@ def scan(providers_dir: str | os.PathLike[str], *, install_dir: str | os.PathLik
     return found
 
 
-async def watch(providers_dir: str | os.PathLike[str], *, install_dir: str | os.PathLike[str] | None = None,
-                interval_s: float = POLL_INTERVAL_S) -> AsyncIterator[list[DiscoveredAgent]]:
+async def watch(
+    providers_dir: str | os.PathLike[str], *, install_dir: str | os.PathLike[str] | None = None, interval_s: float = POLL_INTERVAL_S
+) -> AsyncIterator[list[DiscoveredAgent]]:
     """Yields the live agents whenever the set changes (polling)."""
     last: tuple[tuple[str, int], ...] | None = None
     while True:

@@ -56,9 +56,15 @@ async def test_handshake_through_discovery(fake: FakeAgent, client: AgentClient)
     assert fake.received[0].method == "hello" and fake.received[0].params["token"] == fake.token
 
 
-@pytest.mark.parametrize("case", [f for f in FIXTURES if not f.is_event and not f.is_generic and f.request_valid
-                                  and f.id.endswith("/ok") and f.group not in NATIVE and not METHODS[f.group].job],
-                         ids=lambda f: f.group)
+@pytest.mark.parametrize(
+    "case",
+    [
+        f
+        for f in FIXTURES
+        if not f.is_event and not f.is_generic and f.request_valid and f.id.endswith("/ok") and f.group not in NATIVE and not METHODS[f.group].job
+    ],
+    ids=lambda f: f.group,
+)
 async def test_every_fixture_method(fake: FakeAgent, client: AgentClient, case: object) -> None:
     """The client sends each fixture request (the fake validates it against the schema) and types the result."""
     request = case.request  # type: ignore[attr-defined]

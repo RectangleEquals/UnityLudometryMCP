@@ -1,16 +1,19 @@
 # Contributing to UnityLudometryMCP
 
-Thanks for your interest! The project is pre-release. Today the repository contains the shared protocol and the start of
-the Python orchestrator (its protocol layer and agent client); this guide grows with it.
+Thanks for your interest! The project is pre-release. Today the repository contains the shared protocol, the Python
+orchestrator's protocol layer and agent client, and a minimal MCP server; this guide grows with it.
 
 ## Repository layout
 
 | Path | What it is |
 |---|---|
 | `protocol/` | The schema-first protocol shared with the in-game agent. See [its README](../protocol/README.md). |
-| `src/unity_ludometry_mcp/` | The Python orchestrator: `protocol/` (generated models in `protocol/generated/`, strict JSON, framing, envelopes, transports), `providers/` (discovery, agent client), `errors.py`. |
-| `tests/` | Python tests: `protocol/` (models vs fixtures, codec, framing, the client against the fake agent), `unit/`, and `fakes/` (a fake agent that speaks the real protocol). |
-| `docs/` | Documentation. |
+| `src/unity_ludometry_mcp/` | The Python orchestrator. `server.py` creates the MCP server; `tools/` has one module per tool group (each registers its tools with `register(app)`); `protocol/` is the protocol layer (generated models in `protocol/generated/`); `providers/` has discovery and the agent client. The other packages (`profiles/`, `data/`, `pipeline/`, `advisor/`, `runtime/`, …) are placeholders that fill in as features land. |
+| `rules/` | Shipped defaults (fingerprinting markers, limits, release pins, guides, …), packaged into the wheel. |
+| `templates/` | `dotnet new` templates for mods, tests, live patches and snippets, packaged into the wheel. |
+| `tests/` | `unit/`, `protocol/` (models vs fixtures, codec, framing), `integration/` (the server through an MCP client, the fake agent), `contract/` (what the LLM sees of every tool), `dotnet/` (C# builds), `fakes/` (a fake agent that speaks the real protocol) and `fixtures/`. |
+| `tools/` | Developer scripts: `codegen.py` regenerates everything generated. See [its README](../tools/README.md). |
+| `docs/` | Documentation. `tools.md` is generated. |
 
 ## Building and testing the Python orchestrator
 
@@ -19,11 +22,25 @@ Requirements: Python 3.13 and [uv](https://docs.astral.sh/uv/).
 ```
 uv sync --group dev
 uv run ruff check
+uv run ruff format --check
+uv run mypy
 uv run pytest
+uv run pytest -m dotnet          # needs the .NET SDK
+uv run python tools/codegen.py --check
 ```
 
 - `uv.lock` pins every dependency; CI installs with `uv sync --locked`.
-- Tests marked `windows` use real named pipes and run only on Windows (CI runs on Windows).
+- `ruff format` formats the code (generated code excepted). `mypy` is strict for `profiles`, `data`, `pipeline`,
+  `advisor`, `limits`, `consent` and `protocol`.
+- Test markers: `windows` (real named pipes; CI runs on Windows), `slow`, `dotnet` (builds C#; excluded from the default
+  run, run with `-m dotnet`), and `integration_real` (a real game and agent; excluded by default, and skipped unless
+  `ULM_TEST_SETTINGS` names a local settings file kept outside the repository).
+- `tests/contract/` snapshots every tool's name, description, annotations and parameters. A wording change fails the
+  test on purpose: check that the new text still tells the LLM the right thing, then run
+  `uv run pytest tests/contract --snapshot-update`.
+- A new tool: add it to its group module's `register(app)`, then regenerate the tool reference
+  (`uv run python tools/codegen.py`). Every tool declares all four MCP annotations, and `openWorldHint` is false.
+- Never print to stdout in the server: over stdio, stdout carries the MCP messages. Log through `logging` (stderr).
 - `tests/fakes/agent.py` is a fake agent that speaks the real protocol, answers from the golden fixtures and validates
   every request against the schemas. Use it for anything that talks to the agent.
 

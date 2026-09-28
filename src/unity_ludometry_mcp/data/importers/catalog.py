@@ -1,0 +1,1 @@
+"""Imports Addressables catalogs."""

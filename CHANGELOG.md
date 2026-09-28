@@ -11,3 +11,8 @@
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,
   named-pipe/TCP transports), agent discovery, the agent client (handshake, requests, events, jobs, reconnect), the error
   model, and a fake agent for tests.
+- The MCP server `unity-ludometry-mcp` (stdio, FastMCP) with `server_status`: versions, the profile root and the client's
+  capabilities. `ULM_HOME` and `ULM_LOG_LEVEL`.
+- The full package layout (placeholders for the parts still to come), `rules/` and `templates/` shipped in the wheel,
+  ruff format, mypy, tool contract snapshots, a generated tool reference (`docs/tools.md`), and CI for all of it.
+- User docs: getting started (install, register, what gets written where) and configuration.

@@ -44,7 +44,7 @@ def _escape_surrogates(error: UnicodeError) -> tuple[str, int]:
     """Encoding error handler: writes unpaired surrogates as JSON escapes (they can only occur inside JSON strings)."""
     if not isinstance(error, UnicodeEncodeError):
         raise error
-    chunk = error.object[error.start:error.end]
+    chunk = error.object[error.start : error.end]
     return "".join(f"\\u{ord(c):04x}" for c in chunk), error.end
 
 

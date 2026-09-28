@@ -34,11 +34,26 @@ from unity_ludometry_mcp.protocol.generated import EVENTS, METHODS, Methods
 from unity_ludometry_mcp.protocol.version import PROTOCOL_MAJOR, PROTOCOL_MINOR
 
 SCHEMA_BASE = "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/"
-JOB_KINDS = {"il.index.start": "il.index", "survey.start": "survey", "obj.query.start": "query", "resources.loadAll": "resources.loadAll",
-             "content.export.start": "content.export", "content.scan.start": "content.scan", "trace.start": "trace", "profile.start": "profile",
-             "test.run": "test.run", "metrics.sample.start": "metrics.sample", "probe.runBatch": "probe.batch"}
-JOB_FILES = {"survey.start": "survey", "il.index.start": "il_index", "content.scan.start": "content_scan", "trace.start": "trace",
-             "metrics.sample.start": "metrics"}
+JOB_KINDS = {
+    "il.index.start": "il.index",
+    "survey.start": "survey",
+    "obj.query.start": "query",
+    "resources.loadAll": "resources.loadAll",
+    "content.export.start": "content.export",
+    "content.scan.start": "content.scan",
+    "trace.start": "trace",
+    "profile.start": "profile",
+    "test.run": "test.run",
+    "metrics.sample.start": "metrics.sample",
+    "probe.runBatch": "probe.batch",
+}
+JOB_FILES = {
+    "survey.start": "survey",
+    "il.index.start": "il_index",
+    "content.scan.start": "content_scan",
+    "trace.start": "trace",
+    "metrics.sample.start": "metrics",
+}
 
 
 def _schema_registry() -> Registry:
@@ -106,9 +121,17 @@ class _Job:
 class FakeAgent:
     """Start with `await agent.start()`; connect through the discovery file it writes into `providers_dir`."""
 
-    def __init__(self, providers_dir: pathlib.Path, *, transport: str = "pipe", mode: AgentMode = "ReadOnly",
-                 protocol: tuple[int, int] = (PROTOCOL_MAJOR, PROTOCOL_MINOR), pid: int | None = None,
-                 process_path: str | None = None, job_duration_s: float = 0.05) -> None:
+    def __init__(
+        self,
+        providers_dir: pathlib.Path,
+        *,
+        transport: str = "pipe",
+        mode: AgentMode = "ReadOnly",
+        protocol: tuple[int, int] = (PROTOCOL_MAJOR, PROTOCOL_MINOR),
+        pid: int | None = None,
+        process_path: str | None = None,
+        job_duration_s: float = 0.05,
+    ) -> None:
         self.providers_dir = pathlib.Path(providers_dir)
         self.transport = transport
         self.mode: AgentMode = mode
@@ -144,7 +167,8 @@ class FakeAgent:
         if self.transport == "pipe":
             address = "\\\\.\\pipe\\" + self.pipe_name
             self._server = await loop.start_serving_pipe(  # type: ignore[attr-defined]
-                lambda: asyncio.StreamReaderProtocol(asyncio.StreamReader(), self._on_connection), address)
+                lambda: asyncio.StreamReaderProtocol(asyncio.StreamReader(), self._on_connection), address
+            )
         else:
             self._server = await asyncio.start_server(self._on_connection, "127.0.0.1", 0)
             self.port = self._server.sockets[0].getsockname()[1]
@@ -153,12 +177,22 @@ class FakeAgent:
 
     def write_discovery(self) -> None:
         self.providers_dir.mkdir(parents=True, exist_ok=True)
-        info = {"provider": "agent", "pid": self.pid, "processName": pathlib.Path(self.process_path).stem, "processPath": self.process_path,
-                "transport": self.transport, "pipe": self.pipe_name if self.transport == "pipe" else None,
-                "port": self.port if self.transport == "tcp" else None, "token": self.token,
-                "protocol": {"major": self.protocol[0], "minor": self.protocol[1]}, "agentVersion": "0.1.0",
-                "loader": {"name": "BepInEx", "version": "5.4.23.5"}, "unityVersion": "2021.3.45f1", "mode": self.mode,
-                "startedAt": self._started_at}
+        info = {
+            "provider": "agent",
+            "pid": self.pid,
+            "processName": pathlib.Path(self.process_path).stem,
+            "processPath": self.process_path,
+            "transport": self.transport,
+            "pipe": self.pipe_name if self.transport == "pipe" else None,
+            "port": self.port if self.transport == "tcp" else None,
+            "token": self.token,
+            "protocol": {"major": self.protocol[0], "minor": self.protocol[1]},
+            "agentVersion": "0.1.0",
+            "loader": {"name": "BepInEx", "version": "5.4.23.5"},
+            "unityVersion": "2021.3.45f1",
+            "mode": self.mode,
+            "startedAt": self._started_at,
+        }
         tmp = self.discovery_path.with_suffix(".tmp")
         tmp.write_bytes(json_codec.dumps(info))
         os.replace(tmp, self.discovery_path)
@@ -267,8 +301,9 @@ class FakeAgent:
             path = "params" + "".join(f".{p}" if isinstance(p, str) else f"[{p}]" for p in error.path)
             raise ProtocolException("INVALID_PARAMS", f"{path}: {error.message}", {"param": path})
         if mode_rank(descriptor.min_mode) > mode_rank(self.mode):
-            raise ProtocolException("MODE_FORBIDDEN", f"{method} requires mode {descriptor.min_mode}; the agent is in {self.mode}.",
-                                    {"requiredMode": descriptor.min_mode})
+            raise ProtocolException(
+                "MODE_FORBIDDEN", f"{method} requires mode {descriptor.min_mode}; the agent is in {self.mode}.", {"requiredMode": descriptor.min_mode}
+            )
         if method in self.fail and self.fail_times.get(method, 1) > 0:
             if method in self.fail_times:
                 self.fail_times[method] -= 1
@@ -362,15 +397,44 @@ class FakeAgent:
             await self.emit("job.finished", {"job": job.info()})
 
     def _agent_info(self) -> dict[str, Any]:
-        return {"agentVersion": "0.1.0", "gitCommit": None, "protocol": {"major": self.protocol[0], "minor": self.protocol[1]},
-                "pid": self.pid, "processName": pathlib.Path(self.process_path).stem, "unityVersion": "2021.3.45f1",
-                "scriptingBackend": "mono", "platform": "WindowsPlayer", "loader": {"name": "BepInEx", "version": "5.4.23.5"},
-                "mode": self.mode, "transport": self.transport, "startedAt": self._started_at, "uptimeMs": 1000, "limits": {},
-                "health": {"pump": {"alive": True, "lastTickFrame": 42, "queueLength": 0, "stalledMs": 0, "recreatedCount": 0},
-                           "connections": len(self._connections)}}
+        return {
+            "agentVersion": "0.1.0",
+            "gitCommit": None,
+            "protocol": {"major": self.protocol[0], "minor": self.protocol[1]},
+            "pid": self.pid,
+            "processName": pathlib.Path(self.process_path).stem,
+            "unityVersion": "2021.3.45f1",
+            "scriptingBackend": "mono",
+            "platform": "WindowsPlayer",
+            "loader": {"name": "BepInEx", "version": "5.4.23.5"},
+            "mode": self.mode,
+            "transport": self.transport,
+            "startedAt": self._started_at,
+            "uptimeMs": 1000,
+            "limits": {},
+            "health": {
+                "pump": {"alive": True, "lastTickFrame": 42, "queueLength": 0, "stalledMs": 0, "recreatedCount": 0},
+                "connections": len(self._connections),
+            },
+        }
 
     def _capabilities(self) -> dict[str, Any]:
-        return {"agentVersion": "0.1.0", "apiVersion": "0.1", "protocol": {"major": self.protocol[0], "minor": self.protocol[1]},
-                "methods": [{"name": d.name, "thread": d.thread.value, "minMode": d.min_mode, "mutating": d.mutating, "job": d.job,
-                             **({"requires": list(d.requires)} if d.requires else {})} for d in METHODS.values()],
-                "eventKinds": sorted(EVENTS), "modules": [{"name": "ugui", "available": True, "version": None}], "limits": {}}
+        return {
+            "agentVersion": "0.1.0",
+            "apiVersion": "0.1",
+            "protocol": {"major": self.protocol[0], "minor": self.protocol[1]},
+            "methods": [
+                {
+                    "name": d.name,
+                    "thread": d.thread.value,
+                    "minMode": d.min_mode,
+                    "mutating": d.mutating,
+                    "job": d.job,
+                    **({"requires": list(d.requires)} if d.requires else {}),
+                }
+                for d in METHODS.values()
+            ],
+            "eventKinds": sorted(EVENTS),
+            "modules": [{"name": "ugui", "available": True, "version": None}],
+            "limits": {},
+        }

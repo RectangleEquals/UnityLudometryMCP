@@ -16,8 +16,8 @@ from ..protocol import envelope
 from ..protocol.base import ProtocolModel
 from ..protocol.errors import ProtocolException
 from ..protocol.framing import DEFAULT_MAX_FRAME_BYTES, read_frame, write_frame
-from ..protocol.generated import METHODS, Methods
 from ..protocol.generated.models import AgentCapabilities, AgentInfo, DiscoveryFile, JobInfo, JobRef
+from ..protocol.generated.registry import METHODS, Methods
 from ..protocol.transport import open_pipe, open_tcp
 from ..protocol.version import PROTOCOL_MAJOR, PROTOCOL_MINOR, PROTOCOL_TEXT, is_compatible
 
@@ -55,9 +55,18 @@ class AgentClient:
     they may or may not have run. `BUSY` (refused before running) is retried once.
     """
 
-    def __init__(self, endpoint: EndpointSource, *, client_version: str = __version__, default_timeout_s: float = 30.0,
-                 reconnect: bool = True, backoff_initial_s: float = 0.2, backoff_max_s: float = 10.0,
-                 busy_retry_delay_s: float = 0.5, max_frame_bytes: int = DEFAULT_MAX_FRAME_BYTES) -> None:
+    def __init__(
+        self,
+        endpoint: EndpointSource,
+        *,
+        client_version: str = __version__,
+        default_timeout_s: float = 30.0,
+        reconnect: bool = True,
+        backoff_initial_s: float = 0.2,
+        backoff_max_s: float = 10.0,
+        busy_retry_delay_s: float = 0.5,
+        max_frame_bytes: int = DEFAULT_MAX_FRAME_BYTES,
+    ) -> None:
         self._endpoint = endpoint
         self._client_version = client_version
         self.default_timeout_s = default_timeout_s
@@ -110,13 +119,19 @@ class AgentClient:
         self._last_seq = None
         self._reader_task = asyncio.create_task(self._read_loop(streams), name="agent-client-reader")
         try:
-            hello = {"token": endpoint.token, "client": {"name": CLIENT_NAME, "version": self._client_version},
-                     "protocol": {"major": PROTOCOL_MAJOR, "minor": PROTOCOL_MINOR}}
+            hello = {
+                "token": endpoint.token,
+                "client": {"name": CLIENT_NAME, "version": self._client_version},
+                "protocol": {"major": PROTOCOL_MAJOR, "minor": PROTOCOL_MINOR},
+            }
             info = AgentInfo.model_validate(await self._send(Methods.HELLO, hello, self.default_timeout_s, None))
             if not is_compatible(info.protocol.major, info.protocol.minor):
                 agent_version = f"{info.protocol.major}.{info.protocol.minor}"
-                raise UlmError(PROVIDER_UNAVAILABLE, f"The agent speaks protocol {agent_version}; this orchestrator needs {PROTOCOL_TEXT}.",
-                               "Install matching releases of the orchestrator and the agent.")
+                raise UlmError(
+                    PROVIDER_UNAVAILABLE,
+                    f"The agent speaks protocol {agent_version}; this orchestrator needs {PROTOCOL_TEXT}.",
+                    "Install matching releases of the orchestrator and the agent.",
+                )
             self.info = info
             self._established = True
             self._connected.set()
@@ -144,8 +159,9 @@ class AgentClient:
 
     # ------------------------------------------------------------------ requests
 
-    async def request(self, method: str, params: dict[str, Any] | ProtocolModel | None = None, *, timeout_s: float | None = None,
-                      context: dict[str, Any] | None = None) -> Any:
+    async def request(
+        self, method: str, params: dict[str, Any] | ProtocolModel | None = None, *, timeout_s: float | None = None, context: dict[str, Any] | None = None
+    ) -> Any:
         """Sends a request and returns the raw result. Agent errors raise the mapped UlmError."""
         if isinstance(params, ProtocolModel):
             params = params.to_json()
@@ -190,11 +206,19 @@ class AgentClient:
             except TimeoutError:
                 with contextlib.suppress(Exception):
                     await self._send(Methods.CANCEL, {"id": request_id}, 5.0, None)
-                raise UlmError(TIMEOUT, f"{method} didn't finish within {timeout_s:g} s.", "The game may be loading or hung.",
-                               details={"method": method, "requestId": request_id}) from None
+                raise UlmError(
+                    TIMEOUT,
+                    f"{method} didn't finish within {timeout_s:g} s.",
+                    "The game may be loading or hung.",
+                    details={"method": method, "requestId": request_id},
+                ) from None
         except (ConnectionError, OSError) as e:
-            raise UlmError(PROVIDER_UNAVAILABLE, f"The connection to the agent failed: {e}", "It may or may not have run; check before repeating.",
-                           details={"method": method}) from e
+            raise UlmError(
+                PROVIDER_UNAVAILABLE,
+                f"The connection to the agent failed: {e}",
+                "It may or may not have run; check before repeating.",
+                details={"method": method},
+            ) from e
         finally:
             self._pending.pop(request_id, None)
         if response.error is not None:
@@ -203,8 +227,9 @@ class AgentClient:
 
     # ------------------------------------------------------------------ events
 
-    async def subscribe(self, kinds: list[str], *, filter: dict[str, Any] | None = None, throttle_ms: int | None = None,
-                        max_batch: int | None = None) -> dict[str, Any]:
+    async def subscribe(
+        self, kinds: list[str], *, filter: dict[str, Any] | None = None, throttle_ms: int | None = None, max_batch: int | None = None
+    ) -> dict[str, Any]:
         """Subscribes to event kinds (remembered, and renewed after reconnects). Events arrive in `events(kind)`."""
         params: dict[str, Any] = {"kinds": kinds}
         if filter is not None:
@@ -213,7 +238,7 @@ class AgentClient:
             params["throttleMs"] = throttle_ms
         if max_batch is not None:
             params["maxBatch"] = max_batch
-        result = await self.request(Methods.EVENTS_SUBSCRIBE, params)
+        result: dict[str, Any] = await self.request(Methods.EVENTS_SUBSCRIBE, params)
         key = ",".join(sorted(kinds))
         self._subscriptions[key] = params
         for kind in kinds:
@@ -221,7 +246,7 @@ class AgentClient:
         return result
 
     async def unsubscribe(self, kinds: list[str] | None = None) -> dict[str, Any]:
-        result = await self.request(Methods.EVENTS_UNSUBSCRIBE, {} if kinds is None else {"kinds": kinds})
+        result: dict[str, Any] = await self.request(Methods.EVENTS_UNSUBSCRIBE, {} if kinds is None else {"kinds": kinds})
         if kinds is None:
             self._subscriptions.clear()
         else:
@@ -240,8 +265,7 @@ class AgentClient:
             raise ValueError(f"{method} isn't a job method")
         return JobRef.model_validate(await self.request(method, params, **kwargs))
 
-    async def wait_job(self, job_id: str, *, timeout_s: float, poll_s: float = 10.0,
-                       on_progress: Callable[[dict[str, Any]], None] | None = None) -> JobInfo:
+    async def wait_job(self, job_id: str, *, timeout_s: float, poll_s: float = 10.0, on_progress: Callable[[dict[str, Any]], None] | None = None) -> JobInfo:
         """Waits for a job with `job.wait` long-polls; reports `job.progress` events (if subscribed) to `on_progress`.
         Returns the finished job; a failed or cancelled job raises the mapped error."""
         loop = asyncio.get_running_loop()
@@ -251,8 +275,11 @@ class AgentClient:
             remaining = deadline - loop.time()
             if remaining <= 0:
                 raise UlmError(TIMEOUT, f"Job {job_id} didn't finish within {timeout_s:g} s.", details={"jobId": job_id})
-            info = JobInfo.model_validate(await self.request(Methods.JOB_WAIT, {"jobId": job_id, "timeoutMs": max(1, int(min(poll_s, remaining) * 1000))},
-                                                             timeout_s=min(poll_s, remaining) + 5.0))
+            info = JobInfo.model_validate(
+                await self.request(
+                    Methods.JOB_WAIT, {"jobId": job_id, "timeoutMs": max(1, int(min(poll_s, remaining) * 1000))}, timeout_s=min(poll_s, remaining) + 5.0
+                )
+            )
             if on_progress and progress_queue:
                 while not progress_queue.empty():
                     ev = progress_queue.get_nowait()
@@ -303,12 +330,22 @@ class AgentClient:
         if streams is not None:
             with contextlib.suppress(Exception):
                 streams[1].close()
-        self._fail_pending(UlmError(PROVIDER_UNAVAILABLE, "The connection to the agent was lost.",
-                                    "The request may or may not have run; check before repeating.",
-                                    details={"reason": str(reason) if reason else "closed"}))
+        self._fail_pending(
+            UlmError(
+                PROVIDER_UNAVAILABLE,
+                "The connection to the agent was lost.",
+                "The request may or may not have run; check before repeating.",
+                details={"reason": str(reason) if reason else "closed"},
+            )
+        )
         # Only an established session is renewed; a failing connect() reports its own error instead.
-        if (self._reconnect_enabled and self._established and not self._closed and not self._in_connect
-                and (self._reconnect_task is None or self._reconnect_task.done())):
+        if (
+            self._reconnect_enabled
+            and self._established
+            and not self._closed
+            and not self._in_connect
+            and (self._reconnect_task is None or self._reconnect_task.done())
+        ):
             self._reconnect_task = asyncio.create_task(self._reconnect_loop(), name="agent-client-reconnect")
 
     async def _reconnect_loop(self) -> None:

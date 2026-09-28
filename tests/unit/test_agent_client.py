@@ -33,6 +33,7 @@ class Harness:
             client_side, agent_side = memory_pair()
             self.peers.put_nowait(ScriptedPeer(agent_side))
             return client_side
+
         return AgentEndpoint(TOKEN, open_)
 
     async def next_peer(self) -> ScriptedPeer:
@@ -202,8 +203,12 @@ async def test_jobs_are_waited_for_with_progress() -> None:
     running = {"jobId": "j-1", "kind": "survey", "state": "running", "startedAt": "2026-09-27T10:00:00.000Z", "finishedAt": None}
     await peer.event("job.progress", {"jobId": "j-1", "kind": "survey", "progress": {"phase": "scan", "done": 1, "total": 2}})
     await peer.expect("job.wait", running)
-    done = {**running, "state": "succeeded", "finishedAt": "2026-09-27T10:00:01.000Z",
-            "result": {"file": {"path": "p", "bytes": 1, "sha256": "0" * 64}, "durationMs": 1}}
+    done = {
+        **running,
+        "state": "succeeded",
+        "finishedAt": "2026-09-27T10:00:01.000Z",
+        "result": {"file": {"path": "p", "bytes": 1, "sha256": "0" * 64}, "durationMs": 1},
+    }
     await peer.expect("job.wait", done)
     info = await wait
     assert info.state == "succeeded" and info.result["durationMs"] == 1

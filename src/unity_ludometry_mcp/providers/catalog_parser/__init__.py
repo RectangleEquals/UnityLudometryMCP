@@ -1,0 +1,1 @@
+"""Addressables catalog parsing."""

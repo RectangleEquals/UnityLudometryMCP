@@ -1,0 +1,29 @@
+# serializer version: 1
+# name: test_tool_definitions_match_the_snapshot
+  list([
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+      }),
+      'description': '''
+        Report this server's version, the agent protocol version it speaks, where it keeps its data (the profile root),
+        and what the connected MCP client supports. Read-only; safe to call at any time.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+        }),
+        'type': 'object',
+      }),
+      'name': 'server_status',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Server status',
+    }),
+  ])
+# ---

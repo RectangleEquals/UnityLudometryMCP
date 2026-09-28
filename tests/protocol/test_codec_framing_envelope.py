@@ -42,7 +42,7 @@ def test_json_writer_round_trips_unpaired_surrogates_and_refuses_nan() -> None:
 async def feed(data: bytes, chunk: int = 1) -> asyncio.StreamReader:
     reader = asyncio.StreamReader()
     for i in range(0, len(data), chunk):
-        reader.feed_data(data[i:i + chunk])
+        reader.feed_data(data[i : i + chunk])
     reader.feed_eof()
     return reader
 
@@ -72,17 +72,20 @@ async def test_frame_limits() -> None:
     assert await read_frame(await feed(encode_frame(payload), chunk=1 << 20)) == payload
 
 
-@pytest.mark.parametrize("value", [
-    [],
-    {"id": "a", "kind": "request", "method": "ping"},
-    {"v": "0", "id": "a", "kind": "request", "method": "ping"},
-    {"v": 0, "id": "a", "kind": "notify", "method": "ping"},
-    {"v": 0, "id": "", "kind": "request", "method": "ping"},
-    {"v": 0, "id": "a", "kind": "request", "method": "ping", "params": []},
-    {"v": 0, "id": "a", "kind": "response"},
-    {"v": 0, "id": "a", "kind": "response", "result": 1, "error": {"code": "X", "message": "m"}},
-    {"v": 0, "kind": "event", "method": "log", "params": {}},
-])
+@pytest.mark.parametrize(
+    "value",
+    [
+        [],
+        {"id": "a", "kind": "request", "method": "ping"},
+        {"v": "0", "id": "a", "kind": "request", "method": "ping"},
+        {"v": 0, "id": "a", "kind": "notify", "method": "ping"},
+        {"v": 0, "id": "", "kind": "request", "method": "ping"},
+        {"v": 0, "id": "a", "kind": "request", "method": "ping", "params": []},
+        {"v": 0, "id": "a", "kind": "response"},
+        {"v": 0, "id": "a", "kind": "response", "result": 1, "error": {"code": "X", "message": "m"}},
+        {"v": 0, "kind": "event", "method": "log", "params": {}},
+    ],
+)
 def test_malformed_envelopes_are_invalid_frames(value: object) -> None:
     with pytest.raises(ProtocolException) as e:
         envelope.parse(value if isinstance(value, dict) else json_codec.dumps(value))
@@ -90,8 +93,7 @@ def test_malformed_envelopes_are_invalid_frames(value: object) -> None:
 
 
 def test_envelopes_round_trip_and_keep_unknown_fields() -> None:
-    raw = {"v": 0, "id": "r-1", "kind": "request", "method": "ping", "params": {"echo": "x"}, "timeoutMs": 500,
-           "context": {"task": "t"}, "later": True}
+    raw = {"v": 0, "id": "r-1", "kind": "request", "method": "ping", "params": {"echo": "x"}, "timeoutMs": 500, "context": {"task": "t"}, "later": True}
     parsed = envelope.parse(json_codec.dumps(raw))
     assert isinstance(parsed, envelope.Request)
     assert parsed.to_json() == raw

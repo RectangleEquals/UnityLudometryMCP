@@ -1,0 +1,1 @@
+"""Mod project templates."""

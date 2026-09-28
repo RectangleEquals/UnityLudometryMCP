@@ -61,11 +61,42 @@ jobs:
       - name: Lint
         run: uv run ruff check
 
-      - name: Generated Python models are up to date
-        run: uv run python protocol/codegen/python.py --check
+      - name: Format
+        run: uv run ruff format --check
+
+      - name: Type check
+        run: uv run mypy
+
+      - name: Generated code is up to date
+        run: uv run python tools/codegen.py --check
 
       - name: Test
         run: uv run pytest
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: protocol/csharp/global.json
+
+      - name: Test (.NET builds)
+        run: uv run pytest -m dotnet
+
+      - name: Build wheel and sdist
+        run: uv build
+
+      - name: Check the wheel's contents
+        shell: pwsh
+        run: |
+          $wheel = Get-ChildItem dist/*.whl | Select-Object -First 1
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $names = [System.IO.Compression.ZipFile]::OpenRead($wheel.FullName).Entries.FullName
+          foreach ($required in @('unity_ludometry_mcp/server.py', 'unity_ludometry_mcp/_data/rules/pins.json', 'unity_ludometry_mcp/_data/templates/snippet/README.md', 'unity_ludometry_mcp/_data/protocol/schema/envelope.schema.json')) {
+            if ($names -notcontains $required) { Write-Host "::error::$required is missing from $($wheel.Name)"; exit 1 }
+          }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
   privacy:
     runs-on: windows-latest

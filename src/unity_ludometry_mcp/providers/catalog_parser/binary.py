@@ -1,0 +1,1 @@
+"""Parses binary catalogs."""
