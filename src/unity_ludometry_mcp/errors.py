@@ -8,6 +8,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from .envelope import Result, failure
+
 SETUP_REQUIRED = "SETUP_REQUIRED"
 TARGET_NOT_OPEN = "TARGET_NOT_OPEN"
 PROJECT_NOT_OPEN = "PROJECT_NOT_OPEN"
@@ -86,6 +88,20 @@ class UlmError(Exception):
         if self.details:
             d["details"] = self.details
         return d
+
+    def to_result(self) -> Result:
+        """This error as an `ok:false` tool result."""
+        return failure(self.to_json())
+
+
+def internal_error(exc: BaseException) -> UlmError:
+    """An unexpected exception inside a tool, reported without leaking a traceback to the LLM (it goes to the log)."""
+    return UlmError(
+        INTERNAL,
+        "The tool failed unexpectedly; the server log has the details.",
+        "This is a ULM defect.",
+        details={"exceptionType": type(exc).__name__},
+    )
 
 
 # agent code -> (ULM code, hint, retryable)

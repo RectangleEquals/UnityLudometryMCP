@@ -1,48 +1,69 @@
-"""Server status and machine information."""
+"""Server status, machine information and tool groups."""
 
-from typing import Any
+from typing import Annotated, Any
 
-from fastmcp import Context, FastMCP
-from mcp.types import ToolAnnotations
+from fastmcp import FastMCP
+from pydantic import Field
 
 from .. import __version__
+from ..errors import NOT_FOUND, UlmError
 from ..profiles.paths import resolve_profile_root
 from ..protocol import PROTOCOL_TEXT
+from ..session import GROUPS, Session
+from . import ToolCall, register_tools, ulm_tool
 
 SERVER_NAME = "unity-ludometry-mcp"
 
+Groups = Annotated[list[str], Field(min_length=1, description=f"Tool groups: {', '.join(GROUPS)}.")]
 
-async def server_status(ctx: Context) -> dict[str, Any]:
-    """Report this server's version, the agent protocol version it speaks, where it keeps its data (the profile root),
-    and what the connected MCP client supports. Read-only; safe to call at any time."""
+
+def status_data(session: Session) -> dict[str, Any]:
+    """The server's status (shared by the tool and the `ulm://status` resource)."""
     try:
         root = resolve_profile_root()
         profile_root: dict[str, Any] = {"path": str(root.path), "source": root.source, "exists": root.exists}
     except ValueError as e:
         profile_root = {"error": str(e)}
-
-    params = ctx.session.client_params
-    client: dict[str, Any] | None = None
-    if params is not None:
-        client = {
-            "name": params.client_info.name,
-            "version": params.client_info.version,
-            "protocol_version": params.protocol_version,
-            "capabilities": params.capabilities.model_dump(mode="json", by_alias=True, exclude_none=True),
-        }
-
     return {
         "server": {"name": SERVER_NAME, "version": __version__},
         "protocol": {"version": PROTOCOL_TEXT},
         "profile_root": profile_root,
-        "client": client,
+        "client": session.client.to_json(),
+        "tool_groups": {"mode": session.groups.mode, "enabled": session.groups.enabled()},
     }
 
 
+@ulm_tool(group="core", title="Server status", read_only=True, idempotent=True)
+async def server_status(call: ToolCall) -> dict[str, Any]:
+    """Report this server's version, the agent protocol version it speaks, where it keeps its data (the profile root),
+    what the connected MCP client supports, and which tool groups are enabled. Read-only; safe to call at any time."""
+    return status_data(call.session)
+
+
+@ulm_tool(group="core", title="Enable tool groups", read_only=True, idempotent=True)
+async def tools_enable(call: ToolCall, groups: Groups) -> dict[str, Any]:
+    """List the tools of more groups (code, assets, runtime, instrument, live_act, mods). Only listing changes: nothing
+    in the game or on disk. Enabling live_act lists the tools; using them still needs the agent's mode and consent."""
+    try:
+        changed = await call.session.groups.enable(groups)
+    except ValueError as e:
+        raise _invalid(str(e)) from None
+    return {"enabled": changed, **call.session.groups.state()}
+
+
+@ulm_tool(group="core", title="Disable tool groups", read_only=True, idempotent=True)
+async def tools_disable(call: ToolCall, groups: Groups) -> dict[str, Any]:
+    """Stop listing the tools of some groups, to save context. The core group always stays."""
+    try:
+        changed = await call.session.groups.disable(groups)
+    except ValueError as e:
+        raise _invalid(str(e)) from None
+    return {"disabled": changed, **call.session.groups.state()}
+
+
+def _invalid(message: str) -> Exception:
+    return UlmError(NOT_FOUND, message, "Check the group names.")
+
+
 def register(app: FastMCP[Any]) -> None:
-    app.tool(
-        server_status,
-        name="server_status",
-        title="Server status",
-        annotations=ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False),
-    )
+    register_tools(app, [server_status, tools_enable, tools_disable])

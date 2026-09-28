@@ -25,9 +25,14 @@ def main(argv: Sequence[str] | None = None) -> None:
     _parser().parse_args(argv)
 
     from .logging_setup import configure_logging
+    from .profiles.paths import resolve_profile_root
     from .server import create_server
 
-    log = configure_logging()
+    try:
+        log_dir = resolve_profile_root().path / "logs"
+    except ValueError:
+        log_dir = None  # reported by server_status
+    log = configure_logging(log_dir=log_dir)
     log.info("Starting unity-ludometry-mcp %s (agent protocol %s) over stdio.", __version__, PROTOCOL_TEXT)
     create_server().run(transport="stdio", show_banner=False)
 

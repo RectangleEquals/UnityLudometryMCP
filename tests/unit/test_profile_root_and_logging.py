@@ -37,7 +37,7 @@ def test_log_level_comes_from_the_environment(value: str, level: int) -> None:
 def test_logs_go_to_stderr_and_an_unknown_level_is_reported(capsys: pytest.CaptureFixture[str]) -> None:
     log = configure_logging({"ULM_LOG_LEVEL": "loud"})
     assert log.level == logging.INFO
-    assert len(log.handlers) == 1
+    assert [type(h).__name__ for h in log.handlers] == ["StreamHandler", "ClientLogHandler"]
     log.info("hello")
     captured = capsys.readouterr()
     assert captured.out == ""

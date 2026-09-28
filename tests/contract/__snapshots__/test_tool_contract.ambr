@@ -7,10 +7,11 @@
         'idempotentHint': True,
         'openWorldHint': False,
         'readOnlyHint': True,
+        'title': 'Server status',
       }),
       'description': '''
         Report this server's version, the agent protocol version it speaks, where it keeps its data (the profile root),
-        and what the connected MCP client supports. Read-only; safe to call at any time.
+        what the connected MCP client supports, and which tool groups are enabled. Read-only; safe to call at any time.
       ''',
       'inputSchema': dict({
         'additionalProperties': False,
@@ -24,6 +25,280 @@
         'type': 'object',
       }),
       'title': 'Server status',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Enable tool groups',
+      }),
+      'description': '''
+        List the tools of more groups (code, assets, runtime, instrument, live_act, mods). Only listing changes: nothing
+        in the game or on disk. Enabling live_act lists the tools; using them still needs the agent's mode and consent.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'groups': dict({
+            'description': 'Tool groups: core, code, assets, runtime, instrument, live_act, mods.',
+            'items': dict({
+              'type': 'string',
+            }),
+            'minItems': 1,
+            'type': 'array',
+          }),
+        }),
+        'required': list([
+          'groups',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'tools_enable',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Enable tool groups',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Disable tool groups',
+      }),
+      'description': 'Stop listing the tools of some groups, to save context. The core group always stays.',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'groups': dict({
+            'description': 'Tool groups: core, code, assets, runtime, instrument, live_act, mods.',
+            'items': dict({
+              'type': 'string',
+            }),
+            'minItems': 1,
+            'type': 'array',
+          }),
+        }),
+        'required': list([
+          'groups',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'tools_disable',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Disable tool groups',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Get a task',
+      }),
+      'description': "A task's state and progress, and its result once it has finished.",
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'task_id': dict({
+            'description': 'The task_id a tool returned.',
+            'minLength': 1,
+            'type': 'string',
+          }),
+        }),
+        'required': list([
+          'task_id',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'task_get',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Get a task',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Wait for a task',
+      }),
+      'description': '''
+        Wait for a task to finish and return its result. Returns early with the current state and progress when the wait
+        time is up: call it again to keep waiting.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'task_id': dict({
+            'description': 'The task_id a tool returned.',
+            'minLength': 1,
+            'type': 'string',
+          }),
+          'timeout_s': dict({
+            'anyOf': list([
+              dict({
+                'exclusiveMinimum': 0,
+                'type': 'number',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Longest wait in seconds (capped by the task.wait_poll_s limit).',
+          }),
+        }),
+        'required': list([
+          'task_id',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'task_wait',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Wait for a task',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': True,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': False,
+        'title': 'Cancel a task',
+      }),
+      'description': 'Cancel a running task. Work it already finished stays; a finished task is returned unchanged.',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'task_id': dict({
+            'description': 'The task_id a tool returned.',
+            'minLength': 1,
+            'type': 'string',
+          }),
+        }),
+        'required': list([
+          'task_id',
+        ]),
+        'type': 'object',
+      }),
+      'name': 'task_cancel',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Cancel a task',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'List tasks',
+      }),
+      'description': 'The tasks of this session (and interrupted ones from earlier sessions), oldest first, without their results.',
+      'inputSchema': dict({
+        '$defs': dict({
+          'TaskState': dict({
+            'enum': list([
+              'running',
+              'succeeded',
+              'failed',
+              'cancelled',
+              'interrupted',
+            ]),
+            'type': 'string',
+          }),
+        }),
+        'additionalProperties': False,
+        'properties': dict({
+          'state': dict({
+            'anyOf': list([
+              dict({
+                '$ref': '#/$defs/TaskState',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Only tasks in this state.',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'task_list',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'List tasks',
+    }),
+    dict({
+      'annotations': dict({
+        'destructiveHint': False,
+        'idempotentHint': True,
+        'openWorldHint': False,
+        'readOnlyHint': True,
+        'title': 'Runtime events',
+      }),
+      'description': '''
+        Recent events from the game and the other providers (oldest first), including ones summarised in notices.
+        Pass the returned last_seq as `since` next time to get only newer events.
+      ''',
+      'inputSchema': dict({
+        'additionalProperties': False,
+        'properties': dict({
+          'kinds': dict({
+            'anyOf': list([
+              dict({
+                'items': dict({
+                  'type': 'string',
+                }),
+                'type': 'array',
+              }),
+              dict({
+                'type': 'null',
+              }),
+            ]),
+            'default': None,
+            'description': 'Only these event kinds (e.g. rule.fired, exception).',
+          }),
+          'limit': dict({
+            'default': 200,
+            'description': 'At most this many events.',
+            'maximum': 1000,
+            'minimum': 1,
+            'type': 'integer',
+          }),
+          'since': dict({
+            'default': 0,
+            'description': 'Only events after this seq (the last_seq of a previous call).',
+            'minimum': 0,
+            'type': 'integer',
+          }),
+        }),
+        'type': 'object',
+      }),
+      'name': 'runtime_events',
+      'outputSchema': dict({
+        'additionalProperties': True,
+        'type': 'object',
+      }),
+      'title': 'Runtime events',
     }),
   ])
 # ---

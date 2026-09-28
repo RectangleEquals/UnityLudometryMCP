@@ -38,8 +38,21 @@ uv run python tools/codegen.py --check
 - `tests/contract/` snapshots every tool's name, description, annotations and parameters. A wording change fails the
   test on purpose: check that the new text still tells the LLM the right thing, then run
   `uv run pytest tests/contract --snapshot-update`.
-- A new tool: add it to its group module's `register(app)`, then regenerate the tool reference
-  (`uv run python tools/codegen.py`). Every tool declares all four MCP annotations, and `openWorldHint` is false.
+- A new tool is an async function declared with `@ulm_tool` (in `tools/__init__.py`) in its group's module, added to
+  that module's `register(app)`:
+
+  ```python
+  @ulm_tool(group="runtime", title="Read a value", read_only=True, idempotent=True, scope="target")
+  async def live_value(call: ToolCall, locator: Annotated[str, Field(description="...")]) -> Result:
+      """What the tool does, written for the LLM that calls it."""
+      ...
+  ```
+
+  The decorator adds the MCP annotations (`openWorldHint` is always false), the `target`/`project` parameters and
+  their resolution (`scope`), the `user_confirmed` parameter and the consent flow (`needs_confirmation`), background
+  tasks (`long_running`), notices, the token budget, and error mapping: raise `UlmError` for expected failures.
+  Return data or a `Result` (`envelope.py`). Then regenerate the tool reference (`uv run python tools/codegen.py`).
+- The limits (`rules/limits.json`) are read through `call.limit(key)`, which applies the precedence rules.
 - Never print to stdout in the server: over stdio, stdout carries the MCP messages. Log through `logging` (stderr).
 - `tests/fakes/agent.py` is a fake agent that speaks the real protocol, answers from the golden fixtures and validates
   every request against the schemas. Use it for anything that talks to the agent.

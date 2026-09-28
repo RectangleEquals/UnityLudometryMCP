@@ -30,7 +30,7 @@ PACKAGES = [
     "protocol",
     "consent",
 ]
-MODULES = ["server", "envelope", "errors", "tasks", "events", "budget", "logging_setup", "__main__"]
+MODULES = ["server", "session", "package_data", "envelope", "errors", "tasks", "events", "budget", "logging_setup", "__main__"]
 
 
 @pytest.mark.parametrize("name", PACKAGES)

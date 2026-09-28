@@ -3,7 +3,8 @@
 UnityLudometryMCP is an MCP server. Your MCP client (for example Claude Code) starts it and talks to it over stdio, so
 you register it once and don't run it by hand.
 
-> **Pre-release.** The server currently offers one tool, `server_status`. The rest of the orchestrator is being built.
+> **Pre-release.** The server currently offers its basic tools (status, tool groups, tasks, events). The rest of the
+> orchestrator is being built. The [tool reference](tools.md) lists what's there.
 
 ## Requirements
 
@@ -47,7 +48,16 @@ Other clients take a JSON entry like this one (the exact file depends on the cli
 ```
 
 Then ask your assistant to call `server_status`. It reports the server's version, the agent protocol version, where the
-server keeps its data, and what your client supports.
+server keeps its data, what your client supports, and which tool groups are listed.
+
+## How the server talks to your assistant
+
+- Every tool returns the same shape: `{ok, data}` or `{ok: false, error: {code, message, hint}}`, plus, when there are
+  any, `notices` (things that happened in the game since the last call), `advisories` (questions for you),
+  `redactions` (parts left out, and where to find them) and `task_id` (for work that runs in the background).
+- Anything that changes something asks for your approval first. If your client supports it, the server asks you
+  directly in a dialog; otherwise your assistant asks you in the chat, and must not answer for you.
+- Long operations run as tasks: the tool returns a `task_id` at once, and `task_wait` returns the result.
 
 ## What gets written where
 
@@ -55,6 +65,6 @@ All of the server's own data will live in one folder, the **profile root**:
 `%LOCALAPPDATA%\UnityLudometryMCP` by default (see [configuration](configuration.md) to change it). Anything else it
 writes goes only to locations you choose.
 
-Today the server writes nothing: `server_status` only reports where the profile root would be. To remove the server,
-unregister it from your client (`claude mcp remove unity-ludometry-mcp`), then delete the clone and, if it exists, the
-profile root.
+Today the server writes only its log (`logs\` in the profile root) and, when a result is too large to return in one
+piece, the full result next to it. To remove the server, unregister it from your client
+(`claude mcp remove unity-ludometry-mcp`), then delete the clone and the profile root.

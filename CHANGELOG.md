@@ -16,3 +16,10 @@
 - The full package layout (placeholders for the parts still to come), `rules/` and `templates/` shipped in the wheel,
   ruff format, mypy, tool contract snapshots, a generated tool reference (`docs/tools.md`), and CI for all of it.
 - User docs: getting started (install, register, what gets written where) and configuration.
+- The MCP framework every tool builds on: the result envelope and error mapping; `@ulm_tool` (annotations, consent
+  with `user_confirmed` or a direct question to the user when the client supports it, target/project resolution,
+  background tasks); the task manager with `task_get`, `task_wait`, `task_cancel` and `task_list`; the event store with
+  notices on the next result and `runtime_events`; the token budget (oversized results are cut down, the full result
+  saved to a file, and every left-out part listed); the limit registry (`rules/limits.json`, precedence); tool groups
+  with `tools_enable` / `tools_disable` (`ULM_TOOL_GROUPS=all` lists everything); the `ulm://status` and
+  `ulm://guide/{topic}` resources; the daily server log in the profile root and warnings mirrored to the client.
