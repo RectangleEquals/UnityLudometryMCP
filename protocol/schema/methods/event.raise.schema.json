@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/event.raise.schema.json",
   "title": "event.raise",
-  "description": "Invokes an event's backing delegate (to test its listeners).",
+  "description": "Invokes an event's backing delegate (to trigger its listeners).",
   "x-method": {
     "thread": "main",
     "minMode": "Full",

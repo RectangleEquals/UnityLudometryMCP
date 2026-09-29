@@ -12,7 +12,6 @@ dist/
 # .NET (protocol/csharp)
 bin/
 obj/
-TestResults/
 *.trx
 *.binlog
 

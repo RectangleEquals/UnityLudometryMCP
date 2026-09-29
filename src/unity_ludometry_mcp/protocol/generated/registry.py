@@ -16,9 +16,9 @@ class Methods:
     ADDRESSABLES_LOCATE = "addressables.locate"
     ADDRESSABLES_RELEASE = "addressables.release"
     AGENT_CAPABILITIES = "agent.capabilities"
+    AGENT_HEALTH_CHECK = "agent.healthCheck"
     AGENT_INFO = "agent.info"
     AGENT_LOG_LEVEL = "agent.logLevel"
-    AGENT_SELF_TEST = "agent.selfTest"
     AGENT_SET_MODE = "agent.setMode"
     ANNOTATIONS_CLEAR = "annotations.clear"
     ANNOTATIONS_GET = "annotations.get"
@@ -246,9 +246,9 @@ METHODS: dict[str, MethodDescriptor] = {
     Methods.ADDRESSABLES_LOCATE: MethodDescriptor("addressables.locate", MethodThread.MAIN, "ReadOnly", False, False, ("module:addressables", ), m.AddressablesLocateParams, m.AddressablesLocateResult, None),
     Methods.ADDRESSABLES_RELEASE: MethodDescriptor("addressables.release", MethodThread.MAIN, "ReadOnly+Load", False, True, ("module:addressables", ), m.AddressablesReleaseParams, m.AddressablesReleaseResult, None),
     Methods.AGENT_CAPABILITIES: MethodDescriptor("agent.capabilities", MethodThread.ANY, "ReadOnly", False, False, (), m.AgentCapabilitiesParams, m.AgentCapabilities, None),
+    Methods.AGENT_HEALTH_CHECK: MethodDescriptor("agent.healthCheck", MethodThread.MAIN, "ReadOnly", False, False, (), m.AgentHealthCheckParams, m.AgentHealthCheckResult, None),
     Methods.AGENT_INFO: MethodDescriptor("agent.info", MethodThread.ANY, "ReadOnly", False, False, (), m.AgentInfoParams, m.AgentInfo, None),
     Methods.AGENT_LOG_LEVEL: MethodDescriptor("agent.logLevel", MethodThread.ANY, "ReadOnly", False, False, (), m.AgentLogLevelParams, m.AgentLogLevelResult, None),
-    Methods.AGENT_SELF_TEST: MethodDescriptor("agent.selfTest", MethodThread.MAIN, "ReadOnly", False, False, (), m.AgentSelfTestParams, m.AgentSelfTestResult, None),
     Methods.AGENT_SET_MODE: MethodDescriptor("agent.setMode", MethodThread.ANY, "ReadOnly", False, False, (), m.AgentSetModeParams, m.AgentSetModeResult, None),
     Methods.ANNOTATIONS_CLEAR: MethodDescriptor("annotations.clear", MethodThread.ANY, "ReadOnly", False, False, (), m.AnnotationsClearParams, m.AnnotationsClearResult, None),
     Methods.ANNOTATIONS_GET: MethodDescriptor("annotations.get", MethodThread.ANY, "ReadOnly", False, False, (), m.AnnotationsGetParams, m.AnnotationsGetResult, None),

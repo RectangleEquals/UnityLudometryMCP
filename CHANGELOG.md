@@ -7,6 +7,8 @@
   generated from the schemas (`protocol/codegen`).
 - Protocol `0.1.0-dev.2`: the protocol version is named 0.1 (the wire format is unchanged). The schema reader is
   shared by the C# and the new Python generator.
+- Protocol `0.1.0-dev.3`: the agent's diagnostics method is now `agent.healthCheck` (result types
+  `AgentHealthCheckResult` and `HealthCheckItem`).
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,
   named-pipe/TCP transports), agent discovery, the agent client (handshake, requests, events, jobs, reconnect), the error
   model.

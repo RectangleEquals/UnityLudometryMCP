@@ -32,14 +32,14 @@ public static class Methods
     /// <summary>What this agent build supports: every method with its execution flags, the event kinds, optional modules detected in this game, the Api version and the effective limits. Authoritative: clients check it rather than assume.</summary>
     public const string AgentCapabilities = "agent.capabilities";
 
+    /// <summary>Quick internal check after launch: pump round-trip, anchor resolution on a known agent type, a hook add/remove on an agent-owned method, a log round-trip.</summary>
+    public const string AgentHealthCheck = "agent.healthCheck";
+
     /// <summary>Versions, runtime, loader, mode, limits and health of the agent.</summary>
     public const string AgentInfo = "agent.info";
 
     /// <summary>Sets the agent's own log verbosity.</summary>
     public const string AgentLogLevel = "agent.logLevel";
-
-    /// <summary>Quick internal check after launch: pump round-trip, anchor resolution on a known agent type, a hook add/remove on an agent-owned method, a log round-trip.</summary>
-    public const string AgentSelfTest = "agent.selfTest";
 
     /// <summary>Lowers the agent mode at runtime. Raising is refused (it needs a config change and a restart).</summary>
     public const string AgentSetMode = "agent.setMode";
@@ -158,7 +158,7 @@ public static class Methods
     /// <summary>The current invocation list of a C# event (via its backing delegate field).</summary>
     public const string EventListeners = "event.listeners";
 
-    /// <summary>Invokes an event's backing delegate (to test its listeners).</summary>
+    /// <summary>Invokes an event's backing delegate (to trigger its listeners).</summary>
     public const string EventRaise = "event.raise";
 
     /// <summary>Observes a C# event or UnityEvent: each raise is reported with its arguments.</summary>

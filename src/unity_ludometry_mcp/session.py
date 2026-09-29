@@ -221,7 +221,7 @@ class Session:
         self.limits = limits or LimitRegistry.load()
         self.budget = budget or Budget()
         self._store = store
-        # Hooks (replaceable, e.g. in tests); the defaults use the profile store.
+        # Hooks (replaceable); the defaults use the profile store.
         self.resolve_target: TargetResolver = self._resolve_target
         self.resolve_project: ProjectResolver = self._resolve_project
         self.consent_granted: Callable[[str, Mapping[str, Any]], bool] = lambda tool, args: False

@@ -917,6 +917,61 @@ public sealed partial class AgentHealth : ProtocolMessage
     }
 }
 
+/// <summary>AgentHealthCheckParams.</summary>
+public sealed partial class AgentHealthCheckParams : ProtocolMessage
+{
+    /// <summary>Reads a <see cref="AgentHealthCheckParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static AgentHealthCheckParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new AgentHealthCheckParams
+        {
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+    }
+}
+
+/// <summary>AgentHealthCheckResult.</summary>
+public sealed partial class AgentHealthCheckResult : ProtocolMessage
+{
+    /// <summary><c>passed</c>.</summary>
+    public bool Passed { get; set; }
+
+    /// <summary><c>checks</c>.</summary>
+    public List<HealthCheckItem> Checks { get; set; } = new();
+
+    /// <summary>Reads a <see cref="AgentHealthCheckResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static AgentHealthCheckResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new AgentHealthCheckResult
+        {
+            Passed = r.RequiredBoolean("passed"),
+            Checks = r.RequiredArray("checks", global::UnityLudometry.Protocol.Messages.HealthCheckItem.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("passed");
+        writer.WriteBoolean(Passed);
+        writer.WritePropertyName("checks");
+        writer.WriteStartArray();
+        foreach (var item0 in Checks)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+    }
+}
+
 /// <summary>AgentInfo.</summary>
 public sealed partial class AgentInfo : ProtocolMessage
 {
@@ -1106,61 +1161,6 @@ public sealed partial class AgentLogLevelResult : ProtocolMessage
         writer.WriteString(Previous);
         writer.WritePropertyName("level");
         writer.WriteString(Level);
-    }
-}
-
-/// <summary>AgentSelfTestParams.</summary>
-public sealed partial class AgentSelfTestParams : ProtocolMessage
-{
-    /// <summary>Reads a <see cref="AgentSelfTestParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
-    public static AgentSelfTestParams Read(JsonValue? value, string path)
-    {
-        var r = new ObjectReader(value, path);
-        return new AgentSelfTestParams
-        {
-            Extra = r.Rest(),
-        };
-    }
-
-    /// <inheritdoc />
-    protected override void WriteProperties(JsonWriter writer)
-    {
-    }
-}
-
-/// <summary>AgentSelfTestResult.</summary>
-public sealed partial class AgentSelfTestResult : ProtocolMessage
-{
-    /// <summary><c>passed</c>.</summary>
-    public bool Passed { get; set; }
-
-    /// <summary><c>checks</c>.</summary>
-    public List<SelfTestCheck> Checks { get; set; } = new();
-
-    /// <summary>Reads a <see cref="AgentSelfTestResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
-    public static AgentSelfTestResult Read(JsonValue? value, string path)
-    {
-        var r = new ObjectReader(value, path);
-        return new AgentSelfTestResult
-        {
-            Passed = r.RequiredBoolean("passed"),
-            Checks = r.RequiredArray("checks", global::UnityLudometry.Protocol.Messages.SelfTestCheck.Read),
-            Extra = r.Rest(),
-        };
-    }
-
-    /// <inheritdoc />
-    protected override void WriteProperties(JsonWriter writer)
-    {
-        writer.WritePropertyName("passed");
-        writer.WriteBoolean(Passed);
-        writer.WritePropertyName("checks");
-        writer.WriteStartArray();
-        foreach (var item0 in Checks)
-        {
-            item0.WriteJson(writer);
-        }
-        writer.WriteEndArray();
     }
 }
 
@@ -7608,6 +7608,52 @@ public sealed partial class HarmonyPatchInfo : ProtocolMessage
                 writer.WriteString(item0);
             }
             writer.WriteEndArray();
+        }
+    }
+}
+
+/// <summary>HealthCheckItem.</summary>
+public sealed partial class HealthCheckItem : ProtocolMessage
+{
+    /// <summary><c>name</c>.</summary>
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary><c>passed</c>.</summary>
+    public bool Passed { get; set; }
+
+    /// <summary><c>durationMs</c>.</summary>
+    public long DurationMs { get; set; }
+
+    /// <summary><c>message</c>.</summary>
+    public string? Message { get; set; }
+
+    /// <summary>Reads a <see cref="HealthCheckItem"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static HealthCheckItem Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new HealthCheckItem
+        {
+            Name = r.RequiredString("name"),
+            Passed = r.RequiredBoolean("passed"),
+            DurationMs = r.RequiredInt64("durationMs"),
+            Message = r.OptionalString("message"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("name");
+        writer.WriteString(Name);
+        writer.WritePropertyName("passed");
+        writer.WriteBoolean(Passed);
+        writer.WritePropertyName("durationMs");
+        writer.WriteNumber(DurationMs);
+        if (Message is not null)
+        {
+            writer.WritePropertyName("message");
+            writer.WriteString(Message);
         }
     }
 }
@@ -14255,52 +14301,6 @@ public sealed partial class ScreenshotCaptureResult : ProtocolMessage
             item0.WriteJson(writer);
         }
         writer.WriteEndArray();
-    }
-}
-
-/// <summary>SelfTestCheck.</summary>
-public sealed partial class SelfTestCheck : ProtocolMessage
-{
-    /// <summary><c>name</c>.</summary>
-    public string Name { get; set; } = string.Empty;
-
-    /// <summary><c>passed</c>.</summary>
-    public bool Passed { get; set; }
-
-    /// <summary><c>durationMs</c>.</summary>
-    public long DurationMs { get; set; }
-
-    /// <summary><c>message</c>.</summary>
-    public string? Message { get; set; }
-
-    /// <summary>Reads a <see cref="SelfTestCheck"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
-    public static SelfTestCheck Read(JsonValue? value, string path)
-    {
-        var r = new ObjectReader(value, path);
-        return new SelfTestCheck
-        {
-            Name = r.RequiredString("name"),
-            Passed = r.RequiredBoolean("passed"),
-            DurationMs = r.RequiredInt64("durationMs"),
-            Message = r.OptionalString("message"),
-            Extra = r.Rest(),
-        };
-    }
-
-    /// <inheritdoc />
-    protected override void WriteProperties(JsonWriter writer)
-    {
-        writer.WritePropertyName("name");
-        writer.WriteString(Name);
-        writer.WritePropertyName("passed");
-        writer.WriteBoolean(Passed);
-        writer.WritePropertyName("durationMs");
-        writer.WriteNumber(DurationMs);
-        if (Message is not null)
-        {
-            writer.WritePropertyName("message");
-            writer.WriteString(Message);
-        }
     }
 }
 
