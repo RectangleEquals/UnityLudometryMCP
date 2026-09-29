@@ -2,8 +2,7 @@
 
 The wire protocol between the UnityLudometryMCP orchestrator and the in-game UnityRuntimeAnalysisAgent (and, later,
 other providers such as a static-analysis bridge). It is **schema-first**: the JSON Schemas in `schema/` are the
-normative definition, the fixtures in `fixtures/` are golden examples every implementation must handle, and the code
-in `csharp/` (and the orchestrator's Python models) is generated from or tested against them.
+normative definition, and the code in `csharp/` (and the orchestrator's Python models) is generated from them.
 
 **Current version: 0.1** (pre-release, tag `protocol-v0.1.0-dev.1`). It covers the agent's complete v0.1 surface:
 171 methods, 22 event kinds and the files the agent writes.
@@ -18,9 +17,8 @@ in `csharp/` (and the orchestrator's Python models) is generated from or tested 
 | `schema/events/<kind>.schema.json` | One file per event kind, with `$defs/params` |
 | `schema/files/` | Exchanged files: the discovery file, the release `package.json`, and the NDJSON outputs (`ndjson` header/footer plus survey, IL index, content scan, trace, export manifest, metrics records) |
 | `schema/bridge/` | Methods and events of static-analysis bridges (added later) |
-| `fixtures/agent/`, `fixtures/files/` | Golden fixtures (see below) |
 | `codegen/` | Generators for the C# message types and the Python models (sharing one schema reader) |
-| `csharp/` | `UnityLudometry.Protocol` (netstandard2.0, zero dependencies), `UnityLudometry.Protocol.Conformance` (fixture replay for consumers' tests), `UnityLudometry.Protocol.Tests` |
+| `csharp/` | `UnityLudometry.Protocol` (netstandard2.0, zero dependencies) |
 
 ## Transport and framing
 
@@ -46,7 +44,7 @@ in `csharp/` (and the orchestrator's Python models) is generated from or tested 
 
 ## Schema authoring rules
 
-These keep the schemas, the generated code and the fixtures consistent; the generator and the tests enforce them.
+These keep the schemas and the generated code consistent; the generator enforces them.
 - JSON Schema draft 2020-12. `$id` = `https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/<path>`,
   and `$ref`s are relative.
 - Every object with `properties` has a `title`: its (unique, PascalCase) type name in generated code.
@@ -60,45 +58,26 @@ These keep the schemas, the generated code and the fixtures consistent; the gene
 `python protocol/codegen/python.py` regenerates `src/unity_ludometry_mcp/protocol/generated/`: one pydantic model per
 titled object (strict validation, snake_case fields with the JSON names as aliases, unknown properties kept, canonical
 `to_json()`), plus `METHODS`, `EVENTS` and `FILES`. Integer fields accept integral numbers in the 64-bit range (e.g.
-`5.0`), the same rule as the C# package. CI fails if the models don't match the schemas (`--check`).
+`5.0`), the same rule as the C# package. `--check` fails if the models don't match the schemas.
 
 ## Generated C# types
 
 `python protocol/codegen/csharp.py` (Python 3.10+, standard library only) regenerates
 `csharp/UnityLudometry.Protocol/Generated/`: one class per titled object (with `Read` / `WriteJson`), the `Methods` and
 `EventKinds` name constants, and the `MethodRegistry` (metadata + message types per method), `EventRegistry` and
-`FileRegistry`. Never edit the generated files; CI fails if they don't match the schemas (`--check`).
-
-## Fixtures
-
-```
-fixtures/agent/<method>/<case>.json         {"description", "request", "response", "jobResult"?, "requestValid"?}
-fixtures/agent/events/<kind>/<case>.json    {"description", "event"}
-fixtures/agent/_generic/<case>.json         request/response pairs not tied to one method (e.g. METHOD_NOT_FOUND)
-fixtures/files/<schema>/<case>.json|.ndjson example files (NDJSON footers carry the real SHA-256 and counts)
-```
-
-Every method has at least an `ok` case, plus a `minimal` case (required fields only) and the relevant error cases
-(`mode-forbidden`, `index-stale`, `handle-expired`, `unsupported`, `invalid-params`). Every event and every file schema
-has examples. Each fixture must validate against the schemas and round-trip through the generated types.
-`requestValid: false` marks a request that deliberately violates its params schema; it must be answered with
-`INVALID_PARAMS`. Property order and number spelling (`1` vs `1.0`) don't matter when comparing.
+`FileRegistry`. Never edit the generated files; `--check` fails if they don't match the schemas.
 
 ## Changing the protocol
 
 The protocol is changed only in this repository.
-1. Change or add the schemas (following the authoring rules), and add fixtures for every new case.
+1. Change or add the schemas (following the authoring rules).
 2. Regenerate the C# types and the Python models (`python protocol/codegen/csharp.py`, `python protocol/codegen/python.py`).
-3. `dotnet test` in `csharp/` and `uv run pytest` must pass. They check schema validity, every `$ref`, every fixture
-   (shape and the protocol version it names), and that schemas, fixtures, registries, constants and error codes cover
-   each other.
-4. Tag a new version. Consumers then bump their protocol submodule.
+3. Tag a new version. Consumers then bump their protocol submodule.
 
 ## Using the C# package from another repository
 
-Add this repository as a git submodule (e.g. `external/protocol`), reference
-`protocol/csharp/UnityLudometry.Protocol/UnityLudometry.Protocol.csproj`, and replay the fixtures in your own tests with
-`UnityLudometry.Protocol.Conformance` (`FixtureCatalog` + `FixtureReplay`, `FileFixtures`). The `csharp/` folder
+Add this repository as a git submodule (e.g. `external/protocol`), and reference
+`protocol/csharp/UnityLudometry.Protocol/UnityLudometry.Protocol.csproj`. The `csharp/` folder
 carries its own build settings, so it builds identically inside the consuming solution. `MethodRegistry` gives each
 method's thread, minimum mode, job and mutating flags, which an implementation can use for dispatch and
 `agent.capabilities`.

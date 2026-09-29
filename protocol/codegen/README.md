@@ -1,6 +1,6 @@
 # codegen
 
-Generators that turn the schemas in `../schema` into code. Generated code is committed, and CI regenerates it and fails
+Generators that turn the schemas in `../schema` into code. Generated code is committed; `--check` regenerates it and fails
 if it differs from the committed files. Both generators read the schemas through `schema_ir.py`, so C# and Python
 interpret them identically.
 

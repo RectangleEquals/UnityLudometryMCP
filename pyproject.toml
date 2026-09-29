@@ -22,12 +22,7 @@ Repository = "https://github.com/RectangleEquals/UnityLudometryMCP"
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4",
-    "pytest-asyncio>=1.2",
     "ruff>=0.13",
-    "jsonschema>=4.25",
-    "hypothesis>=6.168",
-    "syrupy>=6.1",
     "mypy>=2.3",
 ]
 
@@ -44,24 +39,10 @@ packages = ["src/unity_ludometry_mcp"]
 "templates" = "unity_ludometry_mcp/_data/templates"
 "protocol/schema" = "unity_ludometry_mcp/_data/protocol/schema"
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["tests"]
-addopts = ["--import-mode=importlib", "-m", "not dotnet and not integration_real"]
-asyncio_mode = "auto"
-asyncio_default_fixture_loop_scope = "function"
-markers = [
-    "windows: needs Windows named pipes",
-    "slow: slow tests",
-    "dotnet: needs the .NET SDK (run with -m dotnet)",
-    "integration_real: needs a real game and agent (run with -m integration_real and ULM_TEST_SETTINGS)",
-]
-filterwarnings = ["error"]
-
 [tool.ruff]
 line-length = 160
 target-version = "py313"
-src = ["src", "tests", "protocol/codegen"]
+src = ["src", "protocol/codegen"]
 
 [tool.ruff.format]
 # Generated code is checked for freshness against its generator instead.

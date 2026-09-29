@@ -1,3 +1,0 @@
-{"rec":"header","schema":"export_manifest","schemaVersion":"0.1","agentVersion":"0.1.0","createdAt":"2026-09-27T10:00:00.000Z","source":{"game":"ExampleGame"}}
-{"rec":"file","path":"Root/Player","sha256":"50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c","size":204800,"source":{"type":"UnityEngine.Texture2D","name":"Player","instanceId":-12844,"locator":"live://Main/Player#Example.Inventory.items"},"format":"png","warnings":["example-warning"]}
-{"rec":"footer","counts":{"file":1},"sha256":"64a9884e0ac240e278f2625e16d7ad0b0b12361b84bd269f7f6bcbe6e2ae9e66","durationMs":1234}

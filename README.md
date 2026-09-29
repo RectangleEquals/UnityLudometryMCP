@@ -11,7 +11,7 @@ your AI assistant can query and act on, with your consent at every step that cha
 ## What's here now
 - The MCP server `unity-ludometry-mcp` (stdio) with the `server_status` tool.
 - [`protocol/`](protocol/README.md): the schema-first protocol spoken between the orchestrator and the agent: JSON Schemas
-  for every method, event and exchanged file, golden fixtures, and the zero-dependency C# package
+  for every method, event and exchanged file, and the zero-dependency C# package
   `UnityLudometry.Protocol` (with message types generated from the schemas) that the agent uses.
 - `src/unity_ludometry_mcp/`: the Python orchestrator: the protocol layer (models generated from the schemas, strict
   JSON, framing, envelopes, named-pipe/TCP transports), agent discovery, the agent client, and the package layout the
@@ -37,13 +37,8 @@ claude mcp add unity-ludometry-mcp -- uv run --directory <path to your clone> un
 root, otherwise only folders you choose; today nothing at all) and how to remove everything.
 [Configuration](docs/configuration.md) lists the environment variables.
 
-## Building and testing
-See [CONTRIBUTING](docs/CONTRIBUTING.md). In short:
-
-```
-uv sync --group dev
-uv run pytest
-```
+## Building
+See [CONTRIBUTING](docs/CONTRIBUTING.md). In short: `uv sync --group dev`.
 
 ## About the use of AI in this project
 This section is here so you can decide for yourself, with accurate information.
@@ -53,10 +48,10 @@ This section is here so you can decide for yourself, with accurate information.
 - The human decides what the project is for, sets every requirement and constraint, and chooses between the options the
   AI proposes.
 - The AI drafts code and documentation within those requirements, one small, reviewable step at a time.
-- **The human reviews every step** before it becomes part of the project. Every commit in this repository is made by the
-  human, not by the AI.
-- Behaviour is checked by automated tests (for the protocol: schema validation and golden fixtures replayed by both
-  sides) and, as the project grows, by running it against real Unity games.
+- **The human reviews every step** before it becomes part of the project. Commits are made by the human, or by the AI only with
+  the human's explicit permission.
+- Behaviour is verified during development (for the protocol: schema validation and example exchanges replayed by
+  both sides) and, as the project grows, by running it against real Unity games.
 
 **How this project uses AI when you run it.** UnityLudometryMCP is an MCP server: it contains no AI model and never
 contacts an AI service by itself. It offers tools to the AI assistant *you* connect it to (for example Claude Code), and

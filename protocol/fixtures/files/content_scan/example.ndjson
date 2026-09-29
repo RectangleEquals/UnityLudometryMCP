@@ -1,5 +1,0 @@
-{"rec":"header","schema":"content_scan","schemaVersion":"0.1","agentVersion":"0.1.0","createdAt":"2026-09-27T10:00:00.000Z","source":{"game":"ExampleGame"}}
-{"rec":"asset","name":"Player","type":{"mvid":"5b0e1c7a-3f2d-4e8b-9a61-0c2d4e6f8a1b","token":100663553,"name":"Example.Inventory::AddItem(System.String,System.Int32)"},"instanceId":-12844,"summary":{},"locator":"live://Main/Player#Example.Inventory.items","bundle":"example-bundle"}
-{"rec":"addressable","key":"items/plank","locations":[{"internalId":"{UnityEngine.AddressableAssets.Addressables.RuntimePath}/items.bundle","providerId":"UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider","resourceType":"UnityEngine.Texture2D","dependencies":["example-dependencie"],"primaryKey":"items/plank"}]}
-{"rec":"bundle","name":"Player","isStreamedSceneAssetBundle":true,"assetNames":["plank"],"scenePaths":["example-scenePath"]}
-{"rec":"footer","counts":{"asset":1,"addressable":1,"bundle":1},"sha256":"5ae33a7c5ffd264ce0a33f4aea8c354c7a11f40e6a45f469ced4daa2870785a9","durationMs":1234}

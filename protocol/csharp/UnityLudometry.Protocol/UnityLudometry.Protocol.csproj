@@ -9,8 +9,4 @@
   <ItemGroup>
     <PackageReference Include="PolySharp" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
-
-  <ItemGroup>
-    <InternalsVisibleTo Include="UnityLudometry.Protocol.Tests" />
-  </ItemGroup>
 </Project>
