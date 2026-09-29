@@ -4,7 +4,7 @@ The wire protocol between the UnityLudometryMCP orchestrator and the in-game Uni
 other providers such as a static-analysis bridge). It is **schema-first**: the JSON Schemas in `schema/` are the
 normative definition, and the code in `csharp/` (and the orchestrator's Python models) is generated from them.
 
-**Current version: 0.1** (pre-release, tag `protocol-v0.1.0-dev.3`). It covers the agent's complete v0.1 surface:
+**Current version: 0.1** (pre-release, tag `protocol-v0.1.0-dev.4`). It covers the agent's complete v0.1 surface:
 171 methods, 22 event kinds and the files the agent writes.
 
 ## Layout

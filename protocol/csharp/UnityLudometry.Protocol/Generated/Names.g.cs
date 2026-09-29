@@ -143,7 +143,7 @@ public static class Methods
     /// <summary>Removes (destroys) a component.</summary>
     public const string ComponentRemove = "component.remove";
 
-    /// <summary>Exports textures, sprites, audio, meshes, text and data to a caller-chosen directory, with a manifest (<c>export-&lt;jobId&gt;.ndjson</c>).</summary>
+    /// <summary>Exports what the running game holds in memory to a caller-chosen directory, with a manifest (<c>export-&lt;jobId&gt;.ndjson</c>): textures, sprites and render textures as PNG (the pixels in use, read back, including ones generated, modified or decrypted at runtime), objects' data as JSON, and text assets' raw bytes. Audio, meshes and fonts are left to static extraction and reported as skipped.</summary>
     public const string ContentExportStart = "content.export.start";
 
     /// <summary>Loaded objects of a type with type-specific summaries.</summary>

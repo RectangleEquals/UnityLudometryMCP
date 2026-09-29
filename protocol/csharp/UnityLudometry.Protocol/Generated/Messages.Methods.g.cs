@@ -6151,12 +6151,6 @@ public sealed partial class ExportFormats : ProtocolMessage
     /// <summary><c>texture</c>.</summary>
     public string? Texture { get; set; }
 
-    /// <summary><c>audio</c>.</summary>
-    public string? Audio { get; set; }
-
-    /// <summary><c>mesh</c>.</summary>
-    public string? Mesh { get; set; }
-
     /// <summary><c>data</c>.</summary>
     public string? Data { get; set; }
 
@@ -6167,8 +6161,6 @@ public sealed partial class ExportFormats : ProtocolMessage
         return new ExportFormats
         {
             Texture = r.OptionalString("texture"),
-            Audio = r.OptionalString("audio"),
-            Mesh = r.OptionalString("mesh"),
             Data = r.OptionalString("data"),
             Extra = r.Rest(),
         };
@@ -6181,16 +6173,6 @@ public sealed partial class ExportFormats : ProtocolMessage
         {
             writer.WritePropertyName("texture");
             writer.WriteString(Texture);
-        }
-        if (Audio is not null)
-        {
-            writer.WritePropertyName("audio");
-            writer.WriteString(Audio);
-        }
-        if (Mesh is not null)
-        {
-            writer.WritePropertyName("mesh");
-            writer.WriteString(Mesh);
         }
         if (Data is not null)
         {

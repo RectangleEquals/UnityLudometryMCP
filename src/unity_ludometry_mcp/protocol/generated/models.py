@@ -1275,8 +1275,6 @@ class ExportFormats(ProtocolModel):
     "ExportFormats."
 
     texture: str | None = Field(default=None, alias="texture")
-    audio: str | None = Field(default=None, alias="audio")
-    mesh: str | None = Field(default=None, alias="mesh")
     data: str | None = Field(default=None, alias="data")
 
 

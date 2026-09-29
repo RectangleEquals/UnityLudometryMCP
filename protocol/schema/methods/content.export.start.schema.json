@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/content.export.start.schema.json",
   "title": "content.export.start",
-  "description": "Exports textures, sprites, audio, meshes, text and data to a caller-chosen directory, with a manifest (`export-<jobId>.ndjson`).",
+  "description": "Exports what the running game holds in memory to a caller-chosen directory, with a manifest (`export-<jobId>.ndjson`): textures, sprites and render textures as PNG (the pixels in use, read back, including ones generated, modified or decrypted at runtime), objects' data as JSON, and text assets' raw bytes. Audio, meshes and fonts are left to static extraction and reported as skipped.",
   "x-method": {
     "thread": "mixed",
     "minMode": "ReadOnly",
@@ -44,18 +44,6 @@
               "type": "string",
               "enum": [
                 "png"
-              ]
-            },
-            "audio": {
-              "type": "string",
-              "enum": [
-                "wav"
-              ]
-            },
-            "mesh": {
-              "type": "string",
-              "enum": [
-                "obj"
               ]
             },
             "data": {
