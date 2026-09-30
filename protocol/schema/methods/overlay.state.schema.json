@@ -47,6 +47,23 @@
         },
         "pickMode": {
           "type": "boolean"
+        },
+        "renderer": {
+          "type": "string",
+          "enum": [
+            "uitoolkit",
+            "ugui",
+            "imgui",
+            "none"
+          ],
+          "description": "How the overlay is drawn in this game (none while it isn't available)."
+        },
+        "rendererReason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Why this renderer was chosen (or why none)."
         }
       },
       "required": [
@@ -55,7 +72,9 @@
         "edge",
         "offset",
         "tab",
-        "pickMode"
+        "pickMode",
+        "renderer",
+        "rendererReason"
       ]
     }
   }

@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.frameworks.schema.json",
+  "title": "ui.frameworks",
+  "description": "Which UI frameworks the running game can use and uses (uGUI, UI Toolkit, TextMeshPro, IMGUI), its input handling, and a classification per framework.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "UiFrameworksParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "UiFrameworksResult",
+      "type": "object",
+      "properties": {
+        "ugui": {
+          "title": "UguiReport",
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Why it isn't available."
+            },
+            "canvases": {
+              "title": "CanvasCounts",
+              "type": "object",
+              "description": "Active root canvases by render mode.",
+              "properties": {
+                "overlay": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "camera": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "world": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "overlay",
+                "camera",
+                "world"
+              ]
+            },
+            "eventSystem": {
+              "title": "EventSystemReport",
+              "type": "object",
+              "properties": {
+                "present": {
+                  "type": "boolean"
+                },
+                "inputModule": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "The active input module's type name."
+                }
+              },
+              "required": [
+                "present",
+                "inputModule"
+              ]
+            }
+          },
+          "required": [
+            "available",
+            "version",
+            "reason",
+            "canvases",
+            "eventSystem"
+          ]
+        },
+        "uiToolkit": {
+          "title": "UiToolkitReport",
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "runtimeSupported": {
+              "type": "boolean",
+              "description": "Runtime UI Toolkit (UIDocument) exists in this Unity version."
+            },
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "documents": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Active UIDocuments."
+            },
+            "panels": {
+              "type": "array",
+              "items": {
+                "title": "UiToolkitPanel",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The PanelSettings asset's name."
+                  },
+                  "sortOrder": {
+                    "type": "number"
+                  },
+                  "documents": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "name",
+                  "sortOrder",
+                  "documents"
+                ]
+              }
+            }
+          },
+          "required": [
+            "available",
+            "runtimeSupported",
+            "version",
+            "reason",
+            "documents",
+            "panels"
+          ]
+        },
+        "tmp": {
+          "title": "TmpReport",
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "available",
+            "version"
+          ]
+        },
+        "imgui": {
+          "title": "ImguiReport",
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "behaviours": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Active behaviours of the game with an OnGUI method."
+            }
+          },
+          "required": [
+            "available",
+            "behaviours"
+          ]
+        },
+        "input": {
+          "title": "InputReport",
+          "type": "object",
+          "properties": {
+            "handling": {
+              "type": "string",
+              "enum": [
+                "inputManager",
+                "inputSystem",
+                "both",
+                "unknown"
+              ]
+            },
+            "inputSystemVersion": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gamepads": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Gamepads connected now."
+            }
+          },
+          "required": [
+            "handling",
+            "inputSystemVersion",
+            "gamepads"
+          ]
+        },
+        "classification": {
+          "title": "UiFrameworkClassification",
+          "type": "object",
+          "description": "From what is active now: primary (most of the UI on screen), secondary (in use too), unused (available, nothing active), unavailable.",
+          "properties": {
+            "ugui": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "unused",
+                "unavailable"
+              ]
+            },
+            "uiToolkit": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "unused",
+                "unavailable"
+              ]
+            },
+            "imgui": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "unused",
+                "unavailable"
+              ]
+            }
+          },
+          "required": [
+            "ugui",
+            "uiToolkit",
+            "imgui"
+          ]
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "ugui",
+        "uiToolkit",
+        "tmp",
+        "imgui",
+        "input",
+        "classification",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

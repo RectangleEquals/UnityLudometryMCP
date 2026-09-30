@@ -3757,6 +3757,12 @@ public sealed partial class UiMark : ProtocolMessage
     /// <summary><c>text</c>.</summary>
     public string? Text { get; set; }
 
+    /// <summary><c>interaction</c>.</summary>
+    public string Interaction { get; set; } = string.Empty;
+
+    /// <summary><c>images</c>.</summary>
+    public List<UiImage>? Images { get; set; }
+
     /// <summary><c>rect</c>.</summary>
     public ScreenRect Rect { get; set; } = new();
 
@@ -3773,6 +3779,8 @@ public sealed partial class UiMark : ProtocolMessage
             H = r.RequiredInt64("h"),
             Kind = r.RequiredString("kind"),
             Text = r.RequiredNullableString("text"),
+            Interaction = r.RequiredString("interaction"),
+            Images = r.OptionalArray("images", global::UnityLudometry.Protocol.Messages.UiImage.Read),
             Rect = r.Required("rect", global::UnityLudometry.Protocol.Messages.ScreenRect.Read),
             Locator = r.OptionalString("locator"),
             Extra = r.Rest(),
@@ -3797,6 +3805,18 @@ public sealed partial class UiMark : ProtocolMessage
         {
             writer.WritePropertyName("text");
             writer.WriteNull();
+        }
+        writer.WritePropertyName("interaction");
+        writer.WriteString(Interaction);
+        if (Images is not null)
+        {
+            writer.WritePropertyName("images");
+            writer.WriteStartArray();
+            foreach (var item0 in Images)
+            {
+                item0.WriteJson(writer);
+            }
+            writer.WriteEndArray();
         }
         writer.WritePropertyName("rect");
         Rect.WriteJson(writer);

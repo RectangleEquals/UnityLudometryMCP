@@ -25,6 +25,13 @@
         },
         "kind": {
           "type": "string"
+        },
+        "interaction": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/ui.snapshot.schema.json#/$defs/interaction"
+          },
+          "description": "Only elements with one of these interactions."
         }
       }
     },

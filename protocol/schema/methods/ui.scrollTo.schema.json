@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.scrollTo.schema.json",
+  "title": "ui.scrollTo",
+  "description": "Scrolls an element's scroll views (innermost first) until it is visible.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true,
+    "requires": [
+      "module:ugui"
+    ]
+  },
+  "$defs": {
+    "params": {
+      "title": "UiScrollToParams",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "../common/target.schema.json"
+        }
+      },
+      "required": [
+        "target"
+      ]
+    },
+    "result": {
+      "title": "UiScrollToResult",
+      "type": "object",
+      "properties": {
+        "scrolled": {
+          "type": "boolean",
+          "description": "Whether any scroll view moved."
+        },
+        "container": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "description": "The innermost scroll view's GameObject, or null when the element isn't in one."
+        },
+        "visibility": {
+          "$ref": "../methods/ui.snapshot.schema.json#/$defs/visibility"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "scrolled",
+        "container",
+        "visibility",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

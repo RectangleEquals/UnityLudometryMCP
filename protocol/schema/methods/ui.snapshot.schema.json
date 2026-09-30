@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/ui.snapshot.schema.json",
   "title": "ui.snapshot",
-  "description": "UI elements on active canvases (uGUI, TextMeshPro) with texts, images and state.",
+  "description": "UI elements on active canvases (uGUI, TextMeshPro): texts, images, state, visibility, interaction, scroll containers and navigation, a page at a time.",
   "x-method": {
     "thread": "main",
     "minMode": "ReadOnly",
@@ -29,7 +29,18 @@
         "limit": {
           "type": "integer",
           "minimum": 1,
-          "description": "Maximum number of items to return."
+          "description": "Maximum number of items per page (default 500)."
+        },
+        "interaction": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/interaction"
+          },
+          "description": "Only elements with one of these interactions."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Continuation cursor from a previous page (session-scoped, expires after 10 minutes)."
         }
       }
     },
@@ -68,7 +79,15 @@
                 "type": [
                   "string",
                   "null"
-                ]
+                ],
+                "description": "The element's text (itself or its children), rich-text markup removed."
+              },
+              "rawText": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The text with its rich-text markup, when it had any."
               },
               "images": {
                 "type": "array",
@@ -97,6 +116,94 @@
               },
               "interactable": {
                 "type": "boolean"
+              },
+              "interaction": {
+                "$ref": "#/$defs/interaction"
+              },
+              "visibility": {
+                "$ref": "#/$defs/visibility"
+              },
+              "visibleRect": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "../common/capture.schema.json#/$defs/rect"
+                  }
+                ],
+                "description": "The visible part (null unless visible or partial)."
+              },
+              "scrollContainer": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1,
+                "description": "Handle of the enclosing ScrollRect's GameObject, or null."
+              },
+              "selected": {
+                "type": "boolean",
+                "description": "Whether it's the EventSystem's selected object."
+              },
+              "navigation": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "title": "UiNavigation",
+                    "type": "object",
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "none",
+                          "horizontal",
+                          "vertical",
+                          "automatic",
+                          "explicit"
+                        ]
+                      },
+                      "up": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 1
+                      },
+                      "down": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 1
+                      },
+                      "left": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 1
+                      },
+                      "right": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 1
+                      }
+                    },
+                    "required": [
+                      "mode",
+                      "up",
+                      "down",
+                      "left",
+                      "right"
+                    ]
+                  }
+                ],
+                "description": "Keyboard/gamepad navigation of a Selectable: the elements it moves to (null for other elements)."
               },
               "isOn": {
                 "type": "boolean"
@@ -133,9 +240,31 @@
               "screenRect",
               "canvas",
               "sortingOrder",
-              "raycastBlocked"
+              "raycastBlocked",
+              "rawText",
+              "interaction",
+              "visibility",
+              "visibleRect",
+              "scrollContainer",
+              "selected",
+              "navigation"
             ]
           }
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cursor for the next page; null when this is the last page."
+        },
+        "total": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Elements matching the filters, when known cheaply; null otherwise."
         },
         "frame": {
           "type": "integer",
@@ -150,9 +279,34 @@
       },
       "required": [
         "items",
+        "cursor",
+        "total",
         "frame",
         "realtimeMs"
       ]
+    },
+    "interaction": {
+      "type": "string",
+      "enum": [
+        "clickable",
+        "disabled",
+        "hover",
+        "display"
+      ],
+      "description": "clickable: an interactable Selectable or a pointer click/down handler; disabled: a Selectable (or CanvasGroup) that isn't interactable; hover: only pointer enter/exit handlers (tooltips); display: nothing reacts.",
+      "title": "UiInteraction"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "visible",
+        "partial",
+        "clipped",
+        "offscreen",
+        "hidden"
+      ],
+      "description": "visible: entirely on screen and inside its masks; partial: partly; clipped: on screen but hidden by a mask or scroll view; offscreen: outside the screen; hidden: faded out (CanvasGroup alpha 0) or without size.",
+      "title": "UiVisibility"
     }
   }
 }

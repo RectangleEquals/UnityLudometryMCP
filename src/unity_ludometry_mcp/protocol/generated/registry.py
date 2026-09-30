@@ -164,6 +164,10 @@ class Methods:
     UI_CANCEL = "ui.cancel"
     UI_CLICK = "ui.click"
     UI_FIND = "ui.find"
+    UI_FRAMEWORKS = "ui.frameworks"
+    UI_HOVER = "ui.hover"
+    UI_NAVIGATE = "ui.navigate"
+    UI_SCROLL_TO = "ui.scrollTo"
     UI_SELECT = "ui.select"
     UI_SET_TEXT = "ui.setText"
     UI_SET_VALUE = "ui.setValue"
@@ -394,6 +398,10 @@ METHODS: dict[str, MethodDescriptor] = {
     Methods.UI_CANCEL: MethodDescriptor("ui.cancel", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiCancelParams, m.UiCancelResult, None),
     Methods.UI_CLICK: MethodDescriptor("ui.click", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiClickParams, m.UiClickResult, None),
     Methods.UI_FIND: MethodDescriptor("ui.find", MethodThread.MAIN, "ReadOnly", False, False, ("module:ugui", ), m.UiFindParams, m.UiFindResult, None),
+    Methods.UI_FRAMEWORKS: MethodDescriptor("ui.frameworks", MethodThread.MAIN, "ReadOnly", False, False, (), m.UiFrameworksParams, m.UiFrameworksResult, None),
+    Methods.UI_HOVER: MethodDescriptor("ui.hover", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiHoverParams, m.UiHoverResult, None),
+    Methods.UI_NAVIGATE: MethodDescriptor("ui.navigate", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiNavigateParams, m.UiNavigateResult, None),
+    Methods.UI_SCROLL_TO: MethodDescriptor("ui.scrollTo", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiScrollToParams, m.UiScrollToResult, None),
     Methods.UI_SELECT: MethodDescriptor("ui.select", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiSelectParams, m.UiSelectResult, None),
     Methods.UI_SET_TEXT: MethodDescriptor("ui.setText", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiSetTextParams, m.UiSetTextResult, None),
     Methods.UI_SET_VALUE: MethodDescriptor("ui.setValue", MethodThread.MAIN, "Full", False, True, ("module:ugui", ), m.UiSetValueParams, m.UiSetValueResult, None),

@@ -476,6 +476,18 @@ public static class Methods
     /// <summary>UI elements by text, path or kind.</summary>
     public const string UiFind = "ui.find";
 
+    /// <summary>Which UI frameworks the running game can use and uses (uGUI, UI Toolkit, TextMeshPro, IMGUI), its input handling, and a classification per framework.</summary>
+    public const string UiFrameworks = "ui.frameworks";
+
+    /// <summary>Moves the pointer onto (or, with leave, off) an element through the EventSystem, so hover-only elements (tooltips, previews) react as for a real pointer.</summary>
+    public const string UiHover = "ui.hover";
+
+    /// <summary>Moves the selection like a gamepad or the arrow keys: the selected element's navigation, through the EventSystem.</summary>
+    public const string UiNavigate = "ui.navigate";
+
+    /// <summary>Scrolls an element's scroll views (innermost first) until it is visible.</summary>
+    public const string UiScrollTo = "ui.scrollTo";
+
     /// <summary>Sets the EventSystem's selected object.</summary>
     public const string UiSelect = "ui.select";
 
@@ -485,7 +497,7 @@ public static class Methods
     /// <summary>Sets a toggle, slider, dropdown or scrollbar value (firing its events).</summary>
     public const string UiSetValue = "ui.setValue";
 
-    /// <summary>UI elements on active canvases (uGUI, TextMeshPro) with texts, images and state.</summary>
+    /// <summary>UI elements on active canvases (uGUI, TextMeshPro): texts, images, state, visibility, interaction, scroll containers and navigation, a page at a time.</summary>
     public const string UiSnapshot = "ui.snapshot";
 
     /// <summary>Sends Submit to the selected object.</summary>

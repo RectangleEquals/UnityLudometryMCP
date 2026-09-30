@@ -14,6 +14,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/RectangleEquals/UnityLudometryMCP</RepositoryUrl>
     <!-- The protocol version, independent of the orchestrator's version. -->
-    <Version>0.1.0-dev.4</Version>
+    <Version>0.1.0-dev.5</Version>
   </PropertyGroup>
 </Project>

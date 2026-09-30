@@ -166,6 +166,15 @@
             "null"
           ]
         },
+        "interaction": {
+          "$ref": "../methods/ui.snapshot.schema.json#/$defs/interaction"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "../methods/ui.snapshot.schema.json#/$defs/result/properties/items/items/properties/images/items"
+          }
+        },
         "rect": {
           "$ref": "#/$defs/rect"
         },
@@ -178,7 +187,8 @@
         "h",
         "kind",
         "text",
-        "rect"
+        "rect",
+        "interaction"
       ]
     },
     "result": {

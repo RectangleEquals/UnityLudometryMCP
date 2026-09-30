@@ -11,6 +11,13 @@
   `AgentHealthCheckResult` and `HealthCheckItem`).
 - Protocol `0.1.0-dev.4`: `content.export.start` exports textures (PNG), object data (JSON) and text assets (raw bytes);
   audio, meshes and fonts are left to static extraction (the `audio` and `mesh` formats are gone).
+- Protocol `0.1.0-dev.5`: `ui.frameworks` (which UI frameworks the running game can use and uses, its input handling,
+  and a classification per framework); `overlay.state` reports the overlay's `renderer`; the complete UI model: UI
+  elements gain `interaction`, `visibility`, `visibleRect`, `scrollContainer`, `selected`, `navigation` and `rawText`,
+  `ui.snapshot` pages with `cursor` and filters by `interaction` (as does `ui.find`), ui-marks carry `interaction` and
+  `images`, and the new actions `ui.hover`, `ui.scrollTo` and `ui.navigate`.
+- Facts `ui.frameworks_available`, `input.systems_present` and `ui.frameworks_used` (static usage merged with the agent's
+  `ui.frameworks` reports: what the agent saw in use wins, with the screens it saw it on).
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,
   named-pipe/TCP transports), agent discovery, the agent client (handshake, requests, events, jobs, reconnect), the error
   model.

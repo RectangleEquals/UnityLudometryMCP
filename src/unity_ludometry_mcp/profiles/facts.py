@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 Scope = Literal["target", "project"]
 
 FACT_SECTIONS: dict[Scope, frozenset[str]] = {
-    "target": frozenset({"identity", "engine", "content", "code", "build", "runtime", "providers", "analysis", "paths", "limits"}),
+    "target": frozenset({"identity", "engine", "content", "code", "build", "runtime", "providers", "analysis", "paths", "limits", "ui", "input"}),
     "project": frozenset({"identity", "mod", "basis", "paths", "limits", "status"}),
 }
 

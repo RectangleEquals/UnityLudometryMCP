@@ -2345,6 +2345,43 @@ public sealed partial class CancelResult : ProtocolMessage
     }
 }
 
+/// <summary>Active root canvases by render mode.</summary>
+public sealed partial class CanvasCounts : ProtocolMessage
+{
+    /// <summary><c>overlay</c>.</summary>
+    public long Overlay { get; set; }
+
+    /// <summary><c>camera</c>.</summary>
+    public long Camera { get; set; }
+
+    /// <summary><c>world</c>.</summary>
+    public long World { get; set; }
+
+    /// <summary>Reads a <see cref="CanvasCounts"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static CanvasCounts Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new CanvasCounts
+        {
+            Overlay = r.RequiredInt64("overlay"),
+            Camera = r.RequiredInt64("camera"),
+            World = r.RequiredInt64("world"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("overlay");
+        writer.WriteNumber(Overlay);
+        writer.WritePropertyName("camera");
+        writer.WriteNumber(Camera);
+        writer.WritePropertyName("world");
+        writer.WriteNumber(World);
+    }
+}
+
 /// <summary>ClientInfo.</summary>
 public sealed partial class ClientInfo : ProtocolMessage
 {
@@ -5525,6 +5562,45 @@ public sealed partial class EventSubscribeResult : ProtocolMessage
     }
 }
 
+/// <summary>EventSystemReport.</summary>
+public sealed partial class EventSystemReport : ProtocolMessage
+{
+    /// <summary><c>present</c>.</summary>
+    public bool Present { get; set; }
+
+    /// <summary>The active input module's type name.</summary>
+    public string? InputModule { get; set; }
+
+    /// <summary>Reads a <see cref="EventSystemReport"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static EventSystemReport Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new EventSystemReport
+        {
+            Present = r.RequiredBoolean("present"),
+            InputModule = r.RequiredNullableString("inputModule"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("present");
+        writer.WriteBoolean(Present);
+        if (InputModule is not null)
+        {
+            writer.WritePropertyName("inputModule");
+            writer.WriteString(InputModule);
+        }
+        else
+        {
+            writer.WritePropertyName("inputModule");
+            writer.WriteNull();
+        }
+    }
+}
+
 /// <summary>EventUnsubscribeParams.</summary>
 public sealed partial class EventUnsubscribeParams : ProtocolMessage
 {
@@ -8647,6 +8723,37 @@ public sealed partial class IlLocal : ProtocolMessage
     }
 }
 
+/// <summary>ImguiReport.</summary>
+public sealed partial class ImguiReport : ProtocolMessage
+{
+    /// <summary><c>available</c>.</summary>
+    public bool Available { get; set; }
+
+    /// <summary>Active behaviours of the game with an OnGUI method.</summary>
+    public long Behaviours { get; set; }
+
+    /// <summary>Reads a <see cref="ImguiReport"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static ImguiReport Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new ImguiReport
+        {
+            Available = r.RequiredBoolean("available"),
+            Behaviours = r.RequiredInt64("behaviours"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("available");
+        writer.WriteBoolean(Available);
+        writer.WritePropertyName("behaviours");
+        writer.WriteNumber(Behaviours);
+    }
+}
+
 /// <summary>Implementation.</summary>
 public sealed partial class Implementation : ProtocolMessage
 {
@@ -8681,6 +8788,51 @@ public sealed partial class Implementation : ProtocolMessage
         DeclaringType.WriteJson(writer);
         writer.WritePropertyName("via");
         writer.WriteString(Via);
+    }
+}
+
+/// <summary>InputReport.</summary>
+public sealed partial class InputReport : ProtocolMessage
+{
+    /// <summary><c>handling</c>.</summary>
+    public string Handling { get; set; } = string.Empty;
+
+    /// <summary><c>inputSystemVersion</c>.</summary>
+    public string? InputSystemVersion { get; set; }
+
+    /// <summary>Gamepads connected now.</summary>
+    public long Gamepads { get; set; }
+
+    /// <summary>Reads a <see cref="InputReport"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputReport Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputReport
+        {
+            Handling = r.RequiredString("handling"),
+            InputSystemVersion = r.RequiredNullableString("inputSystemVersion"),
+            Gamepads = r.RequiredInt64("gamepads"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("handling");
+        writer.WriteString(Handling);
+        if (InputSystemVersion is not null)
+        {
+            writer.WritePropertyName("inputSystemVersion");
+            writer.WriteString(InputSystemVersion);
+        }
+        else
+        {
+            writer.WritePropertyName("inputSystemVersion");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("gamepads");
+        writer.WriteNumber(Gamepads);
     }
 }
 
@@ -12017,6 +12169,12 @@ public sealed partial class OverlayStateResult : ProtocolMessage
     /// <summary><c>pickMode</c>.</summary>
     public bool PickMode { get; set; }
 
+    /// <summary>How the overlay is drawn in this game (none while it isn't available).</summary>
+    public string Renderer { get; set; } = string.Empty;
+
+    /// <summary>Why this renderer was chosen (or why none).</summary>
+    public string? RendererReason { get; set; }
+
     /// <summary>Reads a <see cref="OverlayStateResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
     public static OverlayStateResult Read(JsonValue? value, string path)
     {
@@ -12029,6 +12187,8 @@ public sealed partial class OverlayStateResult : ProtocolMessage
             Offset = r.RequiredDouble("offset"),
             Tab = r.RequiredString("tab"),
             PickMode = r.RequiredBoolean("pickMode"),
+            Renderer = r.RequiredString("renderer"),
+            RendererReason = r.RequiredNullableString("rendererReason"),
             Extra = r.Rest(),
         };
     }
@@ -12048,6 +12208,18 @@ public sealed partial class OverlayStateResult : ProtocolMessage
         writer.WriteString(Tab);
         writer.WritePropertyName("pickMode");
         writer.WriteBoolean(PickMode);
+        writer.WritePropertyName("renderer");
+        writer.WriteString(Renderer);
+        if (RendererReason is not null)
+        {
+            writer.WritePropertyName("rendererReason");
+            writer.WriteString(RendererReason);
+        }
+        else
+        {
+            writer.WritePropertyName("rendererReason");
+            writer.WriteNull();
+        }
     }
 }
 
@@ -15688,6 +15860,45 @@ public sealed partial class TimeWaitSecondsResult : ProtocolMessage
     }
 }
 
+/// <summary>TmpReport.</summary>
+public sealed partial class TmpReport : ProtocolMessage
+{
+    /// <summary><c>available</c>.</summary>
+    public bool Available { get; set; }
+
+    /// <summary><c>version</c>.</summary>
+    public string? Version { get; set; }
+
+    /// <summary>Reads a <see cref="TmpReport"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static TmpReport Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new TmpReport
+        {
+            Available = r.RequiredBoolean("available"),
+            Version = r.RequiredNullableString("version"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("available");
+        writer.WriteBoolean(Available);
+        if (Version is not null)
+        {
+            writer.WritePropertyName("version");
+            writer.WriteString(Version);
+        }
+        else
+        {
+            writer.WritePropertyName("version");
+            writer.WriteNull();
+        }
+    }
+}
+
 /// <summary>TraceCapture.</summary>
 public sealed partial class TraceCapture : ProtocolMessage
 {
@@ -16212,6 +16423,71 @@ public sealed partial class TypeSummary : ProtocolMessage
     }
 }
 
+/// <summary>UguiReport.</summary>
+public sealed partial class UguiReport : ProtocolMessage
+{
+    /// <summary><c>available</c>.</summary>
+    public bool Available { get; set; }
+
+    /// <summary><c>version</c>.</summary>
+    public string? Version { get; set; }
+
+    /// <summary>Why it isn't available.</summary>
+    public string? Reason { get; set; }
+
+    /// <summary>Active root canvases by render mode.</summary>
+    public CanvasCounts Canvases { get; set; } = new();
+
+    /// <summary><c>eventSystem</c>.</summary>
+    public EventSystemReport EventSystem { get; set; } = new();
+
+    /// <summary>Reads a <see cref="UguiReport"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UguiReport Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UguiReport
+        {
+            Available = r.RequiredBoolean("available"),
+            Version = r.RequiredNullableString("version"),
+            Reason = r.RequiredNullableString("reason"),
+            Canvases = r.Required("canvases", global::UnityLudometry.Protocol.Messages.CanvasCounts.Read),
+            EventSystem = r.Required("eventSystem", global::UnityLudometry.Protocol.Messages.EventSystemReport.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("available");
+        writer.WriteBoolean(Available);
+        if (Version is not null)
+        {
+            writer.WritePropertyName("version");
+            writer.WriteString(Version);
+        }
+        else
+        {
+            writer.WritePropertyName("version");
+            writer.WriteNull();
+        }
+        if (Reason is not null)
+        {
+            writer.WritePropertyName("reason");
+            writer.WriteString(Reason);
+        }
+        else
+        {
+            writer.WritePropertyName("reason");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("canvases");
+        Canvases.WriteJson(writer);
+        writer.WritePropertyName("eventSystem");
+        EventSystem.WriteJson(writer);
+    }
+}
+
 /// <summary>UiCancelParams.</summary>
 public sealed partial class UiCancelParams : ProtocolMessage
 {
@@ -16360,14 +16636,35 @@ public sealed partial class UiElement : ProtocolMessage
     /// <summary><c>kind</c>.</summary>
     public string Kind { get; set; } = string.Empty;
 
-    /// <summary><c>text</c>.</summary>
+    /// <summary>The element's text (itself or its children), rich-text markup removed.</summary>
     public string? Text { get; set; }
+
+    /// <summary>The text with its rich-text markup, when it had any.</summary>
+    public string? RawText { get; set; }
 
     /// <summary><c>images</c>.</summary>
     public List<UiImage>? Images { get; set; }
 
     /// <summary><c>interactable</c>.</summary>
     public bool Interactable { get; set; }
+
+    /// <summary><c>interaction</c>.</summary>
+    public string Interaction { get; set; } = string.Empty;
+
+    /// <summary><c>visibility</c>.</summary>
+    public string Visibility { get; set; } = string.Empty;
+
+    /// <summary>The visible part (null unless visible or partial).</summary>
+    public ScreenRect? VisibleRect { get; set; }
+
+    /// <summary>Handle of the enclosing ScrollRect's GameObject, or null.</summary>
+    public long? ScrollContainer { get; set; }
+
+    /// <summary>Whether it's the EventSystem's selected object.</summary>
+    public bool Selected { get; set; }
+
+    /// <summary>Keyboard/gamepad navigation of a Selectable: the elements it moves to (null for other elements).</summary>
+    public UiNavigation? Navigation { get; set; }
 
     /// <summary><c>isOn</c>.</summary>
     public bool? IsOn { get; set; }
@@ -16403,8 +16700,15 @@ public sealed partial class UiElement : ProtocolMessage
             Path = r.RequiredString("path"),
             Kind = r.RequiredString("kind"),
             Text = r.RequiredNullableString("text"),
+            RawText = r.RequiredNullableString("rawText"),
             Images = r.OptionalArray("images", global::UnityLudometry.Protocol.Messages.UiImage.Read),
             Interactable = r.RequiredBoolean("interactable"),
+            Interaction = r.RequiredString("interaction"),
+            Visibility = r.RequiredString("visibility"),
+            VisibleRect = r.RequiredNullable("visibleRect", global::UnityLudometry.Protocol.Messages.ScreenRect.Read),
+            ScrollContainer = r.RequiredNullableInt64("scrollContainer"),
+            Selected = r.RequiredBoolean("selected"),
+            Navigation = r.RequiredNullable("navigation", global::UnityLudometry.Protocol.Messages.UiNavigation.Read),
             IsOn = r.OptionalBoolean("isOn"),
             Value = r.OptionalValue("value"),
             Options = r.OptionalArray("options", ObjectReader.ReadString),
@@ -16436,6 +16740,16 @@ public sealed partial class UiElement : ProtocolMessage
             writer.WritePropertyName("text");
             writer.WriteNull();
         }
+        if (RawText is not null)
+        {
+            writer.WritePropertyName("rawText");
+            writer.WriteString(RawText);
+        }
+        else
+        {
+            writer.WritePropertyName("rawText");
+            writer.WriteNull();
+        }
         if (Images is not null)
         {
             writer.WritePropertyName("images");
@@ -16448,6 +16762,42 @@ public sealed partial class UiElement : ProtocolMessage
         }
         writer.WritePropertyName("interactable");
         writer.WriteBoolean(Interactable);
+        writer.WritePropertyName("interaction");
+        writer.WriteString(Interaction);
+        writer.WritePropertyName("visibility");
+        writer.WriteString(Visibility);
+        if (VisibleRect is not null)
+        {
+            writer.WritePropertyName("visibleRect");
+            VisibleRect.WriteJson(writer);
+        }
+        else
+        {
+            writer.WritePropertyName("visibleRect");
+            writer.WriteNull();
+        }
+        if (ScrollContainer.HasValue)
+        {
+            writer.WritePropertyName("scrollContainer");
+            writer.WriteNumber(ScrollContainer.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("scrollContainer");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("selected");
+        writer.WriteBoolean(Selected);
+        if (Navigation is not null)
+        {
+            writer.WritePropertyName("navigation");
+            Navigation.WriteJson(writer);
+        }
+        else
+        {
+            writer.WritePropertyName("navigation");
+            writer.WriteNull();
+        }
         if (IsOn.HasValue)
         {
             writer.WritePropertyName("isOn");
@@ -16495,6 +16845,9 @@ public sealed partial class UiFindParams : ProtocolMessage
     /// <summary><c>kind</c>.</summary>
     public string? Kind { get; set; }
 
+    /// <summary>Only elements with one of these interactions.</summary>
+    public List<string>? Interaction { get; set; }
+
     /// <summary>Reads a <see cref="UiFindParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
     public static UiFindParams Read(JsonValue? value, string path)
     {
@@ -16504,6 +16857,7 @@ public sealed partial class UiFindParams : ProtocolMessage
             Text = r.OptionalString("text"),
             Path = r.OptionalString("path"),
             Kind = r.OptionalString("kind"),
+            Interaction = r.OptionalArray("interaction", ObjectReader.ReadString),
             Extra = r.Rest(),
         };
     }
@@ -16525,6 +16879,16 @@ public sealed partial class UiFindParams : ProtocolMessage
         {
             writer.WritePropertyName("kind");
             writer.WriteString(Kind);
+        }
+        if (Interaction is not null)
+        {
+            writer.WritePropertyName("interaction");
+            writer.WriteStartArray();
+            foreach (var item0 in Interaction)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
         }
     }
 }
@@ -16556,6 +16920,209 @@ public sealed partial class UiFindResult : ProtocolMessage
             item0.WriteJson(writer);
         }
         writer.WriteEndArray();
+    }
+}
+
+/// <summary>From what is active now: primary (most of the UI on screen), secondary (in use too), unused (available, nothing active), unavailable.</summary>
+public sealed partial class UiFrameworkClassification : ProtocolMessage
+{
+    /// <summary><c>ugui</c>.</summary>
+    public string Ugui { get; set; } = string.Empty;
+
+    /// <summary><c>uiToolkit</c>.</summary>
+    public string UiToolkit { get; set; } = string.Empty;
+
+    /// <summary><c>imgui</c>.</summary>
+    public string Imgui { get; set; } = string.Empty;
+
+    /// <summary>Reads a <see cref="UiFrameworkClassification"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiFrameworkClassification Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiFrameworkClassification
+        {
+            Ugui = r.RequiredString("ugui"),
+            UiToolkit = r.RequiredString("uiToolkit"),
+            Imgui = r.RequiredString("imgui"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("ugui");
+        writer.WriteString(Ugui);
+        writer.WritePropertyName("uiToolkit");
+        writer.WriteString(UiToolkit);
+        writer.WritePropertyName("imgui");
+        writer.WriteString(Imgui);
+    }
+}
+
+/// <summary>UiFrameworksParams.</summary>
+public sealed partial class UiFrameworksParams : ProtocolMessage
+{
+    /// <summary>Reads a <see cref="UiFrameworksParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiFrameworksParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiFrameworksParams
+        {
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+    }
+}
+
+/// <summary>UiFrameworksResult.</summary>
+public sealed partial class UiFrameworksResult : ProtocolMessage
+{
+    /// <summary><c>ugui</c>.</summary>
+    public UguiReport Ugui { get; set; } = new();
+
+    /// <summary><c>uiToolkit</c>.</summary>
+    public UiToolkitReport UiToolkit { get; set; } = new();
+
+    /// <summary><c>tmp</c>.</summary>
+    public TmpReport Tmp { get; set; } = new();
+
+    /// <summary><c>imgui</c>.</summary>
+    public ImguiReport Imgui { get; set; } = new();
+
+    /// <summary><c>input</c>.</summary>
+    public InputReport Input { get; set; } = new();
+
+    /// <summary>From what is active now: primary (most of the UI on screen), secondary (in use too), unused (available, nothing active), unavailable.</summary>
+    public UiFrameworkClassification Classification { get; set; } = new();
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="UiFrameworksResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiFrameworksResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiFrameworksResult
+        {
+            Ugui = r.Required("ugui", global::UnityLudometry.Protocol.Messages.UguiReport.Read),
+            UiToolkit = r.Required("uiToolkit", global::UnityLudometry.Protocol.Messages.UiToolkitReport.Read),
+            Tmp = r.Required("tmp", global::UnityLudometry.Protocol.Messages.TmpReport.Read),
+            Imgui = r.Required("imgui", global::UnityLudometry.Protocol.Messages.ImguiReport.Read),
+            Input = r.Required("input", global::UnityLudometry.Protocol.Messages.InputReport.Read),
+            Classification = r.Required("classification", global::UnityLudometry.Protocol.Messages.UiFrameworkClassification.Read),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("ugui");
+        Ugui.WriteJson(writer);
+        writer.WritePropertyName("uiToolkit");
+        UiToolkit.WriteJson(writer);
+        writer.WritePropertyName("tmp");
+        Tmp.WriteJson(writer);
+        writer.WritePropertyName("imgui");
+        Imgui.WriteJson(writer);
+        writer.WritePropertyName("input");
+        Input.WriteJson(writer);
+        writer.WritePropertyName("classification");
+        Classification.WriteJson(writer);
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
+/// <summary>UiHoverParams.</summary>
+public sealed partial class UiHoverParams : ProtocolMessage
+{
+    /// <summary><c>target</c>.</summary>
+    public Target Target { get; set; } = new();
+
+    /// <summary>Send pointer exit instead of enter.</summary>
+    public bool? Leave { get; set; }
+
+    /// <summary>Reads a <see cref="UiHoverParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiHoverParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiHoverParams
+        {
+            Target = r.Required("target", global::UnityLudometry.Protocol.Messages.Target.Read),
+            Leave = r.OptionalBoolean("leave"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("target");
+        Target.WriteJson(writer);
+        if (Leave.HasValue)
+        {
+            writer.WritePropertyName("leave");
+            writer.WriteBoolean(Leave.Value);
+        }
+    }
+}
+
+/// <summary>UiHoverResult.</summary>
+public sealed partial class UiHoverResult : ProtocolMessage
+{
+    /// <summary><c>handled</c>.</summary>
+    public bool Handled { get; set; }
+
+    /// <summary><c>via</c>.</summary>
+    public string? Via { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="UiHoverResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiHoverResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiHoverResult
+        {
+            Handled = r.RequiredBoolean("handled"),
+            Via = r.OptionalString("via"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("handled");
+        writer.WriteBoolean(Handled);
+        if (Via is not null)
+        {
+            writer.WritePropertyName("via");
+            writer.WriteString(Via);
+        }
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
     }
 }
 
@@ -16603,6 +17170,245 @@ public sealed partial class UiImage : ProtocolMessage
             writer.WritePropertyName("texture");
             writer.WriteNull();
         }
+    }
+}
+
+/// <summary>UiNavigateParams.</summary>
+public sealed partial class UiNavigateParams : ProtocolMessage
+{
+    /// <summary><c>direction</c>.</summary>
+    public string Direction { get; set; } = string.Empty;
+
+    /// <summary>Reads a <see cref="UiNavigateParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiNavigateParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiNavigateParams
+        {
+            Direction = r.RequiredString("direction"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("direction");
+        writer.WriteString(Direction);
+    }
+}
+
+/// <summary>UiNavigateResult.</summary>
+public sealed partial class UiNavigateResult : ProtocolMessage
+{
+    /// <summary>Whether the selection changed.</summary>
+    public bool Moved { get; set; }
+
+    /// <summary>The selected element afterwards, or null when nothing is selected.</summary>
+    public long? Selected { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="UiNavigateResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiNavigateResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiNavigateResult
+        {
+            Moved = r.RequiredBoolean("moved"),
+            Selected = r.RequiredNullableInt64("selected"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("moved");
+        writer.WriteBoolean(Moved);
+        if (Selected.HasValue)
+        {
+            writer.WritePropertyName("selected");
+            writer.WriteNumber(Selected.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("selected");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
+/// <summary>UiNavigation.</summary>
+public sealed partial class UiNavigation : ProtocolMessage
+{
+    /// <summary><c>mode</c>.</summary>
+    public string Mode { get; set; } = string.Empty;
+
+    /// <summary><c>up</c>.</summary>
+    public long? Up { get; set; }
+
+    /// <summary><c>down</c>.</summary>
+    public long? Down { get; set; }
+
+    /// <summary><c>left</c>.</summary>
+    public long? Left { get; set; }
+
+    /// <summary><c>right</c>.</summary>
+    public long? Right { get; set; }
+
+    /// <summary>Reads a <see cref="UiNavigation"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiNavigation Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiNavigation
+        {
+            Mode = r.RequiredString("mode"),
+            Up = r.RequiredNullableInt64("up"),
+            Down = r.RequiredNullableInt64("down"),
+            Left = r.RequiredNullableInt64("left"),
+            Right = r.RequiredNullableInt64("right"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("mode");
+        writer.WriteString(Mode);
+        if (Up.HasValue)
+        {
+            writer.WritePropertyName("up");
+            writer.WriteNumber(Up.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("up");
+            writer.WriteNull();
+        }
+        if (Down.HasValue)
+        {
+            writer.WritePropertyName("down");
+            writer.WriteNumber(Down.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("down");
+            writer.WriteNull();
+        }
+        if (Left.HasValue)
+        {
+            writer.WritePropertyName("left");
+            writer.WriteNumber(Left.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("left");
+            writer.WriteNull();
+        }
+        if (Right.HasValue)
+        {
+            writer.WritePropertyName("right");
+            writer.WriteNumber(Right.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("right");
+            writer.WriteNull();
+        }
+    }
+}
+
+/// <summary>UiScrollToParams.</summary>
+public sealed partial class UiScrollToParams : ProtocolMessage
+{
+    /// <summary><c>target</c>.</summary>
+    public Target Target { get; set; } = new();
+
+    /// <summary>Reads a <see cref="UiScrollToParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiScrollToParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiScrollToParams
+        {
+            Target = r.Required("target", global::UnityLudometry.Protocol.Messages.Target.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("target");
+        Target.WriteJson(writer);
+    }
+}
+
+/// <summary>UiScrollToResult.</summary>
+public sealed partial class UiScrollToResult : ProtocolMessage
+{
+    /// <summary>Whether any scroll view moved.</summary>
+    public bool Scrolled { get; set; }
+
+    /// <summary>The innermost scroll view's GameObject, or null when the element isn't in one.</summary>
+    public long? Container { get; set; }
+
+    /// <summary><c>visibility</c>.</summary>
+    public string Visibility { get; set; } = string.Empty;
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="UiScrollToResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiScrollToResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiScrollToResult
+        {
+            Scrolled = r.RequiredBoolean("scrolled"),
+            Container = r.RequiredNullableInt64("container"),
+            Visibility = r.RequiredString("visibility"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("scrolled");
+        writer.WriteBoolean(Scrolled);
+        if (Container.HasValue)
+        {
+            writer.WritePropertyName("container");
+            writer.WriteNumber(Container.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("container");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("visibility");
+        writer.WriteString(Visibility);
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
     }
 }
 
@@ -16851,8 +17657,14 @@ public sealed partial class UiSnapshotParams : ProtocolMessage
     /// <summary><c>includeText</c>.</summary>
     public bool? IncludeText { get; set; }
 
-    /// <summary>Maximum number of items to return.</summary>
+    /// <summary>Maximum number of items per page (default 500).</summary>
     public long? Limit { get; set; }
+
+    /// <summary>Only elements with one of these interactions.</summary>
+    public List<string>? Interaction { get; set; }
+
+    /// <summary>Continuation cursor from a previous page (session-scoped, expires after 10 minutes).</summary>
+    public string? Cursor { get; set; }
 
     /// <summary>Reads a <see cref="UiSnapshotParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
     public static UiSnapshotParams Read(JsonValue? value, string path)
@@ -16864,6 +17676,8 @@ public sealed partial class UiSnapshotParams : ProtocolMessage
             OnlyVisible = r.OptionalBoolean("onlyVisible"),
             IncludeText = r.OptionalBoolean("includeText"),
             Limit = r.OptionalInt64("limit"),
+            Interaction = r.OptionalArray("interaction", ObjectReader.ReadString),
+            Cursor = r.OptionalString("cursor"),
             Extra = r.Rest(),
         };
     }
@@ -16891,6 +17705,21 @@ public sealed partial class UiSnapshotParams : ProtocolMessage
             writer.WritePropertyName("limit");
             writer.WriteNumber(Limit.Value);
         }
+        if (Interaction is not null)
+        {
+            writer.WritePropertyName("interaction");
+            writer.WriteStartArray();
+            foreach (var item0 in Interaction)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+        if (Cursor is not null)
+        {
+            writer.WritePropertyName("cursor");
+            writer.WriteString(Cursor);
+        }
     }
 }
 
@@ -16899,6 +17728,12 @@ public sealed partial class UiSnapshotResult : ProtocolMessage
 {
     /// <summary><c>items</c>.</summary>
     public List<UiElement> Items { get; set; } = new();
+
+    /// <summary>Cursor for the next page; null when this is the last page.</summary>
+    public string? Cursor { get; set; }
+
+    /// <summary>Elements matching the filters, when known cheaply; null otherwise.</summary>
+    public long? Total { get; set; }
 
     /// <summary>Frame of the read.</summary>
     public long Frame { get; set; }
@@ -16913,6 +17748,8 @@ public sealed partial class UiSnapshotResult : ProtocolMessage
         return new UiSnapshotResult
         {
             Items = r.RequiredArray("items", global::UnityLudometry.Protocol.Messages.UiElement.Read),
+            Cursor = r.RequiredNullableString("cursor"),
+            Total = r.RequiredNullableInt64("total"),
             Frame = r.RequiredInt64("frame"),
             RealtimeMs = r.RequiredInt64("realtimeMs"),
             Extra = r.Rest(),
@@ -16929,6 +17766,26 @@ public sealed partial class UiSnapshotResult : ProtocolMessage
             item0.WriteJson(writer);
         }
         writer.WriteEndArray();
+        if (Cursor is not null)
+        {
+            writer.WritePropertyName("cursor");
+            writer.WriteString(Cursor);
+        }
+        else
+        {
+            writer.WritePropertyName("cursor");
+            writer.WriteNull();
+        }
+        if (Total.HasValue)
+        {
+            writer.WritePropertyName("total");
+            writer.WriteNumber(Total.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("total");
+            writer.WriteNull();
+        }
         writer.WritePropertyName("frame");
         writer.WriteNumber(Frame);
         writer.WritePropertyName("realtimeMs");
@@ -16998,6 +17855,119 @@ public sealed partial class UiSubmitResult : ProtocolMessage
         writer.WriteNumber(Frame);
         writer.WritePropertyName("realtimeMs");
         writer.WriteNumber(RealtimeMs);
+    }
+}
+
+/// <summary>UiToolkitPanel.</summary>
+public sealed partial class UiToolkitPanel : ProtocolMessage
+{
+    /// <summary>The PanelSettings asset's name.</summary>
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary><c>sortOrder</c>.</summary>
+    public double SortOrder { get; set; }
+
+    /// <summary><c>documents</c>.</summary>
+    public long Documents { get; set; }
+
+    /// <summary>Reads a <see cref="UiToolkitPanel"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiToolkitPanel Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiToolkitPanel
+        {
+            Name = r.RequiredString("name"),
+            SortOrder = r.RequiredDouble("sortOrder"),
+            Documents = r.RequiredInt64("documents"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("name");
+        writer.WriteString(Name);
+        writer.WritePropertyName("sortOrder");
+        writer.WriteNumber(SortOrder);
+        writer.WritePropertyName("documents");
+        writer.WriteNumber(Documents);
+    }
+}
+
+/// <summary>UiToolkitReport.</summary>
+public sealed partial class UiToolkitReport : ProtocolMessage
+{
+    /// <summary><c>available</c>.</summary>
+    public bool Available { get; set; }
+
+    /// <summary>Runtime UI Toolkit (UIDocument) exists in this Unity version.</summary>
+    public bool RuntimeSupported { get; set; }
+
+    /// <summary><c>version</c>.</summary>
+    public string? Version { get; set; }
+
+    /// <summary><c>reason</c>.</summary>
+    public string? Reason { get; set; }
+
+    /// <summary>Active UIDocuments.</summary>
+    public long Documents { get; set; }
+
+    /// <summary><c>panels</c>.</summary>
+    public List<UiToolkitPanel> Panels { get; set; } = new();
+
+    /// <summary>Reads a <see cref="UiToolkitReport"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static UiToolkitReport Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new UiToolkitReport
+        {
+            Available = r.RequiredBoolean("available"),
+            RuntimeSupported = r.RequiredBoolean("runtimeSupported"),
+            Version = r.RequiredNullableString("version"),
+            Reason = r.RequiredNullableString("reason"),
+            Documents = r.RequiredInt64("documents"),
+            Panels = r.RequiredArray("panels", global::UnityLudometry.Protocol.Messages.UiToolkitPanel.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("available");
+        writer.WriteBoolean(Available);
+        writer.WritePropertyName("runtimeSupported");
+        writer.WriteBoolean(RuntimeSupported);
+        if (Version is not null)
+        {
+            writer.WritePropertyName("version");
+            writer.WriteString(Version);
+        }
+        else
+        {
+            writer.WritePropertyName("version");
+            writer.WriteNull();
+        }
+        if (Reason is not null)
+        {
+            writer.WritePropertyName("reason");
+            writer.WriteString(Reason);
+        }
+        else
+        {
+            writer.WritePropertyName("reason");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("documents");
+        writer.WriteNumber(Documents);
+        writer.WritePropertyName("panels");
+        writer.WriteStartArray();
+        foreach (var item0 in Panels)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
     }
 }
 
