@@ -16,6 +16,8 @@
   elements gain `interaction`, `visibility`, `visibleRect`, `scrollContainer`, `selected`, `navigation` and `rawText`,
   `ui.snapshot` pages with `cursor` and filters by `interaction` (as does `ui.find`), ui-marks carry `interaction` and
   `images`, and the new actions `ui.hover`, `ui.scrollTo` and `ui.navigate`.
+- Protocol `0.1.0-dev.6`: the C# package's Release build no longer depends on where it's checked out, so repositories
+  that build it from a submodule get a byte-identical assembly (no schema changes).
 - Facts `ui.frameworks_available`, `input.systems_present` and `ui.frameworks_used` (static usage merged with the agent's
   `ui.frameworks` reports: what the agent saw in use wins, with the screens it saw it on).
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,
