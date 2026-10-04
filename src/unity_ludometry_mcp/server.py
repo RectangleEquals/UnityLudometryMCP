@@ -46,7 +46,9 @@ INSTRUCTIONS = (
     "UnityLudometryMCP helps you understand a Unity game and build mods for it. Call server_status to see the server's "
     "state. Only some tool groups are listed at first: tools_enable lists more. Every result is an envelope "
     "{ok, data | error, ...}: read its notices and advisories. Questions that need the user's decision are never "
-    "answered on the user's behalf: ask the user, and set user_confirmed only after an explicit yes."
+    "answered on the user's behalf: ask the user, and set user_confirmed only after an explicit yes. Whenever something "
+    "has to be checked in the running game with the user, verify it interactively, one in-game prompt per step, as the "
+    "guide ulm://guide/interactive-verification describes."
 )
 
 _GUIDE_TOPIC = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
