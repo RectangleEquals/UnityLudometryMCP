@@ -16,6 +16,10 @@
           "type": "string",
           "minLength": 1,
           "description": "The pressed button, or `timeout`."
+        },
+        "text": {
+          "type": "string",
+          "description": "What the user typed, when the answer is the prompt's `textButton`."
         }
       },
       "required": [

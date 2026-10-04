@@ -2931,6 +2931,7 @@ class OverlayPromptParams(ProtocolModel):
     buttons: list[str] | None = Field(default=None, alias="buttons")
     timeout_ms: Int | None = Field(default=None, alias="timeoutMs")
     attach_probe: str | None = Field(default=None, alias="attachProbe")
+    text_button: str | None = Field(default=None, alias="textButton", description="One of `buttons`: pressing it opens a text field instead of answering; sending the text answers with this button and the typed `text`.")
 
 
 class OverlayPromptResult(ProtocolModel):
@@ -3316,6 +3317,7 @@ class PromptResultEventParams(ProtocolModel):
 
     id: str = Field(alias="id")
     button: str = Field(alias="button", description="The pressed button, or `timeout`.")
+    text: str | None = Field(default=None, alias="text", description="What the user typed, when the answer is the prompt's `textButton`.")
 
 
 class ResourcesLoadAllJobResult(ProtocolModel):

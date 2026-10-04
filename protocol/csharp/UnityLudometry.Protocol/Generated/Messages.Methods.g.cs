@@ -11763,6 +11763,9 @@ public sealed partial class OverlayPromptParams : ProtocolMessage
     /// <summary><c>attachProbe</c>.</summary>
     public string? AttachProbe { get; set; }
 
+    /// <summary>One of <c>buttons</c>: pressing it opens a text field instead of answering; sending the text answers with this button and the typed <c>text</c>.</summary>
+    public string? TextButton { get; set; }
+
     /// <summary>Reads a <see cref="OverlayPromptParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
     public static OverlayPromptParams Read(JsonValue? value, string path)
     {
@@ -11775,6 +11778,7 @@ public sealed partial class OverlayPromptParams : ProtocolMessage
             Buttons = r.OptionalArray("buttons", ObjectReader.ReadString),
             TimeoutMs = r.OptionalInt64("timeoutMs"),
             AttachProbe = r.OptionalString("attachProbe"),
+            TextButton = r.OptionalString("textButton"),
             Extra = r.Rest(),
         };
     }
@@ -11810,6 +11814,11 @@ public sealed partial class OverlayPromptParams : ProtocolMessage
         {
             writer.WritePropertyName("attachProbe");
             writer.WriteString(AttachProbe);
+        }
+        if (TextButton is not null)
+        {
+            writer.WritePropertyName("textButton");
+            writer.WriteString(TextButton);
         }
     }
 }

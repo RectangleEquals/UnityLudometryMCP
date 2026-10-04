@@ -628,6 +628,9 @@ public sealed partial class PromptResultEventParams : ProtocolMessage
     /// <summary>The pressed button, or <c>timeout</c>.</summary>
     public string Button { get; set; } = string.Empty;
 
+    /// <summary>What the user typed, when the answer is the prompt's <c>textButton</c>.</summary>
+    public string? Text { get; set; }
+
     /// <summary>Reads a <see cref="PromptResultEventParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
     public static PromptResultEventParams Read(JsonValue? value, string path)
     {
@@ -636,6 +639,7 @@ public sealed partial class PromptResultEventParams : ProtocolMessage
         {
             Id = r.RequiredString("id"),
             Button = r.RequiredString("button"),
+            Text = r.OptionalString("text"),
             Extra = r.Rest(),
         };
     }
@@ -647,6 +651,11 @@ public sealed partial class PromptResultEventParams : ProtocolMessage
         writer.WriteString(Id);
         writer.WritePropertyName("button");
         writer.WriteString(Button);
+        if (Text is not null)
+        {
+            writer.WritePropertyName("text");
+            writer.WriteString(Text);
+        }
     }
 }
 

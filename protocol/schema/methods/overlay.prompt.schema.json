@@ -39,6 +39,11 @@
         },
         "attachProbe": {
           "type": "string"
+        },
+        "textButton": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One of `buttons`: pressing it opens a text field instead of answering; sending the text answers with this button and the typed `text`."
         }
       },
       "required": [
