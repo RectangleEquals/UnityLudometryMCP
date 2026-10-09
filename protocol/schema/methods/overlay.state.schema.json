@@ -64,6 +64,20 @@
             "null"
           ],
           "description": "Why this renderer was chosen (or why none)."
+        },
+        "tabs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tabs the panel shows, in order."
+        },
+        "focusedElement": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The text box that has the keyboard (an element id), or null: the game has it."
         }
       },
       "required": [
@@ -74,7 +88,9 @@
         "tab",
         "pickMode",
         "renderer",
-        "rendererReason"
+        "rendererReason",
+        "tabs",
+        "focusedElement"
       ]
     }
   }

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.reveal.schema.json",
+  "title": "overlay.reveal",
+  "description": "Shows an overlay element to the user (UI only): opens the panel and its tab if needed, scrolls its list or scroll view until it's in view, and outlines it for a moment.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayRevealParams",
+      "type": "object",
+      "properties": {
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An overlay element id, as overlay.snapshot reports it."
+        },
+        "highlight": {
+          "type": "boolean",
+          "description": "Outline it (default true)."
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000,
+          "description": "How long the outline stays (default 2000)."
+        }
+      },
+      "required": [
+        "element"
+      ]
+    },
+    "result": {
+      "title": "OverlayRevealResult",
+      "type": "object",
+      "properties": {
+        "revealed": {
+          "type": "boolean",
+          "description": "It's on screen now."
+        },
+        "tab": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "visible",
+            "partial",
+            "clipped",
+            "offscreen",
+            "hidden"
+          ]
+        },
+        "rect": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "../common/capture.schema.json#/$defs/rect"
+            }
+          ],
+          "description": "Where it is drawn now, in screen pixels from the top-left."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "revealed",
+        "tab",
+        "visibility",
+        "rect",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

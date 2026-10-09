@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.invoke.schema.json",
+  "title": "overlay.invoke",
+  "description": "Operates an overlay control as a click would (switches a tab, answers a prompt, toggles or steps a setting, …): its command runs with the same effect and the same audit entry as the user's click. value sets a value control (toggle, slider, dropdown) instead. Visible on screen or not, the element must exist in the current overlay (overlay.reveal shows it first).",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayInvokeParams",
+      "type": "object",
+      "properties": {
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An overlay element id, as overlay.snapshot reports it."
+        },
+        "value": {
+          "description": "For a toggle, slider or dropdown: the value to set (a toggle's boolean, a slider's number, a dropdown's choice)."
+        }
+      },
+      "required": [
+        "element"
+      ]
+    },
+    "result": {
+      "title": "OverlayInvokeResult",
+      "type": "object",
+      "properties": {
+        "invoked": {
+          "type": "boolean"
+        },
+        "command": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The command that ran."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "invoked",
+        "command",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

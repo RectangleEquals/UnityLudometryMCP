@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.setSettings.schema.json",
+  "title": "overlay.setSettings",
+  "description": "Changes overlay settings. By default only for this session (nothing is saved, and a change that applies only after a restart is rejected); persist saves them to the configuration file, as the Settings tab does. To start a game with other settings, write them to the configuration file before it starts.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlaySetSettingsParams",
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key (Overlay.Name) to value, as text."
+        },
+        "persist": {
+          "type": "boolean",
+          "description": "Save to the configuration file (default false: this session only)."
+        }
+      },
+      "required": [
+        "values"
+      ]
+    },
+    "result": {
+      "title": "OverlaySetSettingsResult",
+      "type": "object",
+      "properties": {
+        "applied": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keys in effect now."
+        },
+        "saved": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keys written to the configuration file."
+        },
+        "restartRequired": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Saved keys that take effect after the game restarts."
+        },
+        "rejected": {
+          "type": "array",
+          "items": {
+            "title": "OverlaySettingRejection",
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "reason"
+            ]
+          }
+        }
+      },
+      "required": [
+        "applied",
+        "saved",
+        "restartRequired",
+        "rejected"
+      ]
+    }
+  }
+}

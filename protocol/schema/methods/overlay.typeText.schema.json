@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.typeText.schema.json",
+  "title": "overlay.typeText",
+  "description": "Types into an overlay text box (a prompt's answer, …) as the keyboard would: it takes the keyboard, the text goes in at its caret, and submit presses Enter (a prompt's answer is sent). Line breaks in the text are Shift+Enter.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlayTypeTextParams",
+      "type": "object",
+      "properties": {
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The text box (an element id); default: the one with the keyboard."
+        },
+        "text": {
+          "type": "string"
+        },
+        "replace": {
+          "type": "boolean",
+          "description": "Replace its text instead of inserting at the caret (default false)."
+        },
+        "submit": {
+          "type": "boolean",
+          "description": "Press Enter afterwards (default false)."
+        }
+      },
+      "required": [
+        "text"
+      ]
+    },
+    "result": {
+      "title": "OverlayTypeTextResult",
+      "type": "object",
+      "properties": {
+        "element": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string",
+          "description": "The box's text afterwards (what was sent, when submitted)."
+        },
+        "submitted": {
+          "type": "boolean"
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "element",
+        "text",
+        "submitted",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

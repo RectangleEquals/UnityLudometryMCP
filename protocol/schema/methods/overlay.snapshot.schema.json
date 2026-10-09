@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.snapshot.schema.json",
+  "title": "overlay.snapshot",
+  "description": "The overlay's elements as the user sees them (UI only): the open tab's content, the header, the cards next to the arrow and the arrow, with what each shows and does, and where it is. A list's rows are all reported, the ones scrolled out of view as clipped.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlaySnapshotParams",
+      "type": "object",
+      "properties": {
+        "onlyVisible": {
+          "type": "boolean",
+          "description": "Only elements that are visible or partly visible (default false)."
+        },
+        "interaction": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "clickable",
+              "editable",
+              "scrollable",
+              "display"
+            ]
+          },
+          "description": "Only elements with one of these interactions."
+        },
+        "under": {
+          "type": "string",
+          "description": "Only this element and what it contains (an element id)."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of items per page (default 500)."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Continuation cursor from a previous page (session-scoped, expires after 10 minutes)."
+        }
+      }
+    },
+    "result": {
+      "title": "OverlaySnapshotResult",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "hidden",
+            "collapsed",
+            "expanded"
+          ]
+        },
+        "tab": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "OverlayElement",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable within the overlay: the element's place in its view, with list rows named by their item's key or id when it has one (e.g. settings/settings/Overlay.Edge/actions/0)."
+              },
+              "parent": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The containing element's id (null at the top)."
+              },
+              "area": {
+                "type": "string",
+                "enum": [
+                  "panel",
+                  "header",
+                  "cards",
+                  "arrow"
+                ],
+                "description": "Where it is: the open panel's tab content, its header (tabs, E-STOP), the cards next to the arrow (prompts, notifications), or the arrow."
+              },
+              "type": {
+                "type": "string",
+                "description": "The view node type (text, button, toggle, slider, dropdown, textField, textBox, list, stack, panel, tab, …)."
+              },
+              "text": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The text it shows, bindings filled in."
+              },
+              "value": {
+                "description": "Its bound value (a toggle's state, a slider's position, a text box's text), or null."
+              },
+              "command": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The overlay command a press runs (overlay.invoke), or null."
+              },
+              "tooltip": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "interaction": {
+                "type": "string",
+                "enum": [
+                  "clickable",
+                  "editable",
+                  "scrollable",
+                  "display"
+                ],
+                "description": "clickable: overlay.invoke presses it; editable: a text box (overlay.typeText) or a value control (overlay.invoke with value); scrollable: a list or scroll view; display: neither."
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "focused": {
+                "type": "boolean",
+                "description": "A text box with the keyboard."
+              },
+              "visibility": {
+                "type": "string",
+                "enum": [
+                  "visible",
+                  "partial",
+                  "clipped",
+                  "offscreen",
+                  "hidden"
+                ],
+                "description": "visible: entirely on screen; partial: partly; clipped: scrolled out of its list or scroll view (overlay.reveal brings it in); offscreen: outside the screen; hidden: not drawn (another tab, a collapsed panel, or a hidden condition)."
+              },
+              "rect": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "../common/capture.schema.json#/$defs/rect"
+                  }
+                ],
+                "description": "Where it is drawn, in screen pixels from the top-left (null when it isn't drawn)."
+              }
+            },
+            "required": [
+              "id",
+              "parent",
+              "area",
+              "type",
+              "text",
+              "value",
+              "command",
+              "tooltip",
+              "interaction",
+              "enabled",
+              "focused",
+              "visibility",
+              "rect"
+            ]
+          }
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cursor for the next page; null when this is the last page."
+        },
+        "total": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Elements matching the filters."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "state",
+        "tab",
+        "items",
+        "cursor",
+        "total",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

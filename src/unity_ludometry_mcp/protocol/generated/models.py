@@ -8,7 +8,7 @@ from pydantic import Field
 
 from ..base import AgentMode, Int, JsonValue, ProtocolError, ProtocolModel
 
-__all__ = ["ActivityEntry", "ActivityGetParams", "ActivityGetResult", "ActivityListParams", "ActivityListResult", "AddressableKey", "AddressableLocation", "AddressablesInfoParams", "AddressablesInfoResult", "AddressablesKeysParams", "AddressablesKeysResult", "AddressablesLoadParams", "AddressablesLoadResult", "AddressablesLocateParams", "AddressablesLocateResult", "AddressablesReleaseParams", "AddressablesReleaseResult", "AgentCapabilities", "AgentCapabilitiesParams", "AgentHealth", "AgentHealthCheckParams", "AgentHealthCheckResult", "AgentInfo", "AgentInfoParams", "AgentLogLevelParams", "AgentLogLevelResult", "AgentSetModeParams", "AgentSetModeResult", "AgentWarningParams", "AllocationSite", "Anchor", "Annotation", "AnnotationsClearParams", "AnnotationsClearResult", "AnnotationsGetParams", "AnnotationsGetResult", "AnnotationsSetParams", "AnnotationsSetResult", "AppInfoParams", "AppInfoResult", "AppQuitParams", "AppQuitResult", "AppRunInBackgroundParams", "AppRunInBackgroundResult", "AssemblyLoadedEventParams", "AssemblySummary", "AttributeInfo", "AttributeUsage", "AuditedAssembly", "BatchItemResult", "BatchParams", "BatchRequest", "BatchResult", "BundleInfo", "BundlesLoadParams", "BundlesLoadResult", "BundlesLoadedParams", "BundlesLoadedResult", "CallTreeNode", "CancelParams", "CancelResult", "CanvasCounts", "CaptureBurst", "CaptureInline", "CaptureOptions", "CaptureRegion", "CaptureResult", "CapturedException", "ClientInfo", "CodeAllocationsParams", "CodeAllocationsResult", "CodeAssembliesParams", "CodeAssembliesResult", "CodeAssemblyParams", "CodeAssemblyResult", "CodeAttributesParams", "CodeAttributesResult", "CodeCalleesParams", "CodeCalleesResult", "CodeCallersParams", "CodeCallersResult", "CodeFieldAccessParams", "CodeFieldAccessResult", "CodeHierarchyParams", "CodeHierarchyResult", "CodeIlHashesParams", "CodeIlHashesResult", "CodeIlParams", "CodeIlResult", "CodeImplementationsParams", "CodeImplementationsResult", "CodeMemberParams", "CodeMemberResult", "CodeResolveParams", "CodeResolveResult", "CodeStringsParams", "CodeStringsResult", "CodeTypeParams", "CodeTypeResult", "CodeTypesParams", "CodeTypesResult", "CollAddParams", "CollAddResult", "CollCountParams", "CollCountResult", "CollPageParams", "CollPageResult", "CollRemoveParams", "CollRemoveResult", "CollSetParams", "CollSetResult", "ComponentAddParams", "ComponentAddResult", "ComponentInfo", "ComponentRemoveParams", "ComponentRemoveResult", "Condition", "ContentExportStartJobResult", "ContentExportStartParams", "ContentItem", "ContentListParams", "ContentListResult", "ContentScanStartJobResult", "ContentScanStartParams", "ContentSummaryParams", "ContentSummaryResult", "ContentTypeSummary", "DelayCondition", "DescribedMember", "DiscoveryFile", "EmitAction", "EmittedItem", "EstopEventParams", "EventCapture", "EventCondition", "EventListenersParams", "EventListenersResult", "EventRaiseParams", "EventRaiseResult", "EventRaisedEventParams", "EventSubscribeParams", "EventSubscribeResult", "EventSystemReport", "EventUnsubscribeParams", "EventUnsubscribeResult", "EventsSubscribeParams", "EventsSubscribeResult", "EventsUnsubscribeParams", "EventsUnsubscribeResult", "ExceptionCondition", "ExceptionEventParams", "ExceptionFilter", "ExceptionsMonitorParams", "ExceptionsMonitorResult", "ExecAction", "ExecEmitEventParams", "ExecRunParams", "ExecRunResult", "ExecSession", "ExecSessionCloseParams", "ExecSessionCloseResult", "ExecSessionsParams", "ExecSessionsResult", "ExpectedMatch", "ExportFormats", "ExportItem", "ExportSource", "ExportedFile", "FieldAccess", "FrameRange", "FrameTimeStats", "FrameTimeSummary", "GameObjectFilter", "GameObjectNode", "GameObjectRef", "GenericParameter", "GoCreateParams", "GoCreateResult", "GoFindParams", "GoFindResult", "GoGetParams", "GoGetResult", "GoInstantiateParams", "GoInstantiateResult", "GoPathParams", "GoPathResult", "GoSetActiveParams", "GoSetActiveResult", "GoTreeParams", "GoTreeResult", "HandleDescriptor", "HandlesListParams", "HandlesListResult", "HandlesReleaseAllParams", "HandlesReleaseAllResult", "HandlesReleaseParams", "HandlesReleaseResult", "HarmonyPatchInfo", "HealthCheckItem", "HelloParams", "HierarchyNode", "HighlightAction", "HitsAction", "HookAddParams", "HookAddResult", "HookCapture", "HookCondition", "HookHitsEventParams", "HookHitsParams", "HookHitsResult", "HookInfo", "HookListParams", "HookListResult", "HookRemoveParams", "HookRemoveResult", "HookVerifyParams", "HookVerifyResult", "HooksClearParams", "HooksClearResult", "IlAlloc", "IlCall", "IlExceptionClause", "IlFieldAccess", "IlHash", "IlIndexError", "IlIndexStartJobResult", "IlIndexStartParams", "IlInstruction", "IlLocal", "IlString", "IlTypeRef", "ImguiReport", "Implementation", "InputReport", "InstrumentationClearParams", "InstrumentationClearResult", "InstrumentationRecord", "InstrumentationStatusParams", "InstrumentationStatusResult", "InvokeAction", "JobCancelParams", "JobCancelResult", "JobFinishedEventParams", "JobGetParams", "JobInfo", "JobListParams", "JobListResult", "JobProgress", "JobProgressEventParams", "JobRef", "JobWaitParams", "Listener", "LoadedPlugin", "LoaderInfo", "LocatorResolveParams", "LocatorResolveResult", "LogCondition", "LogEntry", "LogEventParams", "LogsAction", "LogsMarkParams", "LogsMarkResult", "LogsSearchParams", "LogsSearchResult", "LogsTailParams", "LogsTailResult", "MarkAction", "MemberPathStep", "MemberSummary", "MethodCapability", "MethodFailure", "MethodProfile", "MethodTiming", "Metrics", "MetricsGetParams", "MetricsSampleStartJobResult", "MetricsSampleStartParams", "ModAssembly", "ModListParams", "ModListResult", "ModReloadParams", "ModReloadResult", "ModUnloadParams", "ModUnloadResult", "ModuleCapability", "ModuleInfo", "NdjsonFooter", "NdjsonHeader", "NotifyAction", "ObjCreateParams", "ObjCreateResult", "ObjDescribeParams", "ObjDescribeResult", "ObjDestroyParams", "ObjDestroyResult", "ObjFindParams", "ObjFindResult", "ObjGetParams", "ObjGetResult", "ObjInspectParams", "ObjInspectResult", "ObjInvokeParams", "ObjInvokeResult", "ObjQueryParams", "ObjQueryResult", "ObjSetParams", "ObjSetResult", "ObjSnapshotParams", "ObjSnapshotResult", "Observation", "ObservedException", "OutputFile", "OverlayClearHighlightsParams", "OverlayClearHighlightsResult", "OverlayHighlightParams", "OverlayHighlightResult", "OverlayNotifyParams", "OverlayNotifyResult", "OverlayPromptParams", "OverlayPromptResult", "OverlayRequestEventParams", "OverlaySelectParams", "OverlaySelectResult", "OverlaySetCapabilitiesParams", "OverlaySetCapabilitiesResult", "OverlaySetStateParams", "OverlaySetStateResult", "OverlayShowTextParams", "OverlayShowTextResult", "OverlayStateParams", "OverlayStateResult", "PackageFile", "PackageManifest", "ParameterInfo", "PatchApplyParams", "PatchApplyResult", "PatchError", "PatchInspectParams", "PatchInspectResult", "PatchListParams", "PatchListResult", "PatchRevertParams", "PatchRevertResult", "PatchSetInfo", "PatchedMethod", "PatchedParts", "PatchedTarget", "PatchesAllParams", "PatchesAllResult", "PauseAction", "PersistentListener", "PickCondition", "PickedEventParams", "PingParams", "PingResult", "PluginInfo", "PredicateCondition", "PreviousPlugin", "Probe", "ProbeCancelParams", "ProbeCancelResult", "ProbeEvidence", "ProbeLimits", "ProbeMetrics", "ProbeProgressEventParams", "ProbeResult", "ProbeResultParams", "ProbeRunBatchJobResult", "ProbeRunBatchParams", "ProbeRunParams", "ProfileStartJobResult", "ProfileStartParams", "PromptCondition", "PromptResultEventParams", "ProtocolVersionInfo", "PumpHealth", "QueryOrder", "QueryRow", "QuerySource", "RaisedEvent", "ResourcesLoadAllJobResult", "ResourcesLoadAllParams", "ResourcesLoadParams", "ResourcesLoadResult", "ResumeAction", "Rule", "RuleAction", "RuleAddResult", "RuleCancelParams", "RuleCancelResult", "RuleCondition", "RuleFire", "RuleFiring", "RuleGetParams", "RuleGetResult", "RuleHoldParams", "RuleHoldResult", "RuleListParams", "RuleListResult", "RuleProgressEventParams", "RuleResults", "RuleSummary", "RuleTrigger", "RuleWaitParams", "RuleWaitResult", "RulesClearParams", "RulesClearResult", "ScanAddressable", "ScanAsset", "ScanBundle", "SceneChangedEventParams", "SceneCondition", "SceneInfo", "SceneListParams", "SceneListResult", "SceneLoadParams", "SceneLoadResult", "SceneRootsParams", "SceneRootsResult", "SceneSetActiveParams", "SceneSetActiveResult", "SceneUnloadParams", "SceneUnloadResult", "ScreenInfo", "ScreenRect", "ScreenshotCameraParams", "ScreenshotCaptureResult", "SequenceEntry", "SerializerMarkers", "SingletonInstance", "SnapshotAction", "SnapshotExpectedMatch", "SnapshotRow", "StaticGetParams", "StaticGetResult", "StaticSingletonsParams", "StaticSingletonsResult", "StaticValue", "StayPausedAction", "StringUse", "SurveyAssembly", "SurveyCustomSerializer", "SurveyError", "SurveyInstanceCount", "SurveyMember", "SurveySerializedField", "SurveyStartJobResult", "SurveyStartParams", "SurveyStatic", "SurveyType", "SurveyUnityMessage", "Target", "TestAssembly", "TestFilter", "TestFinishedEventParams", "TestId", "TestInfo", "TestListParams", "TestListResult", "TestResult", "TestResultEventParams", "TestRunJobResult", "TestRunParams", "TestStartedEventParams", "TestTotals", "TimeInfoParams", "TimeInfoResult", "TimePauseParams", "TimePauseResult", "TimeResumeParams", "TimeResumeResult", "TimeScaleParams", "TimeScaleResult", "TimeStepParams", "TimeStepResult", "TimeWaitFramesParams", "TimeWaitFramesResult", "TimeWaitSecondsParams", "TimeWaitSecondsResult", "TmpReport", "TraceCapture", "TraceInclude", "TraceRecordsEventParams", "TraceStartJobResult", "TraceStartParams", "TraceStop", "TraceStopParams", "TraceStopResult", "TraceSummary", "TransformInfo", "Trigger", "TypeSummary", "UguiReport", "UiCancelParams", "UiCancelResult", "UiClickAction", "UiClickParams", "UiClickResult", "UiCondition", "UiElement", "UiFindParams", "UiFindResult", "UiFrameworkClassification", "UiFrameworksParams", "UiFrameworksResult", "UiHoverParams", "UiHoverResult", "UiImage", "UiMark", "UiNavigateParams", "UiNavigateResult", "UiNavigation", "UiScrollToParams", "UiScrollToResult", "UiSelectParams", "UiSelectResult", "UiSetTextParams", "UiSetTextResult", "UiSetValueParams", "UiSetValueResult", "UiSnapshotParams", "UiSnapshotResult", "UiSubmitParams", "UiSubmitResult", "UiToolkitPanel", "UiToolkitReport", "UnityEventListenersParams", "UnityEventListenersResult", "UnityObjectInfo", "ValueCondition", "ValueExpandParams", "ValueExpandResult", "VariableInfo", "VarsDeleteParams", "VarsDeleteResult", "VarsGetParams", "VarsGetResult", "VarsListParams", "VarsListResult", "VarsSetParams", "VarsSetResult", "View", "Warning", "WatchAddParams", "WatchAddResult", "WatchChange", "WatchChangesEventParams", "WatchChangesParams", "WatchChangesResult", "WatchInfo", "WatchListParams", "WatchListResult", "WatchRemoveParams", "WatchRemoveResult"]
+__all__ = ["ActivityEntry", "ActivityGetParams", "ActivityGetResult", "ActivityListParams", "ActivityListResult", "AddressableKey", "AddressableLocation", "AddressablesInfoParams", "AddressablesInfoResult", "AddressablesKeysParams", "AddressablesKeysResult", "AddressablesLoadParams", "AddressablesLoadResult", "AddressablesLocateParams", "AddressablesLocateResult", "AddressablesReleaseParams", "AddressablesReleaseResult", "AgentCapabilities", "AgentCapabilitiesParams", "AgentHealth", "AgentHealthCheckParams", "AgentHealthCheckResult", "AgentInfo", "AgentInfoParams", "AgentLogLevelParams", "AgentLogLevelResult", "AgentSetModeParams", "AgentSetModeResult", "AgentWarningParams", "AllocationSite", "Anchor", "Annotation", "AnnotationsClearParams", "AnnotationsClearResult", "AnnotationsGetParams", "AnnotationsGetResult", "AnnotationsSetParams", "AnnotationsSetResult", "AppInfoParams", "AppInfoResult", "AppQuitParams", "AppQuitResult", "AppRunInBackgroundParams", "AppRunInBackgroundResult", "AssemblyLoadedEventParams", "AssemblySummary", "AttributeInfo", "AttributeUsage", "AuditedAssembly", "BatchItemResult", "BatchParams", "BatchRequest", "BatchResult", "BundleInfo", "BundlesLoadParams", "BundlesLoadResult", "BundlesLoadedParams", "BundlesLoadedResult", "CallTreeNode", "CancelParams", "CancelResult", "CanvasCounts", "CaptureBurst", "CaptureInline", "CaptureOptions", "CaptureRegion", "CaptureResult", "CapturedException", "ClientInfo", "CodeAllocationsParams", "CodeAllocationsResult", "CodeAssembliesParams", "CodeAssembliesResult", "CodeAssemblyParams", "CodeAssemblyResult", "CodeAttributesParams", "CodeAttributesResult", "CodeCalleesParams", "CodeCalleesResult", "CodeCallersParams", "CodeCallersResult", "CodeFieldAccessParams", "CodeFieldAccessResult", "CodeHierarchyParams", "CodeHierarchyResult", "CodeIlHashesParams", "CodeIlHashesResult", "CodeIlParams", "CodeIlResult", "CodeImplementationsParams", "CodeImplementationsResult", "CodeMemberParams", "CodeMemberResult", "CodeResolveParams", "CodeResolveResult", "CodeStringsParams", "CodeStringsResult", "CodeTypeParams", "CodeTypeResult", "CodeTypesParams", "CodeTypesResult", "CollAddParams", "CollAddResult", "CollCountParams", "CollCountResult", "CollPageParams", "CollPageResult", "CollRemoveParams", "CollRemoveResult", "CollSetParams", "CollSetResult", "ComponentAddParams", "ComponentAddResult", "ComponentInfo", "ComponentRemoveParams", "ComponentRemoveResult", "Condition", "ContentExportStartJobResult", "ContentExportStartParams", "ContentItem", "ContentListParams", "ContentListResult", "ContentScanStartJobResult", "ContentScanStartParams", "ContentSummaryParams", "ContentSummaryResult", "ContentTypeSummary", "DelayCondition", "DescribedMember", "DiscoveryFile", "EmitAction", "EmittedItem", "EstopEventParams", "EventCapture", "EventCondition", "EventListenersParams", "EventListenersResult", "EventRaiseParams", "EventRaiseResult", "EventRaisedEventParams", "EventSubscribeParams", "EventSubscribeResult", "EventSystemReport", "EventUnsubscribeParams", "EventUnsubscribeResult", "EventsSubscribeParams", "EventsSubscribeResult", "EventsUnsubscribeParams", "EventsUnsubscribeResult", "ExceptionCondition", "ExceptionEventParams", "ExceptionFilter", "ExceptionsMonitorParams", "ExceptionsMonitorResult", "ExecAction", "ExecEmitEventParams", "ExecRunParams", "ExecRunResult", "ExecSession", "ExecSessionCloseParams", "ExecSessionCloseResult", "ExecSessionsParams", "ExecSessionsResult", "ExpectedMatch", "ExportFormats", "ExportItem", "ExportSource", "ExportedFile", "FieldAccess", "FrameRange", "FrameTimeStats", "FrameTimeSummary", "GameObjectFilter", "GameObjectNode", "GameObjectRef", "GenericParameter", "GoCreateParams", "GoCreateResult", "GoFindParams", "GoFindResult", "GoGetParams", "GoGetResult", "GoInstantiateParams", "GoInstantiateResult", "GoPathParams", "GoPathResult", "GoSetActiveParams", "GoSetActiveResult", "GoTreeParams", "GoTreeResult", "HandleDescriptor", "HandlesListParams", "HandlesListResult", "HandlesReleaseAllParams", "HandlesReleaseAllResult", "HandlesReleaseParams", "HandlesReleaseResult", "HarmonyPatchInfo", "HealthCheckItem", "HelloParams", "HierarchyNode", "HighlightAction", "HitsAction", "HookAddParams", "HookAddResult", "HookCapture", "HookCondition", "HookHitsEventParams", "HookHitsParams", "HookHitsResult", "HookInfo", "HookListParams", "HookListResult", "HookRemoveParams", "HookRemoveResult", "HookVerifyParams", "HookVerifyResult", "HooksClearParams", "HooksClearResult", "IlAlloc", "IlCall", "IlExceptionClause", "IlFieldAccess", "IlHash", "IlIndexError", "IlIndexStartJobResult", "IlIndexStartParams", "IlInstruction", "IlLocal", "IlString", "IlTypeRef", "ImguiReport", "Implementation", "InputReport", "InstrumentationClearParams", "InstrumentationClearResult", "InstrumentationRecord", "InstrumentationStatusParams", "InstrumentationStatusResult", "InvokeAction", "JobCancelParams", "JobCancelResult", "JobFinishedEventParams", "JobGetParams", "JobInfo", "JobListParams", "JobListResult", "JobProgress", "JobProgressEventParams", "JobRef", "JobWaitParams", "Listener", "LoadedPlugin", "LoaderInfo", "LocatorResolveParams", "LocatorResolveResult", "LogCondition", "LogEntry", "LogEventParams", "LogsAction", "LogsMarkParams", "LogsMarkResult", "LogsSearchParams", "LogsSearchResult", "LogsTailParams", "LogsTailResult", "MarkAction", "MemberPathStep", "MemberSummary", "MethodCapability", "MethodFailure", "MethodProfile", "MethodTiming", "Metrics", "MetricsGetParams", "MetricsSampleStartJobResult", "MetricsSampleStartParams", "ModAssembly", "ModListParams", "ModListResult", "ModReloadParams", "ModReloadResult", "ModUnloadParams", "ModUnloadResult", "ModuleCapability", "ModuleInfo", "NdjsonFooter", "NdjsonHeader", "NotifyAction", "ObjCreateParams", "ObjCreateResult", "ObjDescribeParams", "ObjDescribeResult", "ObjDestroyParams", "ObjDestroyResult", "ObjFindParams", "ObjFindResult", "ObjGetParams", "ObjGetResult", "ObjInspectParams", "ObjInspectResult", "ObjInvokeParams", "ObjInvokeResult", "ObjQueryParams", "ObjQueryResult", "ObjSetParams", "ObjSetResult", "ObjSnapshotParams", "ObjSnapshotResult", "Observation", "ObservedException", "OutputFile", "OverlayClearHighlightsParams", "OverlayClearHighlightsResult", "OverlayElement", "OverlayHighlightParams", "OverlayHighlightResult", "OverlayInvokeParams", "OverlayInvokeResult", "OverlayNotifyParams", "OverlayNotifyResult", "OverlayPromptParams", "OverlayPromptResult", "OverlayRequestEventParams", "OverlayRevealParams", "OverlayRevealResult", "OverlaySelectParams", "OverlaySelectResult", "OverlaySetCapabilitiesParams", "OverlaySetCapabilitiesResult", "OverlaySetSettingsParams", "OverlaySetSettingsResult", "OverlaySetStateParams", "OverlaySetStateResult", "OverlaySetting", "OverlaySettingRejection", "OverlaySettingsParams", "OverlaySettingsResult", "OverlayShowTextParams", "OverlayShowTextResult", "OverlaySnapshotParams", "OverlaySnapshotResult", "OverlayStateParams", "OverlayStateResult", "OverlayTypeTextParams", "OverlayTypeTextResult", "PackageFile", "PackageManifest", "ParameterInfo", "PatchApplyParams", "PatchApplyResult", "PatchError", "PatchInspectParams", "PatchInspectResult", "PatchListParams", "PatchListResult", "PatchRevertParams", "PatchRevertResult", "PatchSetInfo", "PatchedMethod", "PatchedParts", "PatchedTarget", "PatchesAllParams", "PatchesAllResult", "PauseAction", "PersistentListener", "PickCondition", "PickedEventParams", "PingParams", "PingResult", "PluginInfo", "PredicateCondition", "PreviousPlugin", "Probe", "ProbeCancelParams", "ProbeCancelResult", "ProbeEvidence", "ProbeLimits", "ProbeMetrics", "ProbeProgressEventParams", "ProbeResult", "ProbeResultParams", "ProbeRunBatchJobResult", "ProbeRunBatchParams", "ProbeRunParams", "ProfileStartJobResult", "ProfileStartParams", "PromptCondition", "PromptResultEventParams", "ProtocolVersionInfo", "PumpHealth", "QueryOrder", "QueryRow", "QuerySource", "RaisedEvent", "ResourcesLoadAllJobResult", "ResourcesLoadAllParams", "ResourcesLoadParams", "ResourcesLoadResult", "ResumeAction", "Rule", "RuleAction", "RuleAddResult", "RuleCancelParams", "RuleCancelResult", "RuleCondition", "RuleFire", "RuleFiring", "RuleGetParams", "RuleGetResult", "RuleHoldParams", "RuleHoldResult", "RuleListParams", "RuleListResult", "RuleProgressEventParams", "RuleResults", "RuleSummary", "RuleTrigger", "RuleWaitParams", "RuleWaitResult", "RulesClearParams", "RulesClearResult", "ScanAddressable", "ScanAsset", "ScanBundle", "SceneChangedEventParams", "SceneCondition", "SceneInfo", "SceneListParams", "SceneListResult", "SceneLoadParams", "SceneLoadResult", "SceneRootsParams", "SceneRootsResult", "SceneSetActiveParams", "SceneSetActiveResult", "SceneUnloadParams", "SceneUnloadResult", "ScreenInfo", "ScreenRect", "ScreenshotCameraParams", "ScreenshotCaptureResult", "SequenceEntry", "SerializerMarkers", "SingletonInstance", "SnapshotAction", "SnapshotExpectedMatch", "SnapshotRow", "StaticGetParams", "StaticGetResult", "StaticSingletonsParams", "StaticSingletonsResult", "StaticValue", "StayPausedAction", "StringUse", "SurveyAssembly", "SurveyCustomSerializer", "SurveyError", "SurveyInstanceCount", "SurveyMember", "SurveySerializedField", "SurveyStartJobResult", "SurveyStartParams", "SurveyStatic", "SurveyType", "SurveyUnityMessage", "Target", "TestAssembly", "TestFilter", "TestFinishedEventParams", "TestId", "TestInfo", "TestListParams", "TestListResult", "TestResult", "TestResultEventParams", "TestRunJobResult", "TestRunParams", "TestStartedEventParams", "TestTotals", "TimeInfoParams", "TimeInfoResult", "TimePauseParams", "TimePauseResult", "TimeResumeParams", "TimeResumeResult", "TimeScaleParams", "TimeScaleResult", "TimeStepParams", "TimeStepResult", "TimeWaitFramesParams", "TimeWaitFramesResult", "TimeWaitSecondsParams", "TimeWaitSecondsResult", "TmpReport", "TraceCapture", "TraceInclude", "TraceRecordsEventParams", "TraceStartJobResult", "TraceStartParams", "TraceStop", "TraceStopParams", "TraceStopResult", "TraceSummary", "TransformInfo", "Trigger", "TypeSummary", "UguiReport", "UiCancelParams", "UiCancelResult", "UiClickAction", "UiClickParams", "UiClickResult", "UiCondition", "UiElement", "UiFindParams", "UiFindResult", "UiFrameworkClassification", "UiFrameworksParams", "UiFrameworksResult", "UiHoverParams", "UiHoverResult", "UiImage", "UiMark", "UiNavigateParams", "UiNavigateResult", "UiNavigation", "UiScrollToParams", "UiScrollToResult", "UiSelectParams", "UiSelectResult", "UiSetTextParams", "UiSetTextResult", "UiSetValueParams", "UiSetValueResult", "UiSnapshotParams", "UiSnapshotResult", "UiSubmitParams", "UiSubmitResult", "UiToolkitPanel", "UiToolkitReport", "UnityEventListenersParams", "UnityEventListenersResult", "UnityObjectInfo", "ValueCondition", "ValueExpandParams", "ValueExpandResult", "VariableInfo", "VarsDeleteParams", "VarsDeleteResult", "VarsGetParams", "VarsGetResult", "VarsListParams", "VarsListResult", "VarsSetParams", "VarsSetResult", "View", "Warning", "WatchAddParams", "WatchAddResult", "WatchChange", "WatchChangesEventParams", "WatchChangesParams", "WatchChangesResult", "WatchInfo", "WatchListParams", "WatchListResult", "WatchRemoveParams", "WatchRemoveResult"]
 
 
 class AuditedAssembly(ProtocolModel):
@@ -2892,6 +2892,24 @@ class OverlayClearHighlightsResult(ProtocolModel):
     cleared: Int = Field(alias="cleared")
 
 
+class OverlayElement(ProtocolModel):
+    "OverlayElement."
+
+    id: str = Field(alias="id", description="Stable within the overlay: the element's place in its view, with list rows named by their item's key or id when it has one (e.g. settings/settings/Overlay.Edge/actions/0).")
+    parent: str | None = Field(alias="parent", description="The containing element's id (null at the top).")
+    area: str = Field(alias="area", description="Where it is: the open panel's tab content, its header (tabs, E-STOP), the cards next to the arrow (prompts, notifications), or the arrow.")
+    type: str = Field(alias="type", description="The view node type (text, button, toggle, slider, dropdown, textField, textBox, list, stack, panel, tab, …).")
+    text: str | None = Field(alias="text", description="The text it shows, bindings filled in.")
+    value: JsonValue = Field(alias="value", description="Its bound value (a toggle's state, a slider's position, a text box's text), or null.")
+    command: str | None = Field(alias="command", description="The overlay command a press runs (overlay.invoke), or null.")
+    tooltip: str | None = Field(alias="tooltip")
+    interaction: str = Field(alias="interaction", description="clickable: overlay.invoke presses it; editable: a text box (overlay.typeText) or a value control (overlay.invoke with value); scrollable: a list or scroll view; display: neither.")
+    enabled: bool = Field(alias="enabled")
+    focused: bool = Field(alias="focused", description="A text box with the keyboard.")
+    visibility: str = Field(alias="visibility", description="visible: entirely on screen; partial: partly; clipped: scrolled out of its list or scroll view (overlay.reveal brings it in); offscreen: outside the screen; hidden: not drawn (another tab, a collapsed panel, or a hidden condition).")
+    rect: ScreenRect | None = Field(alias="rect", description="Where it is drawn, in screen pixels from the top-left (null when it isn't drawn).")
+
+
 class OverlayHighlightParams(ProtocolModel):
     "OverlayHighlightParams."
 
@@ -2906,6 +2924,22 @@ class OverlayHighlightResult(ProtocolModel):
 
     highlight_id: str = Field(alias="highlightId")
     drawn: Int = Field(alias="drawn")
+
+
+class OverlayInvokeParams(ProtocolModel):
+    "OverlayInvokeParams."
+
+    element: str = Field(alias="element", description="An overlay element id, as overlay.snapshot reports it.")
+    value: JsonValue = Field(default=None, alias="value", description="For a toggle, slider or dropdown: the value to set (a toggle's boolean, a slider's number, a dropdown's choice).")
+
+
+class OverlayInvokeResult(ProtocolModel):
+    "OverlayInvokeResult."
+
+    invoked: bool = Field(alias="invoked")
+    command: str | None = Field(alias="command", description="The command that ran.")
+    frame: Int = Field(alias="frame", description="Frame of the read.")
+    realtime_ms: Int = Field(alias="realtimeMs", description="Milliseconds since the game started.")
 
 
 class OverlayNotifyParams(ProtocolModel):
@@ -2949,6 +2983,25 @@ class OverlayRequestEventParams(ProtocolModel):
     locator: str | None = Field(default=None, alias="locator")
 
 
+class OverlayRevealParams(ProtocolModel):
+    "OverlayRevealParams."
+
+    element: str = Field(alias="element", description="An overlay element id, as overlay.snapshot reports it.")
+    highlight: bool | None = Field(default=None, alias="highlight", description="Outline it (default true).")
+    duration_ms: Int | None = Field(default=None, alias="durationMs", description="How long the outline stays (default 2000).")
+
+
+class OverlayRevealResult(ProtocolModel):
+    "OverlayRevealResult."
+
+    revealed: bool = Field(alias="revealed", description="It's on screen now.")
+    tab: str = Field(alias="tab")
+    visibility: str = Field(alias="visibility")
+    rect: ScreenRect | None = Field(alias="rect", description="Where it is drawn now, in screen pixels from the top-left.")
+    frame: Int = Field(alias="frame", description="Frame of the read.")
+    realtime_ms: Int = Field(alias="realtimeMs", description="Milliseconds since the game started.")
+
+
 class OverlaySelectParams(ProtocolModel):
     "OverlaySelectParams."
 
@@ -2979,6 +3032,29 @@ class OverlaySetCapabilitiesResult(ProtocolModel):
     follow_static_tool_selection: bool = Field(alias="followStaticToolSelection")
 
 
+class OverlaySetSettingsParams(ProtocolModel):
+    "OverlaySetSettingsParams."
+
+    values: dict[str, Any] = Field(alias="values", description="Key (Overlay.Name) to value, as text.")
+    persist: bool | None = Field(default=None, alias="persist", description="Save to the configuration file (default false: this session only).")
+
+
+class OverlaySettingRejection(ProtocolModel):
+    "OverlaySettingRejection."
+
+    key: str = Field(alias="key")
+    reason: str = Field(alias="reason")
+
+
+class OverlaySetSettingsResult(ProtocolModel):
+    "OverlaySetSettingsResult."
+
+    applied: list[str] = Field(alias="applied", description="Keys in effect now.")
+    saved: list[str] = Field(alias="saved", description="Keys written to the configuration file.")
+    restart_required: list[str] = Field(alias="restartRequired", description="Saved keys that take effect after the game restarts.")
+    rejected: list[OverlaySettingRejection] = Field(alias="rejected")
+
+
 class OverlaySetStateParams(ProtocolModel):
     "OverlaySetStateParams."
 
@@ -2991,6 +3067,36 @@ class OverlaySetStateResult(ProtocolModel):
 
     state: str = Field(alias="state")
     tab: str = Field(alias="tab")
+
+
+class OverlaySetting(ProtocolModel):
+    "OverlaySetting."
+
+    key: str = Field(alias="key", description="The configuration key (Overlay.Name).")
+    name: str = Field(alias="name", description="Its name in the Settings tab.")
+    group: str = Field(alias="group", description="Its Settings tab section.")
+    description: str = Field(alias="description")
+    kind: str = Field(alias="kind")
+    value: str = Field(alias="value", description="In effect now.")
+    default: str = Field(alias="default")
+    saved: str = Field(alias="saved", description="In the configuration file (differs from value while a session override is in effect).")
+    choices: list[str] = Field(alias="choices")
+    min: float | None = Field(alias="min")
+    max: float | None = Field(alias="max")
+    step: float | None = Field(alias="step")
+    applies_now: bool = Field(alias="appliesNow", description="A change takes effect at once; otherwise after the game restarts.")
+
+
+class OverlaySettingsParams(ProtocolModel):
+    "OverlaySettingsParams."
+
+    pass
+
+
+class OverlaySettingsResult(ProtocolModel):
+    "OverlaySettingsResult."
+
+    items: list[OverlaySetting] = Field(alias="items")
 
 
 class OverlayShowTextParams(ProtocolModel):
@@ -3006,6 +3112,28 @@ class OverlayShowTextResult(ProtocolModel):
     "OverlayShowTextResult."
 
     shown: bool = Field(alias="shown")
+
+
+class OverlaySnapshotParams(ProtocolModel):
+    "OverlaySnapshotParams."
+
+    only_visible: bool | None = Field(default=None, alias="onlyVisible", description="Only elements that are visible or partly visible (default false).")
+    interaction: list[str] | None = Field(default=None, alias="interaction", description="Only elements with one of these interactions.")
+    under: str | None = Field(default=None, alias="under", description="Only this element and what it contains (an element id).")
+    limit: Int | None = Field(default=None, alias="limit", description="Maximum number of items per page (default 500).")
+    cursor: str | None = Field(default=None, alias="cursor", description="Continuation cursor from a previous page (session-scoped, expires after 10 minutes).")
+
+
+class OverlaySnapshotResult(ProtocolModel):
+    "OverlaySnapshotResult."
+
+    state: str = Field(alias="state")
+    tab: str = Field(alias="tab")
+    items: list[OverlayElement] = Field(alias="items")
+    cursor: str | None = Field(alias="cursor", description="Cursor for the next page; null when this is the last page.")
+    total: Int | None = Field(alias="total", description="Elements matching the filters.")
+    frame: Int = Field(alias="frame", description="Frame of the read.")
+    realtime_ms: Int = Field(alias="realtimeMs", description="Milliseconds since the game started.")
 
 
 class OverlayStateParams(ProtocolModel):
@@ -3025,6 +3153,27 @@ class OverlayStateResult(ProtocolModel):
     pick_mode: bool = Field(alias="pickMode")
     renderer: str = Field(alias="renderer", description="How the overlay is drawn in this game (none while it isn't available).")
     renderer_reason: str | None = Field(alias="rendererReason", description="Why this renderer was chosen (or why none).")
+    tabs: list[str] = Field(alias="tabs", description="The tabs the panel shows, in order.")
+    focused_element: str | None = Field(alias="focusedElement", description="The text box that has the keyboard (an element id), or null: the game has it.")
+
+
+class OverlayTypeTextParams(ProtocolModel):
+    "OverlayTypeTextParams."
+
+    element: str | None = Field(default=None, alias="element", description="The text box (an element id); default: the one with the keyboard.")
+    text: str = Field(alias="text")
+    replace: bool | None = Field(default=None, alias="replace", description="Replace its text instead of inserting at the caret (default false).")
+    submit: bool | None = Field(default=None, alias="submit", description="Press Enter afterwards (default false).")
+
+
+class OverlayTypeTextResult(ProtocolModel):
+    "OverlayTypeTextResult."
+
+    element: str = Field(alias="element")
+    text: str = Field(alias="text", description="The box's text afterwards (what was sent, when submitted).")
+    submitted: bool = Field(alias="submitted")
+    frame: Int = Field(alias="frame", description="Frame of the read.")
+    realtime_ms: Int = Field(alias="realtimeMs", description="Milliseconds since the game started.")
 
 
 class PackageFile(ProtocolModel):
@@ -5021,23 +5170,38 @@ SnapshotExpectedMatch.model_rebuild()
 ObjSnapshotResult.model_rebuild()
 OverlayClearHighlightsParams.model_rebuild()
 OverlayClearHighlightsResult.model_rebuild()
+OverlayElement.model_rebuild()
 OverlayHighlightParams.model_rebuild()
 OverlayHighlightResult.model_rebuild()
+OverlayInvokeParams.model_rebuild()
+OverlayInvokeResult.model_rebuild()
 OverlayNotifyParams.model_rebuild()
 OverlayNotifyResult.model_rebuild()
 OverlayPromptParams.model_rebuild()
 OverlayPromptResult.model_rebuild()
 OverlayRequestEventParams.model_rebuild()
+OverlayRevealParams.model_rebuild()
+OverlayRevealResult.model_rebuild()
 OverlaySelectParams.model_rebuild()
 OverlaySelectResult.model_rebuild()
 OverlaySetCapabilitiesParams.model_rebuild()
 OverlaySetCapabilitiesResult.model_rebuild()
+OverlaySetSettingsParams.model_rebuild()
+OverlaySettingRejection.model_rebuild()
+OverlaySetSettingsResult.model_rebuild()
 OverlaySetStateParams.model_rebuild()
 OverlaySetStateResult.model_rebuild()
+OverlaySetting.model_rebuild()
+OverlaySettingsParams.model_rebuild()
+OverlaySettingsResult.model_rebuild()
 OverlayShowTextParams.model_rebuild()
 OverlayShowTextResult.model_rebuild()
+OverlaySnapshotParams.model_rebuild()
+OverlaySnapshotResult.model_rebuild()
 OverlayStateParams.model_rebuild()
 OverlayStateResult.model_rebuild()
+OverlayTypeTextParams.model_rebuild()
+OverlayTypeTextResult.model_rebuild()
 PackageFile.model_rebuild()
 PackageManifest.model_rebuild()
 PatchApplyParams.model_rebuild()

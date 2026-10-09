@@ -11586,6 +11586,142 @@ public sealed partial class OverlayClearHighlightsResult : ProtocolMessage
     }
 }
 
+/// <summary>OverlayElement.</summary>
+public sealed partial class OverlayElement : ProtocolMessage
+{
+    /// <summary>Stable within the overlay: the element's place in its view, with list rows named by their item's key or id when it has one (e.g. settings/settings/Overlay.Edge/actions/0).</summary>
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>The containing element's id (null at the top).</summary>
+    public string? Parent { get; set; }
+
+    /// <summary>Where it is: the open panel's tab content, its header (tabs, E-STOP), the cards next to the arrow (prompts, notifications), or the arrow.</summary>
+    public string Area { get; set; } = string.Empty;
+
+    /// <summary>The view node type (text, button, toggle, slider, dropdown, textField, textBox, list, stack, panel, tab, …).</summary>
+    public string Type { get; set; } = string.Empty;
+
+    /// <summary>The text it shows, bindings filled in.</summary>
+    public string? Text { get; set; }
+
+    /// <summary>Its bound value (a toggle's state, a slider's position, a text box's text), or null.</summary>
+    public JsonValue Value { get; set; } = JsonNull.Instance;
+
+    /// <summary>The overlay command a press runs (overlay.invoke), or null.</summary>
+    public string? Command { get; set; }
+
+    /// <summary><c>tooltip</c>.</summary>
+    public string? Tooltip { get; set; }
+
+    /// <summary>clickable: overlay.invoke presses it; editable: a text box (overlay.typeText) or a value control (overlay.invoke with value); scrollable: a list or scroll view; display: neither.</summary>
+    public string Interaction { get; set; } = string.Empty;
+
+    /// <summary><c>enabled</c>.</summary>
+    public bool Enabled { get; set; }
+
+    /// <summary>A text box with the keyboard.</summary>
+    public bool Focused { get; set; }
+
+    /// <summary>visible: entirely on screen; partial: partly; clipped: scrolled out of its list or scroll view (overlay.reveal brings it in); offscreen: outside the screen; hidden: not drawn (another tab, a collapsed panel, or a hidden condition).</summary>
+    public string Visibility { get; set; } = string.Empty;
+
+    /// <summary>Where it is drawn, in screen pixels from the top-left (null when it isn't drawn).</summary>
+    public ScreenRect? Rect { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayElement"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayElement Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayElement
+        {
+            Id = r.RequiredString("id"),
+            Parent = r.RequiredNullableString("parent"),
+            Area = r.RequiredString("area"),
+            Type = r.RequiredString("type"),
+            Text = r.RequiredNullableString("text"),
+            Value = r.RequiredValue("value"),
+            Command = r.RequiredNullableString("command"),
+            Tooltip = r.RequiredNullableString("tooltip"),
+            Interaction = r.RequiredString("interaction"),
+            Enabled = r.RequiredBoolean("enabled"),
+            Focused = r.RequiredBoolean("focused"),
+            Visibility = r.RequiredString("visibility"),
+            Rect = r.RequiredNullable("rect", global::UnityLudometry.Protocol.Messages.ScreenRect.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("id");
+        writer.WriteString(Id);
+        if (Parent is not null)
+        {
+            writer.WritePropertyName("parent");
+            writer.WriteString(Parent);
+        }
+        else
+        {
+            writer.WritePropertyName("parent");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("area");
+        writer.WriteString(Area);
+        writer.WritePropertyName("type");
+        writer.WriteString(Type);
+        if (Text is not null)
+        {
+            writer.WritePropertyName("text");
+            writer.WriteString(Text);
+        }
+        else
+        {
+            writer.WritePropertyName("text");
+            writer.WriteNull();
+        }
+        writer.WriteValue("value", Value);
+        if (Command is not null)
+        {
+            writer.WritePropertyName("command");
+            writer.WriteString(Command);
+        }
+        else
+        {
+            writer.WritePropertyName("command");
+            writer.WriteNull();
+        }
+        if (Tooltip is not null)
+        {
+            writer.WritePropertyName("tooltip");
+            writer.WriteString(Tooltip);
+        }
+        else
+        {
+            writer.WritePropertyName("tooltip");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("interaction");
+        writer.WriteString(Interaction);
+        writer.WritePropertyName("enabled");
+        writer.WriteBoolean(Enabled);
+        writer.WritePropertyName("focused");
+        writer.WriteBoolean(Focused);
+        writer.WritePropertyName("visibility");
+        writer.WriteString(Visibility);
+        if (Rect is not null)
+        {
+            writer.WritePropertyName("rect");
+            Rect.WriteJson(writer);
+        }
+        else
+        {
+            writer.WritePropertyName("rect");
+            writer.WriteNull();
+        }
+    }
+}
+
 /// <summary>OverlayHighlightParams.</summary>
 public sealed partial class OverlayHighlightParams : ProtocolMessage
 {
@@ -11671,6 +11807,90 @@ public sealed partial class OverlayHighlightResult : ProtocolMessage
         writer.WriteString(HighlightId);
         writer.WritePropertyName("drawn");
         writer.WriteNumber(Drawn);
+    }
+}
+
+/// <summary>OverlayInvokeParams.</summary>
+public sealed partial class OverlayInvokeParams : ProtocolMessage
+{
+    /// <summary>An overlay element id, as overlay.snapshot reports it.</summary>
+    public string Element { get; set; } = string.Empty;
+
+    /// <summary>For a toggle, slider or dropdown: the value to set (a toggle's boolean, a slider's number, a dropdown's choice).</summary>
+    public JsonValue? Value { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayInvokeParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayInvokeParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayInvokeParams
+        {
+            Element = r.RequiredString("element"),
+            Value = r.OptionalValue("value"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("element");
+        writer.WriteString(Element);
+        if (Value is not null)
+        {
+            writer.WriteValue("value", Value);
+        }
+    }
+}
+
+/// <summary>OverlayInvokeResult.</summary>
+public sealed partial class OverlayInvokeResult : ProtocolMessage
+{
+    /// <summary><c>invoked</c>.</summary>
+    public bool Invoked { get; set; }
+
+    /// <summary>The command that ran.</summary>
+    public string? Command { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayInvokeResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayInvokeResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayInvokeResult
+        {
+            Invoked = r.RequiredBoolean("invoked"),
+            Command = r.RequiredNullableString("command"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("invoked");
+        writer.WriteBoolean(Invoked);
+        if (Command is not null)
+        {
+            writer.WritePropertyName("command");
+            writer.WriteString(Command);
+        }
+        else
+        {
+            writer.WritePropertyName("command");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
     }
 }
 
@@ -11848,6 +12068,112 @@ public sealed partial class OverlayPromptResult : ProtocolMessage
     }
 }
 
+/// <summary>OverlayRevealParams.</summary>
+public sealed partial class OverlayRevealParams : ProtocolMessage
+{
+    /// <summary>An overlay element id, as overlay.snapshot reports it.</summary>
+    public string Element { get; set; } = string.Empty;
+
+    /// <summary>Outline it (default true).</summary>
+    public bool? Highlight { get; set; }
+
+    /// <summary>How long the outline stays (default 2000).</summary>
+    public long? DurationMs { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayRevealParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayRevealParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayRevealParams
+        {
+            Element = r.RequiredString("element"),
+            Highlight = r.OptionalBoolean("highlight"),
+            DurationMs = r.OptionalInt64("durationMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("element");
+        writer.WriteString(Element);
+        if (Highlight.HasValue)
+        {
+            writer.WritePropertyName("highlight");
+            writer.WriteBoolean(Highlight.Value);
+        }
+        if (DurationMs.HasValue)
+        {
+            writer.WritePropertyName("durationMs");
+            writer.WriteNumber(DurationMs.Value);
+        }
+    }
+}
+
+/// <summary>OverlayRevealResult.</summary>
+public sealed partial class OverlayRevealResult : ProtocolMessage
+{
+    /// <summary>It's on screen now.</summary>
+    public bool Revealed { get; set; }
+
+    /// <summary><c>tab</c>.</summary>
+    public string Tab { get; set; } = string.Empty;
+
+    /// <summary><c>visibility</c>.</summary>
+    public string Visibility { get; set; } = string.Empty;
+
+    /// <summary>Where it is drawn now, in screen pixels from the top-left.</summary>
+    public ScreenRect? Rect { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayRevealResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayRevealResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayRevealResult
+        {
+            Revealed = r.RequiredBoolean("revealed"),
+            Tab = r.RequiredString("tab"),
+            Visibility = r.RequiredString("visibility"),
+            Rect = r.RequiredNullable("rect", global::UnityLudometry.Protocol.Messages.ScreenRect.Read),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("revealed");
+        writer.WriteBoolean(Revealed);
+        writer.WritePropertyName("tab");
+        writer.WriteString(Tab);
+        writer.WritePropertyName("visibility");
+        writer.WriteString(Visibility);
+        if (Rect is not null)
+        {
+            writer.WritePropertyName("rect");
+            Rect.WriteJson(writer);
+        }
+        else
+        {
+            writer.WritePropertyName("rect");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
 /// <summary>OverlaySelectParams.</summary>
 public sealed partial class OverlaySelectParams : ProtocolMessage
 {
@@ -11996,6 +12322,103 @@ public sealed partial class OverlaySetCapabilitiesResult : ProtocolMessage
     }
 }
 
+/// <summary>OverlaySetSettingsParams.</summary>
+public sealed partial class OverlaySetSettingsParams : ProtocolMessage
+{
+    /// <summary>Key (Overlay.Name) to value, as text.</summary>
+    public JsonObject Values { get; set; } = new();
+
+    /// <summary>Save to the configuration file (default false: this session only).</summary>
+    public bool? Persist { get; set; }
+
+    /// <summary>Reads a <see cref="OverlaySetSettingsParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySetSettingsParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySetSettingsParams
+        {
+            Values = r.RequiredObject("values"),
+            Persist = r.OptionalBoolean("persist"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("values");
+        writer.WriteValue(Values);
+        if (Persist.HasValue)
+        {
+            writer.WritePropertyName("persist");
+            writer.WriteBoolean(Persist.Value);
+        }
+    }
+}
+
+/// <summary>OverlaySetSettingsResult.</summary>
+public sealed partial class OverlaySetSettingsResult : ProtocolMessage
+{
+    /// <summary>Keys in effect now.</summary>
+    public List<string> Applied { get; set; } = new();
+
+    /// <summary>Keys written to the configuration file.</summary>
+    public List<string> Saved { get; set; } = new();
+
+    /// <summary>Saved keys that take effect after the game restarts.</summary>
+    public List<string> RestartRequired { get; set; } = new();
+
+    /// <summary><c>rejected</c>.</summary>
+    public List<OverlaySettingRejection> Rejected { get; set; } = new();
+
+    /// <summary>Reads a <see cref="OverlaySetSettingsResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySetSettingsResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySetSettingsResult
+        {
+            Applied = r.RequiredArray("applied", ObjectReader.ReadString),
+            Saved = r.RequiredArray("saved", ObjectReader.ReadString),
+            RestartRequired = r.RequiredArray("restartRequired", ObjectReader.ReadString),
+            Rejected = r.RequiredArray("rejected", global::UnityLudometry.Protocol.Messages.OverlaySettingRejection.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("applied");
+        writer.WriteStartArray();
+        foreach (var item0 in Applied)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("saved");
+        writer.WriteStartArray();
+        foreach (var item0 in Saved)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("restartRequired");
+        writer.WriteStartArray();
+        foreach (var item0 in RestartRequired)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("rejected");
+        writer.WriteStartArray();
+        foreach (var item0 in Rejected)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+    }
+}
+
 /// <summary>OverlaySetStateParams.</summary>
 public sealed partial class OverlaySetStateParams : ProtocolMessage
 {
@@ -12061,6 +12484,212 @@ public sealed partial class OverlaySetStateResult : ProtocolMessage
         writer.WriteString(State);
         writer.WritePropertyName("tab");
         writer.WriteString(Tab);
+    }
+}
+
+/// <summary>OverlaySetting.</summary>
+public sealed partial class OverlaySetting : ProtocolMessage
+{
+    /// <summary>The configuration key (Overlay.Name).</summary>
+    public string Key { get; set; } = string.Empty;
+
+    /// <summary>Its name in the Settings tab.</summary>
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>Its Settings tab section.</summary>
+    public string Group { get; set; } = string.Empty;
+
+    /// <summary><c>description</c>.</summary>
+    public string Description { get; set; } = string.Empty;
+
+    /// <summary><c>kind</c>.</summary>
+    public string Kind { get; set; } = string.Empty;
+
+    /// <summary>In effect now.</summary>
+    public string Value { get; set; } = string.Empty;
+
+    /// <summary><c>default</c>.</summary>
+    public string Default { get; set; } = string.Empty;
+
+    /// <summary>In the configuration file (differs from value while a session override is in effect).</summary>
+    public string Saved { get; set; } = string.Empty;
+
+    /// <summary><c>choices</c>.</summary>
+    public List<string> Choices { get; set; } = new();
+
+    /// <summary><c>min</c>.</summary>
+    public double? Min { get; set; }
+
+    /// <summary><c>max</c>.</summary>
+    public double? Max { get; set; }
+
+    /// <summary><c>step</c>.</summary>
+    public double? Step { get; set; }
+
+    /// <summary>A change takes effect at once; otherwise after the game restarts.</summary>
+    public bool AppliesNow { get; set; }
+
+    /// <summary>Reads a <see cref="OverlaySetting"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySetting Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySetting
+        {
+            Key = r.RequiredString("key"),
+            Name = r.RequiredString("name"),
+            Group = r.RequiredString("group"),
+            Description = r.RequiredString("description"),
+            Kind = r.RequiredString("kind"),
+            Value = r.RequiredString("value"),
+            Default = r.RequiredString("default"),
+            Saved = r.RequiredString("saved"),
+            Choices = r.RequiredArray("choices", ObjectReader.ReadString),
+            Min = r.RequiredNullableDouble("min"),
+            Max = r.RequiredNullableDouble("max"),
+            Step = r.RequiredNullableDouble("step"),
+            AppliesNow = r.RequiredBoolean("appliesNow"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("key");
+        writer.WriteString(Key);
+        writer.WritePropertyName("name");
+        writer.WriteString(Name);
+        writer.WritePropertyName("group");
+        writer.WriteString(Group);
+        writer.WritePropertyName("description");
+        writer.WriteString(Description);
+        writer.WritePropertyName("kind");
+        writer.WriteString(Kind);
+        writer.WritePropertyName("value");
+        writer.WriteString(Value);
+        writer.WritePropertyName("default");
+        writer.WriteString(Default);
+        writer.WritePropertyName("saved");
+        writer.WriteString(Saved);
+        writer.WritePropertyName("choices");
+        writer.WriteStartArray();
+        foreach (var item0 in Choices)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        if (Min.HasValue)
+        {
+            writer.WritePropertyName("min");
+            writer.WriteNumber(Min.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("min");
+            writer.WriteNull();
+        }
+        if (Max.HasValue)
+        {
+            writer.WritePropertyName("max");
+            writer.WriteNumber(Max.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("max");
+            writer.WriteNull();
+        }
+        if (Step.HasValue)
+        {
+            writer.WritePropertyName("step");
+            writer.WriteNumber(Step.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("step");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("appliesNow");
+        writer.WriteBoolean(AppliesNow);
+    }
+}
+
+/// <summary>OverlaySettingRejection.</summary>
+public sealed partial class OverlaySettingRejection : ProtocolMessage
+{
+    /// <summary><c>key</c>.</summary>
+    public string Key { get; set; } = string.Empty;
+
+    /// <summary><c>reason</c>.</summary>
+    public string Reason { get; set; } = string.Empty;
+
+    /// <summary>Reads a <see cref="OverlaySettingRejection"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySettingRejection Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySettingRejection
+        {
+            Key = r.RequiredString("key"),
+            Reason = r.RequiredString("reason"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("key");
+        writer.WriteString(Key);
+        writer.WritePropertyName("reason");
+        writer.WriteString(Reason);
+    }
+}
+
+/// <summary>OverlaySettingsParams.</summary>
+public sealed partial class OverlaySettingsParams : ProtocolMessage
+{
+    /// <summary>Reads a <see cref="OverlaySettingsParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySettingsParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySettingsParams
+        {
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+    }
+}
+
+/// <summary>OverlaySettingsResult.</summary>
+public sealed partial class OverlaySettingsResult : ProtocolMessage
+{
+    /// <summary><c>items</c>.</summary>
+    public List<OverlaySetting> Items { get; set; } = new();
+
+    /// <summary>Reads a <see cref="OverlaySettingsResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySettingsResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySettingsResult
+        {
+            Items = r.RequiredArray("items", global::UnityLudometry.Protocol.Messages.OverlaySetting.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("items");
+        writer.WriteStartArray();
+        foreach (var item0 in Items)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
     }
 }
 
@@ -12138,6 +12767,157 @@ public sealed partial class OverlayShowTextResult : ProtocolMessage
     }
 }
 
+/// <summary>OverlaySnapshotParams.</summary>
+public sealed partial class OverlaySnapshotParams : ProtocolMessage
+{
+    /// <summary>Only elements that are visible or partly visible (default false).</summary>
+    public bool? OnlyVisible { get; set; }
+
+    /// <summary>Only elements with one of these interactions.</summary>
+    public List<string>? Interaction { get; set; }
+
+    /// <summary>Only this element and what it contains (an element id).</summary>
+    public string? Under { get; set; }
+
+    /// <summary>Maximum number of items per page (default 500).</summary>
+    public long? Limit { get; set; }
+
+    /// <summary>Continuation cursor from a previous page (session-scoped, expires after 10 minutes).</summary>
+    public string? Cursor { get; set; }
+
+    /// <summary>Reads a <see cref="OverlaySnapshotParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySnapshotParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySnapshotParams
+        {
+            OnlyVisible = r.OptionalBoolean("onlyVisible"),
+            Interaction = r.OptionalArray("interaction", ObjectReader.ReadString),
+            Under = r.OptionalString("under"),
+            Limit = r.OptionalInt64("limit"),
+            Cursor = r.OptionalString("cursor"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (OnlyVisible.HasValue)
+        {
+            writer.WritePropertyName("onlyVisible");
+            writer.WriteBoolean(OnlyVisible.Value);
+        }
+        if (Interaction is not null)
+        {
+            writer.WritePropertyName("interaction");
+            writer.WriteStartArray();
+            foreach (var item0 in Interaction)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+        if (Under is not null)
+        {
+            writer.WritePropertyName("under");
+            writer.WriteString(Under);
+        }
+        if (Limit.HasValue)
+        {
+            writer.WritePropertyName("limit");
+            writer.WriteNumber(Limit.Value);
+        }
+        if (Cursor is not null)
+        {
+            writer.WritePropertyName("cursor");
+            writer.WriteString(Cursor);
+        }
+    }
+}
+
+/// <summary>OverlaySnapshotResult.</summary>
+public sealed partial class OverlaySnapshotResult : ProtocolMessage
+{
+    /// <summary><c>state</c>.</summary>
+    public string State { get; set; } = string.Empty;
+
+    /// <summary><c>tab</c>.</summary>
+    public string Tab { get; set; } = string.Empty;
+
+    /// <summary><c>items</c>.</summary>
+    public List<OverlayElement> Items { get; set; } = new();
+
+    /// <summary>Cursor for the next page; null when this is the last page.</summary>
+    public string? Cursor { get; set; }
+
+    /// <summary>Elements matching the filters.</summary>
+    public long? Total { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="OverlaySnapshotResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlaySnapshotResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlaySnapshotResult
+        {
+            State = r.RequiredString("state"),
+            Tab = r.RequiredString("tab"),
+            Items = r.RequiredArray("items", global::UnityLudometry.Protocol.Messages.OverlayElement.Read),
+            Cursor = r.RequiredNullableString("cursor"),
+            Total = r.RequiredNullableInt64("total"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("state");
+        writer.WriteString(State);
+        writer.WritePropertyName("tab");
+        writer.WriteString(Tab);
+        writer.WritePropertyName("items");
+        writer.WriteStartArray();
+        foreach (var item0 in Items)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+        if (Cursor is not null)
+        {
+            writer.WritePropertyName("cursor");
+            writer.WriteString(Cursor);
+        }
+        else
+        {
+            writer.WritePropertyName("cursor");
+            writer.WriteNull();
+        }
+        if (Total.HasValue)
+        {
+            writer.WritePropertyName("total");
+            writer.WriteNumber(Total.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("total");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
 /// <summary>OverlayStateParams.</summary>
 public sealed partial class OverlayStateParams : ProtocolMessage
 {
@@ -12184,6 +12964,12 @@ public sealed partial class OverlayStateResult : ProtocolMessage
     /// <summary>Why this renderer was chosen (or why none).</summary>
     public string? RendererReason { get; set; }
 
+    /// <summary>The tabs the panel shows, in order.</summary>
+    public List<string> Tabs { get; set; } = new();
+
+    /// <summary>The text box that has the keyboard (an element id), or null: the game has it.</summary>
+    public string? FocusedElement { get; set; }
+
     /// <summary>Reads a <see cref="OverlayStateResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
     public static OverlayStateResult Read(JsonValue? value, string path)
     {
@@ -12198,6 +12984,8 @@ public sealed partial class OverlayStateResult : ProtocolMessage
             PickMode = r.RequiredBoolean("pickMode"),
             Renderer = r.RequiredString("renderer"),
             RendererReason = r.RequiredNullableString("rendererReason"),
+            Tabs = r.RequiredArray("tabs", ObjectReader.ReadString),
+            FocusedElement = r.RequiredNullableString("focusedElement"),
             Extra = r.Rest(),
         };
     }
@@ -12229,6 +13017,124 @@ public sealed partial class OverlayStateResult : ProtocolMessage
             writer.WritePropertyName("rendererReason");
             writer.WriteNull();
         }
+        writer.WritePropertyName("tabs");
+        writer.WriteStartArray();
+        foreach (var item0 in Tabs)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        if (FocusedElement is not null)
+        {
+            writer.WritePropertyName("focusedElement");
+            writer.WriteString(FocusedElement);
+        }
+        else
+        {
+            writer.WritePropertyName("focusedElement");
+            writer.WriteNull();
+        }
+    }
+}
+
+/// <summary>OverlayTypeTextParams.</summary>
+public sealed partial class OverlayTypeTextParams : ProtocolMessage
+{
+    /// <summary>The text box (an element id); default: the one with the keyboard.</summary>
+    public string? Element { get; set; }
+
+    /// <summary><c>text</c>.</summary>
+    public string Text { get; set; } = string.Empty;
+
+    /// <summary>Replace its text instead of inserting at the caret (default false).</summary>
+    public bool? Replace { get; set; }
+
+    /// <summary>Press Enter afterwards (default false).</summary>
+    public bool? Submit { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayTypeTextParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayTypeTextParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayTypeTextParams
+        {
+            Element = r.OptionalString("element"),
+            Text = r.RequiredString("text"),
+            Replace = r.OptionalBoolean("replace"),
+            Submit = r.OptionalBoolean("submit"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (Element is not null)
+        {
+            writer.WritePropertyName("element");
+            writer.WriteString(Element);
+        }
+        writer.WritePropertyName("text");
+        writer.WriteString(Text);
+        if (Replace.HasValue)
+        {
+            writer.WritePropertyName("replace");
+            writer.WriteBoolean(Replace.Value);
+        }
+        if (Submit.HasValue)
+        {
+            writer.WritePropertyName("submit");
+            writer.WriteBoolean(Submit.Value);
+        }
+    }
+}
+
+/// <summary>OverlayTypeTextResult.</summary>
+public sealed partial class OverlayTypeTextResult : ProtocolMessage
+{
+    /// <summary><c>element</c>.</summary>
+    public string Element { get; set; } = string.Empty;
+
+    /// <summary>The box's text afterwards (what was sent, when submitted).</summary>
+    public string Text { get; set; } = string.Empty;
+
+    /// <summary><c>submitted</c>.</summary>
+    public bool Submitted { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="OverlayTypeTextResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static OverlayTypeTextResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new OverlayTypeTextResult
+        {
+            Element = r.RequiredString("element"),
+            Text = r.RequiredString("text"),
+            Submitted = r.RequiredBoolean("submitted"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("element");
+        writer.WriteString(Element);
+        writer.WritePropertyName("text");
+        writer.WriteString(Text);
+        writer.WritePropertyName("submitted");
+        writer.WriteBoolean(Submitted);
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
     }
 }
 

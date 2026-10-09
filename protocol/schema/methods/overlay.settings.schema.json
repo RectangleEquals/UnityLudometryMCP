@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/overlay.settings.schema.json",
+  "title": "overlay.settings",
+  "description": "The overlay's settings: what each does, its value now, its saved value and default, its range, and whether a change applies at once.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "OverlaySettingsParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "OverlaySettingsResult",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "OverlaySetting",
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The configuration key (Overlay.Name)."
+              },
+              "name": {
+                "type": "string",
+                "description": "Its name in the Settings tab."
+              },
+              "group": {
+                "type": "string",
+                "description": "Its Settings tab section."
+              },
+              "description": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "bool",
+                  "int",
+                  "float",
+                  "text",
+                  "choice",
+                  "shortcut"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "description": "In effect now."
+              },
+              "default": {
+                "type": "string"
+              },
+              "saved": {
+                "type": "string",
+                "description": "In the configuration file (differs from value while a session override is in effect)."
+              },
+              "choices": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "min": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "max": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "step": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "appliesNow": {
+                "type": "boolean",
+                "description": "A change takes effect at once; otherwise after the game restarts."
+              }
+            },
+            "required": [
+              "key",
+              "name",
+              "group",
+              "description",
+              "kind",
+              "value",
+              "default",
+              "saved",
+              "choices",
+              "min",
+              "max",
+              "step",
+              "appliesNow"
+            ]
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  }
+}

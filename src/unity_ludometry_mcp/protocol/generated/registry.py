@@ -113,13 +113,19 @@ class Methods:
     OBJ_SNAPSHOT = "obj.snapshot"
     OVERLAY_CLEAR_HIGHLIGHTS = "overlay.clearHighlights"
     OVERLAY_HIGHLIGHT = "overlay.highlight"
+    OVERLAY_INVOKE = "overlay.invoke"
     OVERLAY_NOTIFY = "overlay.notify"
     OVERLAY_PROMPT = "overlay.prompt"
+    OVERLAY_REVEAL = "overlay.reveal"
     OVERLAY_SELECT = "overlay.select"
     OVERLAY_SET_CAPABILITIES = "overlay.setCapabilities"
+    OVERLAY_SET_SETTINGS = "overlay.setSettings"
     OVERLAY_SET_STATE = "overlay.setState"
+    OVERLAY_SETTINGS = "overlay.settings"
     OVERLAY_SHOW_TEXT = "overlay.showText"
+    OVERLAY_SNAPSHOT = "overlay.snapshot"
     OVERLAY_STATE = "overlay.state"
+    OVERLAY_TYPE_TEXT = "overlay.typeText"
     PATCH_APPLY = "patch.apply"
     PATCH_INSPECT = "patch.inspect"
     PATCH_LIST = "patch.list"
@@ -347,13 +353,19 @@ METHODS: dict[str, MethodDescriptor] = {
     Methods.OBJ_SNAPSHOT: MethodDescriptor("obj.snapshot", MethodThread.MAIN, "ReadOnly", False, False, (), m.ObjSnapshotParams, m.ObjSnapshotResult, None),
     Methods.OVERLAY_CLEAR_HIGHLIGHTS: MethodDescriptor("overlay.clearHighlights", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayClearHighlightsParams, m.OverlayClearHighlightsResult, None),
     Methods.OVERLAY_HIGHLIGHT: MethodDescriptor("overlay.highlight", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayHighlightParams, m.OverlayHighlightResult, None),
+    Methods.OVERLAY_INVOKE: MethodDescriptor("overlay.invoke", MethodThread.MAIN, "Full", False, True, (), m.OverlayInvokeParams, m.OverlayInvokeResult, None),
     Methods.OVERLAY_NOTIFY: MethodDescriptor("overlay.notify", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayNotifyParams, m.OverlayNotifyResult, None),
     Methods.OVERLAY_PROMPT: MethodDescriptor("overlay.prompt", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayPromptParams, m.OverlayPromptResult, None),
+    Methods.OVERLAY_REVEAL: MethodDescriptor("overlay.reveal", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayRevealParams, m.OverlayRevealResult, None),
     Methods.OVERLAY_SELECT: MethodDescriptor("overlay.select", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlaySelectParams, m.OverlaySelectResult, None),
     Methods.OVERLAY_SET_CAPABILITIES: MethodDescriptor("overlay.setCapabilities", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlaySetCapabilitiesParams, m.OverlaySetCapabilitiesResult, None),
+    Methods.OVERLAY_SET_SETTINGS: MethodDescriptor("overlay.setSettings", MethodThread.MAIN, "Full", False, True, (), m.OverlaySetSettingsParams, m.OverlaySetSettingsResult, None),
     Methods.OVERLAY_SET_STATE: MethodDescriptor("overlay.setState", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlaySetStateParams, m.OverlaySetStateResult, None),
+    Methods.OVERLAY_SETTINGS: MethodDescriptor("overlay.settings", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlaySettingsParams, m.OverlaySettingsResult, None),
     Methods.OVERLAY_SHOW_TEXT: MethodDescriptor("overlay.showText", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayShowTextParams, m.OverlayShowTextResult, None),
+    Methods.OVERLAY_SNAPSHOT: MethodDescriptor("overlay.snapshot", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlaySnapshotParams, m.OverlaySnapshotResult, None),
     Methods.OVERLAY_STATE: MethodDescriptor("overlay.state", MethodThread.MAIN, "ReadOnly", False, False, (), m.OverlayStateParams, m.OverlayStateResult, None),
+    Methods.OVERLAY_TYPE_TEXT: MethodDescriptor("overlay.typeText", MethodThread.MAIN, "Full", False, True, (), m.OverlayTypeTextParams, m.OverlayTypeTextResult, None),
     Methods.PATCH_APPLY: MethodDescriptor("patch.apply", MethodThread.MAIN, "Full", False, True, (), m.PatchApplyParams, m.PatchApplyResult, None),
     Methods.PATCH_INSPECT: MethodDescriptor("patch.inspect", MethodThread.ANY, "ReadOnly", False, False, (), m.PatchInspectParams, m.PatchInspectResult, None),
     Methods.PATCH_LIST: MethodDescriptor("patch.list", MethodThread.MAIN, "ReadOnly", False, False, (), m.PatchListParams, m.PatchListResult, None),

@@ -323,11 +323,17 @@ public static class Methods
     /// <summary>Outlines targets with a label.</summary>
     public const string OverlayHighlight = "overlay.highlight";
 
+    /// <summary>Operates an overlay control as a click would (switches a tab, answers a prompt, toggles or steps a setting, …): its command runs with the same effect and the same audit entry as the user's click. value sets a value control (toggle, slider, dropdown) instead. Visible on screen or not, the element must exist in the current overlay (overlay.reveal shows it first).</summary>
+    public const string OverlayInvoke = "overlay.invoke";
+
     /// <summary>Shows a toast to the user.</summary>
     public const string OverlayNotify = "overlay.notify";
 
     /// <summary>Asks the user to do something in-game; the answer arrives as <c>overlay.promptResult</c>.</summary>
     public const string OverlayPrompt = "overlay.prompt";
+
+    /// <summary>Shows an overlay element to the user (UI only): opens the panel and its tab if needed, scrolls its list or scroll view until it's in view, and outlines it for a moment.</summary>
+    public const string OverlayReveal = "overlay.reveal";
 
     /// <summary>Sets the Inspector's current selection.</summary>
     public const string OverlaySelect = "overlay.select";
@@ -335,14 +341,26 @@ public static class Methods
     /// <summary>Declares which cross-tool features the client can fulfil (the overlay shows those buttons).</summary>
     public const string OverlaySetCapabilities = "overlay.setCapabilities";
 
+    /// <summary>Changes overlay settings. By default only for this session (nothing is saved, and a change that applies only after a restart is rejected); persist saves them to the configuration file, as the Settings tab does. To start a game with other settings, write them to the configuration file before it starts.</summary>
+    public const string OverlaySetSettings = "overlay.setSettings";
+
     /// <summary>Shows, collapses or hides the overlay, or selects a tab (UI only).</summary>
     public const string OverlaySetState = "overlay.setState";
+
+    /// <summary>The overlay's settings: what each does, its value now, its saved value and default, its range, and whether a change applies at once.</summary>
+    public const string OverlaySettings = "overlay.settings";
 
     /// <summary>Shows text or source in the Inspector's viewer panel.</summary>
     public const string OverlayShowText = "overlay.showText";
 
+    /// <summary>The overlay's elements as the user sees them (UI only): the open tab's content, the header, the cards next to the arrow and the arrow, with what each shows and does, and where it is. A list's rows are all reported, the ones scrolled out of view as clipped.</summary>
+    public const string OverlaySnapshot = "overlay.snapshot";
+
     /// <summary>Overlay availability and state.</summary>
     public const string OverlayState = "overlay.state";
+
+    /// <summary>Types into an overlay text box (a prompt's answer, …) as the keyboard would: it takes the keyboard, the text goes in at its caret, and submit presses Enter (a prompt's answer is sent). Line breaks in the text are Shift+Enter.</summary>
+    public const string OverlayTypeText = "overlay.typeText";
 
     /// <summary>Applies a live Harmony patch set from a compiled patch assembly.</summary>
     public const string PatchApply = "patch.apply";

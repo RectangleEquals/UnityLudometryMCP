@@ -23,6 +23,11 @@
   events (never timers), with a typed-answer option on every prompt and a notification closing every loop.
 - Protocol `0.1.0-dev.7`: `overlay.prompt` takes an optional `textButton` (one of its buttons that opens a text field),
   and `overlay.promptResult` carries the typed `text` when the answer is that button.
+- Protocol `0.1.0-dev.8`: clients can drive the in-game overlay. `overlay.snapshot` lists its elements (what each shows
+  and does, where it is, visible or scrolled away), `overlay.reveal` brings one into view and outlines it,
+  `overlay.invoke` operates a control as a click would, `overlay.typeText` types into a text box, and
+  `overlay.settings` / `overlay.setSettings` read and change its settings (for the session, or saved). `overlay.state`
+  also reports the visible tabs and the text box that has the keyboard.
 - Facts `ui.frameworks_available`, `input.systems_present` and `ui.frameworks_used` (static usage merged with the agent's
   `ui.frameworks` reports: what the agent saw in use wins, with the screens it saw it on).
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,
