@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/input.sequence.start.schema.json",
+  "title": "input.sequence.start",
+  "description": "Runs a timed input script in the session, frame-accurate: each step sets held input or taps one at its time (milliseconds or frames from the start). Cancel it with `job.cancel`; a takeover, `input.end` or E-STOP stops it, and everything virtual is released.",
+  "x-method": {
+    "thread": "mixed",
+    "minMode": "Full",
+    "job": true,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "InputSequenceStartParams",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The session, from `input.begin`."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "title": "InputSequenceStep",
+            "type": "object",
+            "properties": {
+              "atMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "When, from the start (or atFrame)."
+              },
+              "atFrame": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "When, in frames from the start."
+              },
+              "set": {
+                "$ref": "../common/input.schema.json#/$defs/state"
+              },
+              "tap": {
+                "$ref": "../common/input.schema.json#/$defs/press"
+              },
+              "release": {
+                "type": "boolean",
+                "description": "Release everything held."
+              }
+            }
+          }
+        },
+        "layer": {
+          "$ref": "../common/input.schema.json#/$defs/layer"
+        }
+      },
+      "required": [
+        "sessionId",
+        "steps"
+      ]
+    },
+    "result": {
+      "$ref": "../common/job.schema.json#/$defs/jobRef"
+    },
+    "jobResult": {
+      "title": "InputSequenceStartJobResult",
+      "type": "object",
+      "properties": {
+        "stepsRun": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "stoppedBy": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "takeover",
+                "end",
+                "estop",
+                "cancel",
+                "disconnect"
+              ],
+              "description": "Why it stopped early."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "startFrame": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endFrame": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "stepsRun",
+        "completed",
+        "stoppedBy",
+        "startFrame",
+        "endFrame"
+      ]
+    }
+  }
+}

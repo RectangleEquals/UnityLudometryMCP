@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/input.begin.schema.json",
+  "title": "input.begin",
+  "description": "Opens an input session, the only way to inject input. The overlay warns the user (what will be driven, by which client, why, and how to take over) with a countdown; the request completes when the session is active, or paused if the user took over during the countdown. One session at a time.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "InputBeginParams",
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Shown to the user: why the client wants to drive the game."
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/input.schema.json#/$defs/layer"
+          },
+          "description": "Layers to use (default: the recommended one)."
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/input.schema.json#/$defs/device"
+          },
+          "description": "What will be driven, for the warning (default: what the layers drive)."
+        },
+        "countdownMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Warning time before input starts (default: the `Input.Countdown` setting)."
+        },
+        "takeover": {
+          "type": "string",
+          "enum": [
+            "user",
+            "chord"
+          ],
+          "description": "What takes over (default `user`: any real input in the game, plus the chord)."
+        },
+        "maxDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Ends the session after this long (capped by `Input.MaxSessionMs`)."
+        }
+      },
+      "required": [
+        "reason"
+      ]
+    },
+    "result": {
+      "$ref": "../common/input.schema.json#/$defs/sessionInfo"
+    }
+  }
+}

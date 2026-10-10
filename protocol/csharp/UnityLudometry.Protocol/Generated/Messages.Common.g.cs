@@ -1128,6 +1128,426 @@ public sealed partial class HookCondition : ProtocolMessage
     }
 }
 
+/// <summary>InputActionValue.</summary>
+public sealed partial class InputActionValue : ProtocolMessage
+{
+    /// <summary>The action as the game names it (Rewired action, Input System action as <c>map/action</c>, or a recipe's action).</summary>
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>Rewired player id (default 0).</summary>
+    public long? Player { get; set; }
+
+    /// <summary>A button's state (boolean), an axis value (number) or a 2D axis (<c>{x, y}</c>).</summary>
+    public JsonValue Value { get; set; } = JsonNull.Instance;
+
+    /// <summary>Reads a <see cref="InputActionValue"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputActionValue Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputActionValue
+        {
+            Name = r.RequiredString("name"),
+            Player = r.OptionalInt64("player"),
+            Value = r.RequiredValue("value"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("name");
+        writer.WriteString(Name);
+        if (Player.HasValue)
+        {
+            writer.WritePropertyName("player");
+            writer.WriteNumber(Player.Value);
+        }
+        writer.WriteValue("value", Value);
+    }
+}
+
+/// <summary>InputGamepadState.</summary>
+public sealed partial class InputGamepadState : ProtocolMessage
+{
+    /// <summary>Buttons held, by position (south is A on Xbox, Cross on PlayStation).</summary>
+    public List<string>? Buttons { get; set; }
+
+    /// <summary>-1..1 per axis, y up positive.</summary>
+    public InputVector2? LeftStick { get; set; }
+
+    /// <summary>-1..1 per axis, y up positive.</summary>
+    public InputVector2? RightStick { get; set; }
+
+    /// <summary><c>leftTrigger</c>.</summary>
+    public double? LeftTrigger { get; set; }
+
+    /// <summary><c>rightTrigger</c>.</summary>
+    public double? RightTrigger { get; set; }
+
+    /// <summary>Reads a <see cref="InputGamepadState"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputGamepadState Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputGamepadState
+        {
+            Buttons = r.OptionalArray("buttons", ObjectReader.ReadString),
+            LeftStick = r.Optional("leftStick", global::UnityLudometry.Protocol.Messages.InputVector2.Read),
+            RightStick = r.Optional("rightStick", global::UnityLudometry.Protocol.Messages.InputVector2.Read),
+            LeftTrigger = r.OptionalDouble("leftTrigger"),
+            RightTrigger = r.OptionalDouble("rightTrigger"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (Buttons is not null)
+        {
+            writer.WritePropertyName("buttons");
+            writer.WriteStartArray();
+            foreach (var item0 in Buttons)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+        if (LeftStick is not null)
+        {
+            writer.WritePropertyName("leftStick");
+            LeftStick.WriteJson(writer);
+        }
+        if (RightStick is not null)
+        {
+            writer.WritePropertyName("rightStick");
+            RightStick.WriteJson(writer);
+        }
+        if (LeftTrigger.HasValue)
+        {
+            writer.WritePropertyName("leftTrigger");
+            writer.WriteNumber(LeftTrigger.Value);
+        }
+        if (RightTrigger.HasValue)
+        {
+            writer.WritePropertyName("rightTrigger");
+            writer.WriteNumber(RightTrigger.Value);
+        }
+    }
+}
+
+/// <summary>InputMouseState.</summary>
+public sealed partial class InputMouseState : ProtocolMessage
+{
+    /// <summary>Pointer position in screen pixels, origin top left (like screenshots).</summary>
+    public InputVector2? Position { get; set; }
+
+    /// <summary>Movement this frame, in pixels (what mouse-look reads); cleared after each frame unless set again.</summary>
+    public InputVector2? Delta { get; set; }
+
+    /// <summary>Scroll this frame (y: up positive); cleared after each frame unless set again.</summary>
+    public InputVector2? Wheel { get; set; }
+
+    /// <summary>Buttons held.</summary>
+    public List<string>? Buttons { get; set; }
+
+    /// <summary>Reads a <see cref="InputMouseState"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputMouseState Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputMouseState
+        {
+            Position = r.Optional("position", global::UnityLudometry.Protocol.Messages.InputVector2.Read),
+            Delta = r.Optional("delta", global::UnityLudometry.Protocol.Messages.InputVector2.Read),
+            Wheel = r.Optional("wheel", global::UnityLudometry.Protocol.Messages.InputVector2.Read),
+            Buttons = r.OptionalArray("buttons", ObjectReader.ReadString),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (Position is not null)
+        {
+            writer.WritePropertyName("position");
+            Position.WriteJson(writer);
+        }
+        if (Delta is not null)
+        {
+            writer.WritePropertyName("delta");
+            Delta.WriteJson(writer);
+        }
+        if (Wheel is not null)
+        {
+            writer.WritePropertyName("wheel");
+            Wheel.WriteJson(writer);
+        }
+        if (Buttons is not null)
+        {
+            writer.WritePropertyName("buttons");
+            writer.WriteStartArray();
+            foreach (var item0 in Buttons)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+    }
+}
+
+/// <summary>One input to press and release: exactly one of key, mouseButton, gamepadButton or action.</summary>
+public sealed partial class InputPress : ProtocolMessage
+{
+    /// <summary>A <c>UnityEngine.KeyCode</c> name.</summary>
+    public string? Key { get; set; }
+
+    /// <summary><c>mouseButton</c>.</summary>
+    public string? MouseButton { get; set; }
+
+    /// <summary><c>gamepadButton</c>.</summary>
+    public string? GamepadButton { get; set; }
+
+    /// <summary>A button action as the game names it.</summary>
+    public string? Action { get; set; }
+
+    /// <summary>Rewired player id for an action (default 0).</summary>
+    public long? Player { get; set; }
+
+    /// <summary>How long it stays down (default: one frame).</summary>
+    public long? HoldMs { get; set; }
+
+    /// <summary>How many frames it stays down (instead of holdMs).</summary>
+    public long? HoldFrames { get; set; }
+
+    /// <summary>Reads a <see cref="InputPress"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputPress Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputPress
+        {
+            Key = r.OptionalString("key"),
+            MouseButton = r.OptionalString("mouseButton"),
+            GamepadButton = r.OptionalString("gamepadButton"),
+            Action = r.OptionalString("action"),
+            Player = r.OptionalInt64("player"),
+            HoldMs = r.OptionalInt64("holdMs"),
+            HoldFrames = r.OptionalInt64("holdFrames"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (Key is not null)
+        {
+            writer.WritePropertyName("key");
+            writer.WriteString(Key);
+        }
+        if (MouseButton is not null)
+        {
+            writer.WritePropertyName("mouseButton");
+            writer.WriteString(MouseButton);
+        }
+        if (GamepadButton is not null)
+        {
+            writer.WritePropertyName("gamepadButton");
+            writer.WriteString(GamepadButton);
+        }
+        if (Action is not null)
+        {
+            writer.WritePropertyName("action");
+            writer.WriteString(Action);
+        }
+        if (Player.HasValue)
+        {
+            writer.WritePropertyName("player");
+            writer.WriteNumber(Player.Value);
+        }
+        if (HoldMs.HasValue)
+        {
+            writer.WritePropertyName("holdMs");
+            writer.WriteNumber(HoldMs.Value);
+        }
+        if (HoldFrames.HasValue)
+        {
+            writer.WritePropertyName("holdFrames");
+            writer.WriteNumber(HoldFrames.Value);
+        }
+    }
+}
+
+/// <summary>InputSessionInfo.</summary>
+public sealed partial class InputSessionInfo : ProtocolMessage
+{
+    /// <summary><c>sessionId</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary><c>state</c>.</summary>
+    public string State { get; set; } = string.Empty;
+
+    /// <summary>The client that began it (its hello name).</summary>
+    public string Client { get; set; } = string.Empty;
+
+    /// <summary>Why, as the client told the user.</summary>
+    public string Reason { get; set; } = string.Empty;
+
+    /// <summary>The layers it drives.</summary>
+    public List<string> Layers { get; set; } = new();
+
+    /// <summary><c>user</c>: any real input in the game takes over. <c>chord</c>: only the takeover chord.</summary>
+    public string Takeover { get; set; } = string.Empty;
+
+    /// <summary><c>remainingMs</c>.</summary>
+    public long? RemainingMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputSessionInfo"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSessionInfo Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSessionInfo
+        {
+            SessionId = r.RequiredString("sessionId"),
+            State = r.RequiredString("state"),
+            Client = r.RequiredString("client"),
+            Reason = r.RequiredString("reason"),
+            Layers = r.RequiredArray("layers", ObjectReader.ReadString),
+            Takeover = r.RequiredString("takeover"),
+            RemainingMs = r.RequiredNullableInt64("remainingMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        writer.WritePropertyName("state");
+        writer.WriteString(State);
+        writer.WritePropertyName("client");
+        writer.WriteString(Client);
+        writer.WritePropertyName("reason");
+        writer.WriteString(Reason);
+        writer.WritePropertyName("layers");
+        writer.WriteStartArray();
+        foreach (var item0 in Layers)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("takeover");
+        writer.WriteString(Takeover);
+        if (RemainingMs.HasValue)
+        {
+            writer.WritePropertyName("remainingMs");
+            writer.WriteNumber(RemainingMs.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("remainingMs");
+            writer.WriteNull();
+        }
+    }
+}
+
+/// <summary>Virtual input held until changed. Each group given replaces that group's state; groups left out keep theirs.</summary>
+public sealed partial class InputState : ProtocolMessage
+{
+    /// <summary>Keys held, by <c>UnityEngine.KeyCode</c> name (<c>W</c>, <c>Space</c>, <c>LeftShift</c>, <c>Alpha1</c>, <c>F5</c>, ...).</summary>
+    public List<string>? Keys { get; set; }
+
+    /// <summary><c>mouse</c>.</summary>
+    public InputMouseState? Mouse { get; set; }
+
+    /// <summary><c>gamepad</c>.</summary>
+    public InputGamepadState? Gamepad { get; set; }
+
+    /// <summary>Action values held (layers with actions).</summary>
+    public List<InputActionValue>? Actions { get; set; }
+
+    /// <summary>Reads a <see cref="InputState"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputState Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputState
+        {
+            Keys = r.OptionalArray("keys", ObjectReader.ReadString),
+            Mouse = r.Optional("mouse", global::UnityLudometry.Protocol.Messages.InputMouseState.Read),
+            Gamepad = r.Optional("gamepad", global::UnityLudometry.Protocol.Messages.InputGamepadState.Read),
+            Actions = r.OptionalArray("actions", global::UnityLudometry.Protocol.Messages.InputActionValue.Read),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (Keys is not null)
+        {
+            writer.WritePropertyName("keys");
+            writer.WriteStartArray();
+            foreach (var item0 in Keys)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+        if (Mouse is not null)
+        {
+            writer.WritePropertyName("mouse");
+            Mouse.WriteJson(writer);
+        }
+        if (Gamepad is not null)
+        {
+            writer.WritePropertyName("gamepad");
+            Gamepad.WriteJson(writer);
+        }
+        if (Actions is not null)
+        {
+            writer.WritePropertyName("actions");
+            writer.WriteStartArray();
+            foreach (var item0 in Actions)
+            {
+                item0.WriteJson(writer);
+            }
+            writer.WriteEndArray();
+        }
+    }
+}
+
+/// <summary>InputVector2.</summary>
+public sealed partial class InputVector2 : ProtocolMessage
+{
+    /// <summary><c>x</c>.</summary>
+    public double X { get; set; }
+
+    /// <summary><c>y</c>.</summary>
+    public double Y { get; set; }
+
+    /// <summary>Reads a <see cref="InputVector2"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputVector2 Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputVector2
+        {
+            X = r.RequiredDouble("x"),
+            Y = r.RequiredDouble("y"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("x");
+        writer.WriteNumber(X);
+        writer.WritePropertyName("y");
+        writer.WriteNumber(Y);
+    }
+}
+
 /// <summary>One recorded call of an instrumented method (hooks and traces). Captured values are shallow and as they were at call time; anything cut is a redaction stub marked <c>live</c>.</summary>
 public sealed partial class InstrumentationRecord : ProtocolMessage
 {

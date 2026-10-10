@@ -239,6 +239,27 @@ public static class Methods
     /// <summary>Scans every method body of the included assemblies on a worker thread and writes the runtime cross-reference index as NDJSON.</summary>
     public const string IlIndexStart = "il.index.start";
 
+    /// <summary>Opens an input session, the only way to inject input. The overlay warns the user (what will be driven, by which client, why, and how to take over) with a countdown; the request completes when the session is active, or paused if the user took over during the countdown. One session at a time.</summary>
+    public const string InputBegin = "input.begin";
+
+    /// <summary>How the agent can drive this game's input: the layers that apply (with why), the real devices seen, the game's actions and named axes when known, the recommended layer, and the input session if one is open.</summary>
+    public const string InputCapabilities = "input.capabilities";
+
+    /// <summary>Ends a session: the overlay shows that control ends (a short countdown), then everything virtual is released.</summary>
+    public const string InputEnd = "input.end";
+
+    /// <summary>Resumes a session the user paused, after asking them (an overlay prompt) and getting a yes: the warning and countdown run again, and the request completes when it is active.</summary>
+    public const string InputResume = "input.resume";
+
+    /// <summary>Runs a timed input script in the session, frame-accurate: each step sets held input or taps one at its time (milliseconds or frames from the start). Cancel it with <c>job.cancel</c>; a takeover, <c>input.end</c> or E-STOP stops it, and everything virtual is released.</summary>
+    public const string InputSequenceStart = "input.sequence.start";
+
+    /// <summary>Sets the session's held virtual input: each group given replaces that group (keys, mouse, gamepad, actions); the game sees it from its next input update until changed. Real input is merged in (virtual OR real for buttons, the larger magnitude for axes).</summary>
+    public const string InputSet = "input.set";
+
+    /// <summary>Presses one input and releases it after holdMs or holdFrames (default one frame); completes after the release.</summary>
+    public const string InputTap = "input.tap";
+
     /// <summary>Removes all agent instrumentation.</summary>
     public const string InstrumentationClear = "instrumentation.clear";
 
@@ -572,6 +593,9 @@ public static class EventKinds
 
     /// <summary>Batched hook records. Also pullable with <c>hook.hits</c>.</summary>
     public const string HookHits = "hook.hits";
+
+    /// <summary>An input session changed state: counting down, active, paused (the user took over) or ended.</summary>
+    public const string InputSession = "input.session";
 
     /// <summary>A job finished (succeeded, failed or cancelled). The same state is pullable with <c>job.get</c>.</summary>
     public const string JobFinished = "job.finished";

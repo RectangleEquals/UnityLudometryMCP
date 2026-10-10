@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/common/input.schema.json",
+  "description": "Shared types of the input methods (`input.*`): the layers that drive a game's input, and the virtual input state a client sets.",
+  "$defs": {
+    "layer": {
+      "title": "InputLayer",
+      "description": "Where virtual input enters the game. `rewired`: Rewired's player actions (its action queries merge the virtual values). `inputSystem`: virtual keyboard, mouse and gamepad devices of the Input System package, which its actions read like real ones. `inputManager`: the Input Manager (`UnityEngine.Input`) queries merge the virtual state; named axes are computed from the game's axis definitions. `xinput`: a managed XInput wrapper the game polls. `recipe`: a per-game recipe for another action layer (from the target profile).",
+      "type": "string",
+      "enum": [
+        "rewired",
+        "inputSystem",
+        "inputManager",
+        "xinput",
+        "recipe"
+      ]
+    },
+    "device": {
+      "title": "InputDeviceKind",
+      "description": "What a layer can drive.",
+      "type": "string",
+      "enum": [
+        "keyboard",
+        "mouse",
+        "gamepad",
+        "actions"
+      ]
+    },
+    "vector2": {
+      "title": "InputVector2",
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "mouse": {
+      "title": "InputMouseState",
+      "type": "object",
+      "properties": {
+        "position": {
+          "$ref": "#/$defs/vector2",
+          "description": "Pointer position in screen pixels, origin top left (like screenshots)."
+        },
+        "delta": {
+          "$ref": "#/$defs/vector2",
+          "description": "Movement this frame, in pixels (what mouse-look reads); cleared after each frame unless set again."
+        },
+        "wheel": {
+          "$ref": "#/$defs/vector2",
+          "description": "Scroll this frame (y: up positive); cleared after each frame unless set again."
+        },
+        "buttons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "middle",
+              "back",
+              "forward"
+            ]
+          },
+          "description": "Buttons held."
+        }
+      }
+    },
+    "gamepad": {
+      "title": "InputGamepadState",
+      "type": "object",
+      "properties": {
+        "buttons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "south",
+              "east",
+              "west",
+              "north",
+              "leftShoulder",
+              "rightShoulder",
+              "leftStickPress",
+              "rightStickPress",
+              "start",
+              "select",
+              "dpadUp",
+              "dpadDown",
+              "dpadLeft",
+              "dpadRight"
+            ]
+          },
+          "description": "Buttons held, by position (south is A on Xbox, Cross on PlayStation)."
+        },
+        "leftStick": {
+          "$ref": "#/$defs/vector2",
+          "description": "-1..1 per axis, y up positive."
+        },
+        "rightStick": {
+          "$ref": "#/$defs/vector2",
+          "description": "-1..1 per axis, y up positive."
+        },
+        "leftTrigger": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rightTrigger": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "actionValue": {
+      "title": "InputActionValue",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The action as the game names it (Rewired action, Input System action as `map/action`, or a recipe's action)."
+        },
+        "player": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Rewired player id (default 0)."
+        },
+        "value": {
+          "description": "A button's state (boolean), an axis value (number) or a 2D axis (`{x, y}`)."
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ]
+    },
+    "state": {
+      "title": "InputState",
+      "type": "object",
+      "description": "Virtual input held until changed. Each group given replaces that group's state; groups left out keep theirs.",
+      "properties": {
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Keys held, by `UnityEngine.KeyCode` name (`W`, `Space`, `LeftShift`, `Alpha1`, `F5`, ...)."
+        },
+        "mouse": {
+          "$ref": "#/$defs/mouse"
+        },
+        "gamepad": {
+          "$ref": "#/$defs/gamepad"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/actionValue"
+          },
+          "description": "Action values held (layers with actions)."
+        }
+      }
+    },
+    "press": {
+      "title": "InputPress",
+      "type": "object",
+      "description": "One input to press and release: exactly one of key, mouseButton, gamepadButton or action.",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A `UnityEngine.KeyCode` name."
+        },
+        "mouseButton": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "middle",
+            "back",
+            "forward"
+          ]
+        },
+        "gamepadButton": {
+          "type": "string",
+          "enum": [
+            "south",
+            "east",
+            "west",
+            "north",
+            "leftShoulder",
+            "rightShoulder",
+            "leftStickPress",
+            "rightStickPress",
+            "start",
+            "select",
+            "dpadUp",
+            "dpadDown",
+            "dpadLeft",
+            "dpadRight"
+          ]
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A button action as the game names it."
+        },
+        "player": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Rewired player id for an action (default 0)."
+        },
+        "holdMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How long it stays down (default: one frame)."
+        },
+        "holdFrames": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many frames it stays down (instead of holdMs)."
+        }
+      }
+    },
+    "sessionState": {
+      "title": "InputSessionState",
+      "description": "`countdown`: the user is being warned; nothing is injected yet. `active`: input is injected. `paused`: the user took over; everything virtual is released until `input.resume`. `ended`: finished; the session id is no longer valid.",
+      "type": "string",
+      "enum": [
+        "countdown",
+        "active",
+        "paused",
+        "ended"
+      ]
+    },
+    "sessionInfo": {
+      "title": "InputSessionInfo",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "$ref": "#/$defs/sessionState"
+        },
+        "client": {
+          "type": "string",
+          "description": "The client that began it (its hello name)."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Why, as the client told the user."
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/layer"
+          },
+          "description": "The layers it drives."
+        },
+        "takeover": {
+          "type": "string",
+          "enum": [
+            "user",
+            "chord"
+          ],
+          "description": "`user`: any real input in the game takes over. `chord`: only the takeover chord."
+        },
+        "remainingMs": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Time left before maxDurationMs ends it."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "sessionId",
+        "state",
+        "client",
+        "reason",
+        "layers",
+        "takeover",
+        "remainingMs"
+      ]
+    }
+  }
+}

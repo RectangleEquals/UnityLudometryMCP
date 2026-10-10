@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/input.capabilities.schema.json",
+  "title": "input.capabilities",
+  "description": "How the agent can drive this game's input: the layers that apply (with why), the real devices seen, the game's actions and named axes when known, the recommended layer, and the input session if one is open.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "ReadOnly",
+    "job": false,
+    "mutating": false
+  },
+  "$defs": {
+    "params": {
+      "title": "InputCapabilitiesParams",
+      "type": "object",
+      "properties": {}
+    },
+    "result": {
+      "title": "InputCapabilitiesResult",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether the user allows input driving (the agent's `Input.Enabled` setting)."
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "title": "InputLayerInfo",
+            "type": "object",
+            "properties": {
+              "layer": {
+                "$ref": "../common/input.schema.json#/$defs/layer"
+              },
+              "available": {
+                "type": "boolean"
+              },
+              "version": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "description": "The input stack's version, when it reports one."
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "drives": {
+                "type": "array",
+                "items": {
+                  "$ref": "../common/input.schema.json#/$defs/device"
+                }
+              },
+              "reason": {
+                "type": "string",
+                "description": "Why it applies or doesn't (what was found)."
+              }
+            },
+            "required": [
+              "layer",
+              "available",
+              "version",
+              "drives",
+              "reason"
+            ]
+          }
+        },
+        "recommended": {
+          "anyOf": [
+            {
+              "$ref": "../common/input.schema.json#/$defs/layer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "title": "InputDeviceInfo",
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "keyboard",
+                  "mouse",
+                  "gamepad",
+                  "joystick",
+                  "other"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "layer": {
+                "$ref": "../common/input.schema.json#/$defs/layer"
+              }
+            },
+            "required": [
+              "kind",
+              "name",
+              "layer"
+            ]
+          },
+          "description": "Real devices the game's input stacks see."
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "title": "InputActionInfo",
+            "type": "object",
+            "properties": {
+              "layer": {
+                "$ref": "../common/input.schema.json#/$defs/layer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "button",
+                  "axis",
+                  "axis2d"
+                ]
+              },
+              "player": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "layer",
+              "name",
+              "kind"
+            ]
+          },
+          "description": "The game's actions (Rewired actions, Input System `map/action`s, a recipe's actions)."
+        },
+        "axes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The Input Manager's named axes, when known."
+        },
+        "session": {
+          "anyOf": [
+            {
+              "$ref": "../common/input.schema.json#/$defs/sessionInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "enabled",
+        "layers",
+        "recommended",
+        "devices",
+        "actions",
+        "axes",
+        "session",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

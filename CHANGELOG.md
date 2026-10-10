@@ -28,6 +28,12 @@
   `overlay.invoke` operates a control as a click would, `overlay.typeText` types into a text box, and
   `overlay.settings` / `overlay.setSettings` read and change its settings (for the session, or saved). `overlay.state`
   also reports the visible tabs and the text box that has the keyboard.
+- Protocol `0.1.0-dev.9`: driving the game's input. `input.capabilities` reports the layers that can inject input in
+  this game (Rewired actions, Input System virtual devices, Input Manager queries, XInput wrappers, per-game recipes),
+  the devices and actions it found, and the recommended layer. Input only flows inside a session the user is warned
+  about: `input.begin` (a countdown, then active), `input.set` (held keys, mouse, gamepad, actions), `input.tap`,
+  `input.sequence.start` (a frame-accurate timed script, as a job), `input.resume` after the user took over, and
+  `input.end`; the `input.session` event reports each change, and a new error code `SESSION_INACTIVE`.
 - Facts `ui.frameworks_available`, `input.systems_present` and `ui.frameworks_used` (static usage merged with the agent's
   `ui.frameworks` reports: what the agent saw in use wins, with the screens it saw it on).
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,

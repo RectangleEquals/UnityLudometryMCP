@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/input.resume.schema.json",
+  "title": "input.resume",
+  "description": "Resumes a session the user paused, after asking them (an overlay prompt) and getting a yes: the warning and countdown run again, and the request completes when it is active.",
+  "x-method": {
+    "thread": "main",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "InputResumeParams",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The session, from `input.begin`."
+        },
+        "countdownMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "sessionId"
+      ]
+    },
+    "result": {
+      "$ref": "../common/input.schema.json#/$defs/sessionInfo"
+    }
+  }
+}

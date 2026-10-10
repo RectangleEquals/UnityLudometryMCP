@@ -308,6 +308,55 @@ public sealed partial class HookHitsEventParams : ProtocolMessage
     }
 }
 
+/// <summary>InputSessionEventParams.</summary>
+public sealed partial class InputSessionEventParams : ProtocolMessage
+{
+    /// <summary><c>sessionId</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary><c>state</c>.</summary>
+    public string State { get; set; } = string.Empty;
+
+    /// <summary>What changed it: the client's call, the user's own input, the takeover chord, the time limit, E-STOP, the client disconnecting, or the user switching input driving off.</summary>
+    public string Reason { get; set; } = string.Empty;
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputSessionEventParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSessionEventParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSessionEventParams
+        {
+            SessionId = r.RequiredString("sessionId"),
+            State = r.RequiredString("state"),
+            Reason = r.RequiredString("reason"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        writer.WritePropertyName("state");
+        writer.WriteString(State);
+        writer.WritePropertyName("reason");
+        writer.WriteString(Reason);
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
 /// <summary>JobFinishedEventParams.</summary>
 public sealed partial class JobFinishedEventParams : ProtocolMessage
 {

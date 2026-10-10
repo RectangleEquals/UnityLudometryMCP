@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/events/input.session.schema.json",
+  "title": "input.session",
+  "description": "An input session changed state: counting down, active, paused (the user took over) or ended.",
+  "$defs": {
+    "params": {
+      "title": "InputSessionEventParams",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "$ref": "../common/input.schema.json#/$defs/sessionState"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "client",
+            "user",
+            "chord",
+            "maxDuration",
+            "estop",
+            "disconnect",
+            "disabled"
+          ],
+          "description": "What changed it: the client's call, the user's own input, the takeover chord, the time limit, E-STOP, the client disconnecting, or the user switching input driving off."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "sessionId",
+        "state",
+        "reason",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

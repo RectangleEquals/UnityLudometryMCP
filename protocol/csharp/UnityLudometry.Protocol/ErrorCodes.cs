@@ -66,6 +66,9 @@ public static class ErrorCodes
     /// <summary>A concurrency cap was reached; the request can be retried later.</summary>
     public const string Busy = "BUSY";
 
+    /// <summary>The input session isn't active: counting down, paused by the user, or ended.</summary>
+    public const string SessionInactive = "SESSION_INACTIVE";
+
     /// <summary>The request's timeout expired.</summary>
     public const string Timeout = "TIMEOUT";
 

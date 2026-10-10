@@ -8791,6 +8791,430 @@ public sealed partial class Implementation : ProtocolMessage
     }
 }
 
+/// <summary>InputActionInfo.</summary>
+public sealed partial class InputActionInfo : ProtocolMessage
+{
+    /// <summary><c>layer</c>.</summary>
+    public string Layer { get; set; } = string.Empty;
+
+    /// <summary><c>name</c>.</summary>
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary><c>kind</c>.</summary>
+    public string Kind { get; set; } = string.Empty;
+
+    /// <summary><c>player</c>.</summary>
+    public long? Player { get; set; }
+
+    /// <summary>Reads a <see cref="InputActionInfo"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputActionInfo Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputActionInfo
+        {
+            Layer = r.RequiredString("layer"),
+            Name = r.RequiredString("name"),
+            Kind = r.RequiredString("kind"),
+            Player = r.OptionalInt64("player"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("layer");
+        writer.WriteString(Layer);
+        writer.WritePropertyName("name");
+        writer.WriteString(Name);
+        writer.WritePropertyName("kind");
+        writer.WriteString(Kind);
+        if (Player.HasValue)
+        {
+            writer.WritePropertyName("player");
+            writer.WriteNumber(Player.Value);
+        }
+    }
+}
+
+/// <summary>InputBeginParams.</summary>
+public sealed partial class InputBeginParams : ProtocolMessage
+{
+    /// <summary>Shown to the user: why the client wants to drive the game.</summary>
+    public string Reason { get; set; } = string.Empty;
+
+    /// <summary>Layers to use (default: the recommended one).</summary>
+    public List<string>? Layers { get; set; }
+
+    /// <summary>What will be driven, for the warning (default: what the layers drive).</summary>
+    public List<string>? Devices { get; set; }
+
+    /// <summary>Warning time before input starts (default: the <c>Input.Countdown</c> setting).</summary>
+    public long? CountdownMs { get; set; }
+
+    /// <summary>What takes over (default <c>user</c>: any real input in the game, plus the chord).</summary>
+    public string? Takeover { get; set; }
+
+    /// <summary>Ends the session after this long (capped by <c>Input.MaxSessionMs</c>).</summary>
+    public long? MaxDurationMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputBeginParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputBeginParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputBeginParams
+        {
+            Reason = r.RequiredString("reason"),
+            Layers = r.OptionalArray("layers", ObjectReader.ReadString),
+            Devices = r.OptionalArray("devices", ObjectReader.ReadString),
+            CountdownMs = r.OptionalInt64("countdownMs"),
+            Takeover = r.OptionalString("takeover"),
+            MaxDurationMs = r.OptionalInt64("maxDurationMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("reason");
+        writer.WriteString(Reason);
+        if (Layers is not null)
+        {
+            writer.WritePropertyName("layers");
+            writer.WriteStartArray();
+            foreach (var item0 in Layers)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+        if (Devices is not null)
+        {
+            writer.WritePropertyName("devices");
+            writer.WriteStartArray();
+            foreach (var item0 in Devices)
+            {
+                writer.WriteString(item0);
+            }
+            writer.WriteEndArray();
+        }
+        if (CountdownMs.HasValue)
+        {
+            writer.WritePropertyName("countdownMs");
+            writer.WriteNumber(CountdownMs.Value);
+        }
+        if (Takeover is not null)
+        {
+            writer.WritePropertyName("takeover");
+            writer.WriteString(Takeover);
+        }
+        if (MaxDurationMs.HasValue)
+        {
+            writer.WritePropertyName("maxDurationMs");
+            writer.WriteNumber(MaxDurationMs.Value);
+        }
+    }
+}
+
+/// <summary>InputCapabilitiesParams.</summary>
+public sealed partial class InputCapabilitiesParams : ProtocolMessage
+{
+    /// <summary>Reads a <see cref="InputCapabilitiesParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputCapabilitiesParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputCapabilitiesParams
+        {
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+    }
+}
+
+/// <summary>InputCapabilitiesResult.</summary>
+public sealed partial class InputCapabilitiesResult : ProtocolMessage
+{
+    /// <summary>Whether the user allows input driving (the agent's <c>Input.Enabled</c> setting).</summary>
+    public bool Enabled { get; set; }
+
+    /// <summary><c>layers</c>.</summary>
+    public List<InputLayerInfo> Layers { get; set; } = new();
+
+    /// <summary><c>recommended</c>.</summary>
+    public string? Recommended { get; set; }
+
+    /// <summary>Real devices the game's input stacks see.</summary>
+    public List<InputDeviceInfo> Devices { get; set; } = new();
+
+    /// <summary>The game's actions (Rewired actions, Input System <c>map/action</c>s, a recipe's actions).</summary>
+    public List<InputActionInfo> Actions { get; set; } = new();
+
+    /// <summary>The Input Manager's named axes, when known.</summary>
+    public List<string> Axes { get; set; } = new();
+
+    /// <summary><c>session</c>.</summary>
+    public InputSessionInfo? Session { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputCapabilitiesResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputCapabilitiesResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputCapabilitiesResult
+        {
+            Enabled = r.RequiredBoolean("enabled"),
+            Layers = r.RequiredArray("layers", global::UnityLudometry.Protocol.Messages.InputLayerInfo.Read),
+            Recommended = r.RequiredNullableString("recommended"),
+            Devices = r.RequiredArray("devices", global::UnityLudometry.Protocol.Messages.InputDeviceInfo.Read),
+            Actions = r.RequiredArray("actions", global::UnityLudometry.Protocol.Messages.InputActionInfo.Read),
+            Axes = r.RequiredArray("axes", ObjectReader.ReadString),
+            Session = r.RequiredNullable("session", global::UnityLudometry.Protocol.Messages.InputSessionInfo.Read),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("enabled");
+        writer.WriteBoolean(Enabled);
+        writer.WritePropertyName("layers");
+        writer.WriteStartArray();
+        foreach (var item0 in Layers)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+        if (Recommended is not null)
+        {
+            writer.WritePropertyName("recommended");
+            writer.WriteString(Recommended);
+        }
+        else
+        {
+            writer.WritePropertyName("recommended");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("devices");
+        writer.WriteStartArray();
+        foreach (var item0 in Devices)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("actions");
+        writer.WriteStartArray();
+        foreach (var item0 in Actions)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("axes");
+        writer.WriteStartArray();
+        foreach (var item0 in Axes)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        if (Session is not null)
+        {
+            writer.WritePropertyName("session");
+            Session.WriteJson(writer);
+        }
+        else
+        {
+            writer.WritePropertyName("session");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
+/// <summary>InputDeviceInfo.</summary>
+public sealed partial class InputDeviceInfo : ProtocolMessage
+{
+    /// <summary><c>kind</c>.</summary>
+    public string Kind { get; set; } = string.Empty;
+
+    /// <summary><c>name</c>.</summary>
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary><c>layer</c>.</summary>
+    public string Layer { get; set; } = string.Empty;
+
+    /// <summary>Reads a <see cref="InputDeviceInfo"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputDeviceInfo Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputDeviceInfo
+        {
+            Kind = r.RequiredString("kind"),
+            Name = r.RequiredString("name"),
+            Layer = r.RequiredString("layer"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("kind");
+        writer.WriteString(Kind);
+        writer.WritePropertyName("name");
+        writer.WriteString(Name);
+        writer.WritePropertyName("layer");
+        writer.WriteString(Layer);
+    }
+}
+
+/// <summary>InputEndParams.</summary>
+public sealed partial class InputEndParams : ProtocolMessage
+{
+    /// <summary>The session, from <c>input.begin</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary>Notice before control ends (default 3000; 0 ends at once).</summary>
+    public long? CountdownMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputEndParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputEndParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputEndParams
+        {
+            SessionId = r.RequiredString("sessionId"),
+            CountdownMs = r.OptionalInt64("countdownMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        if (CountdownMs.HasValue)
+        {
+            writer.WritePropertyName("countdownMs");
+            writer.WriteNumber(CountdownMs.Value);
+        }
+    }
+}
+
+/// <summary>InputEndResult.</summary>
+public sealed partial class InputEndResult : ProtocolMessage
+{
+    /// <summary>How long the session was open.</summary>
+    public long DurationMs { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputEndResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputEndResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputEndResult
+        {
+            DurationMs = r.RequiredInt64("durationMs"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("durationMs");
+        writer.WriteNumber(DurationMs);
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
+/// <summary>InputLayerInfo.</summary>
+public sealed partial class InputLayerInfo : ProtocolMessage
+{
+    /// <summary><c>layer</c>.</summary>
+    public string Layer { get; set; } = string.Empty;
+
+    /// <summary><c>available</c>.</summary>
+    public bool Available { get; set; }
+
+    /// <summary><c>version</c>.</summary>
+    public string? Version { get; set; }
+
+    /// <summary><c>drives</c>.</summary>
+    public List<string> Drives { get; set; } = new();
+
+    /// <summary>Why it applies or doesn't (what was found).</summary>
+    public string Reason { get; set; } = string.Empty;
+
+    /// <summary>Reads a <see cref="InputLayerInfo"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputLayerInfo Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputLayerInfo
+        {
+            Layer = r.RequiredString("layer"),
+            Available = r.RequiredBoolean("available"),
+            Version = r.RequiredNullableString("version"),
+            Drives = r.RequiredArray("drives", ObjectReader.ReadString),
+            Reason = r.RequiredString("reason"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("layer");
+        writer.WriteString(Layer);
+        writer.WritePropertyName("available");
+        writer.WriteBoolean(Available);
+        if (Version is not null)
+        {
+            writer.WritePropertyName("version");
+            writer.WriteString(Version);
+        }
+        else
+        {
+            writer.WritePropertyName("version");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("drives");
+        writer.WriteStartArray();
+        foreach (var item0 in Drives)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("reason");
+        writer.WriteString(Reason);
+    }
+}
+
 /// <summary>InputReport.</summary>
 public sealed partial class InputReport : ProtocolMessage
 {
@@ -8833,6 +9257,377 @@ public sealed partial class InputReport : ProtocolMessage
         }
         writer.WritePropertyName("gamepads");
         writer.WriteNumber(Gamepads);
+    }
+}
+
+/// <summary>InputResumeParams.</summary>
+public sealed partial class InputResumeParams : ProtocolMessage
+{
+    /// <summary>The session, from <c>input.begin</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary><c>countdownMs</c>.</summary>
+    public long? CountdownMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputResumeParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputResumeParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputResumeParams
+        {
+            SessionId = r.RequiredString("sessionId"),
+            CountdownMs = r.OptionalInt64("countdownMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        if (CountdownMs.HasValue)
+        {
+            writer.WritePropertyName("countdownMs");
+            writer.WriteNumber(CountdownMs.Value);
+        }
+    }
+}
+
+/// <summary>InputSequenceStartJobResult.</summary>
+public sealed partial class InputSequenceStartJobResult : ProtocolMessage
+{
+    /// <summary><c>stepsRun</c>.</summary>
+    public long StepsRun { get; set; }
+
+    /// <summary><c>completed</c>.</summary>
+    public bool Completed { get; set; }
+
+    /// <summary><c>stoppedBy</c>.</summary>
+    public string? StoppedBy { get; set; }
+
+    /// <summary><c>startFrame</c>.</summary>
+    public long StartFrame { get; set; }
+
+    /// <summary><c>endFrame</c>.</summary>
+    public long EndFrame { get; set; }
+
+    /// <summary>Reads a <see cref="InputSequenceStartJobResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSequenceStartJobResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSequenceStartJobResult
+        {
+            StepsRun = r.RequiredInt64("stepsRun"),
+            Completed = r.RequiredBoolean("completed"),
+            StoppedBy = r.RequiredNullableString("stoppedBy"),
+            StartFrame = r.RequiredInt64("startFrame"),
+            EndFrame = r.RequiredInt64("endFrame"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("stepsRun");
+        writer.WriteNumber(StepsRun);
+        writer.WritePropertyName("completed");
+        writer.WriteBoolean(Completed);
+        if (StoppedBy is not null)
+        {
+            writer.WritePropertyName("stoppedBy");
+            writer.WriteString(StoppedBy);
+        }
+        else
+        {
+            writer.WritePropertyName("stoppedBy");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("startFrame");
+        writer.WriteNumber(StartFrame);
+        writer.WritePropertyName("endFrame");
+        writer.WriteNumber(EndFrame);
+    }
+}
+
+/// <summary>InputSequenceStartParams.</summary>
+public sealed partial class InputSequenceStartParams : ProtocolMessage
+{
+    /// <summary>The session, from <c>input.begin</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary><c>steps</c>.</summary>
+    public List<InputSequenceStep> Steps { get; set; } = new();
+
+    /// <summary><c>layer</c>.</summary>
+    public string? Layer { get; set; }
+
+    /// <summary>Reads a <see cref="InputSequenceStartParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSequenceStartParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSequenceStartParams
+        {
+            SessionId = r.RequiredString("sessionId"),
+            Steps = r.RequiredArray("steps", global::UnityLudometry.Protocol.Messages.InputSequenceStep.Read),
+            Layer = r.OptionalString("layer"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        writer.WritePropertyName("steps");
+        writer.WriteStartArray();
+        foreach (var item0 in Steps)
+        {
+            item0.WriteJson(writer);
+        }
+        writer.WriteEndArray();
+        if (Layer is not null)
+        {
+            writer.WritePropertyName("layer");
+            writer.WriteString(Layer);
+        }
+    }
+}
+
+/// <summary>InputSequenceStep.</summary>
+public sealed partial class InputSequenceStep : ProtocolMessage
+{
+    /// <summary>When, from the start (or atFrame).</summary>
+    public long? AtMs { get; set; }
+
+    /// <summary>When, in frames from the start.</summary>
+    public long? AtFrame { get; set; }
+
+    /// <summary><c>set</c>.</summary>
+    public InputState? Set { get; set; }
+
+    /// <summary><c>tap</c>.</summary>
+    public InputPress? Tap { get; set; }
+
+    /// <summary>Release everything held.</summary>
+    public bool? Release { get; set; }
+
+    /// <summary>Reads a <see cref="InputSequenceStep"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSequenceStep Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSequenceStep
+        {
+            AtMs = r.OptionalInt64("atMs"),
+            AtFrame = r.OptionalInt64("atFrame"),
+            Set = r.Optional("set", global::UnityLudometry.Protocol.Messages.InputState.Read),
+            Tap = r.Optional("tap", global::UnityLudometry.Protocol.Messages.InputPress.Read),
+            Release = r.OptionalBoolean("release"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        if (AtMs.HasValue)
+        {
+            writer.WritePropertyName("atMs");
+            writer.WriteNumber(AtMs.Value);
+        }
+        if (AtFrame.HasValue)
+        {
+            writer.WritePropertyName("atFrame");
+            writer.WriteNumber(AtFrame.Value);
+        }
+        if (Set is not null)
+        {
+            writer.WritePropertyName("set");
+            Set.WriteJson(writer);
+        }
+        if (Tap is not null)
+        {
+            writer.WritePropertyName("tap");
+            Tap.WriteJson(writer);
+        }
+        if (Release.HasValue)
+        {
+            writer.WritePropertyName("release");
+            writer.WriteBoolean(Release.Value);
+        }
+    }
+}
+
+/// <summary>InputSetParams.</summary>
+public sealed partial class InputSetParams : ProtocolMessage
+{
+    /// <summary>The session, from <c>input.begin</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary><c>state</c>.</summary>
+    public InputState State { get; set; } = new();
+
+    /// <summary>The layer to use (default: the session's first that drives it).</summary>
+    public string? Layer { get; set; }
+
+    /// <summary>Reads a <see cref="InputSetParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSetParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSetParams
+        {
+            SessionId = r.RequiredString("sessionId"),
+            State = r.Required("state", global::UnityLudometry.Protocol.Messages.InputState.Read),
+            Layer = r.OptionalString("layer"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        writer.WritePropertyName("state");
+        State.WriteJson(writer);
+        if (Layer is not null)
+        {
+            writer.WritePropertyName("layer");
+            writer.WriteString(Layer);
+        }
+    }
+}
+
+/// <summary>InputSetResult.</summary>
+public sealed partial class InputSetResult : ProtocolMessage
+{
+    /// <summary>The layers it went to.</summary>
+    public List<string> Layers { get; set; } = new();
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputSetResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputSetResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputSetResult
+        {
+            Layers = r.RequiredArray("layers", ObjectReader.ReadString),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("layers");
+        writer.WriteStartArray();
+        foreach (var item0 in Layers)
+        {
+            writer.WriteString(item0);
+        }
+        writer.WriteEndArray();
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
+    }
+}
+
+/// <summary>InputTapParams.</summary>
+public sealed partial class InputTapParams : ProtocolMessage
+{
+    /// <summary>The session, from <c>input.begin</c>.</summary>
+    public string SessionId { get; set; } = string.Empty;
+
+    /// <summary><c>press</c>.</summary>
+    public InputPress Press { get; set; } = new();
+
+    /// <summary><c>layer</c>.</summary>
+    public string? Layer { get; set; }
+
+    /// <summary>Reads a <see cref="InputTapParams"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputTapParams Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputTapParams
+        {
+            SessionId = r.RequiredString("sessionId"),
+            Press = r.Required("press", global::UnityLudometry.Protocol.Messages.InputPress.Read),
+            Layer = r.OptionalString("layer"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("sessionId");
+        writer.WriteString(SessionId);
+        writer.WritePropertyName("press");
+        Press.WriteJson(writer);
+        if (Layer is not null)
+        {
+            writer.WritePropertyName("layer");
+            writer.WriteString(Layer);
+        }
+    }
+}
+
+/// <summary>InputTapResult.</summary>
+public sealed partial class InputTapResult : ProtocolMessage
+{
+    /// <summary><c>layer</c>.</summary>
+    public string Layer { get; set; } = string.Empty;
+
+    /// <summary><c>downFrame</c>.</summary>
+    public long DownFrame { get; set; }
+
+    /// <summary><c>upFrame</c>.</summary>
+    public long UpFrame { get; set; }
+
+    /// <summary>Frame of the read.</summary>
+    public long Frame { get; set; }
+
+    /// <summary>Milliseconds since the game started.</summary>
+    public long RealtimeMs { get; set; }
+
+    /// <summary>Reads a <see cref="InputTapResult"/> (unknown properties are kept in <see cref="ProtocolMessage.Extra"/>).</summary>
+    public static InputTapResult Read(JsonValue? value, string path)
+    {
+        var r = new ObjectReader(value, path);
+        return new InputTapResult
+        {
+            Layer = r.RequiredString("layer"),
+            DownFrame = r.RequiredInt64("downFrame"),
+            UpFrame = r.RequiredInt64("upFrame"),
+            Frame = r.RequiredInt64("frame"),
+            RealtimeMs = r.RequiredInt64("realtimeMs"),
+            Extra = r.Rest(),
+        };
+    }
+
+    /// <inheritdoc />
+    protected override void WriteProperties(JsonWriter writer)
+    {
+        writer.WritePropertyName("layer");
+        writer.WriteString(Layer);
+        writer.WritePropertyName("downFrame");
+        writer.WriteNumber(DownFrame);
+        writer.WritePropertyName("upFrame");
+        writer.WriteNumber(UpFrame);
+        writer.WritePropertyName("frame");
+        writer.WriteNumber(Frame);
+        writer.WritePropertyName("realtimeMs");
+        writer.WriteNumber(RealtimeMs);
     }
 }
 

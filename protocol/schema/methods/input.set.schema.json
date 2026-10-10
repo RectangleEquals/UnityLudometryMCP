@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/input.set.schema.json",
+  "title": "input.set",
+  "description": "Sets the session's held virtual input: each group given replaces that group (keys, mouse, gamepad, actions); the game sees it from its next input update until changed. Real input is merged in (virtual OR real for buttons, the larger magnitude for axes).",
+  "x-method": {
+    "thread": "any",
+    "minMode": "Full",
+    "job": false,
+    "mutating": true
+  },
+  "$defs": {
+    "params": {
+      "title": "InputSetParams",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The session, from `input.begin`."
+        },
+        "state": {
+          "$ref": "../common/input.schema.json#/$defs/state"
+        },
+        "layer": {
+          "$ref": "../common/input.schema.json#/$defs/layer",
+          "description": "The layer to use (default: the session's first that drives it)."
+        }
+      },
+      "required": [
+        "sessionId",
+        "state"
+      ]
+    },
+    "result": {
+      "title": "InputSetResult",
+      "type": "object",
+      "properties": {
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/input.schema.json#/$defs/layer"
+          },
+          "description": "The layers it went to."
+        },
+        "frame": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Frame of the read."
+        },
+        "realtimeMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Milliseconds since the game started."
+        }
+      },
+      "required": [
+        "layers",
+        "frame",
+        "realtimeMs"
+      ]
+    }
+  }
+}

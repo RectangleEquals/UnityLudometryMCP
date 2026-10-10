@@ -127,6 +127,11 @@ _AGENT_MAP: dict[str, tuple[str, str, bool]] = {
     "EXEC_FAILED": (PROVIDER_FAILED, "Loading, binding or running the compiled code failed; see details.", False),
     "DUPLICATE_ASSEMBLY": (INTERNAL, "An assembly name was reused; generated assemblies must have unique names.", False),
     "BUSY": (PROVIDER_FAILED, "The agent is at a concurrency limit; retry later or lower the load.", True),
+    "SESSION_INACTIVE": (
+        PROVIDER_FAILED,
+        "The input session isn't active: the user took over, or it ended. Ask the user in-game before resuming; never retry.",
+        False,
+    ),
     "TIMEOUT": (TIMEOUT, "The agent didn't finish in time; the game may be loading or hung (check agent health).", False),
     "CANCELLED": (CANCELLED, "", False),
     "MAIN_THREAD_UNAVAILABLE": (TIMEOUT, "The game's main thread isn't responding (loading or hung).", False),

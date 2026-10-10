@@ -85,6 +85,13 @@ class Methods:
     HOOK_VERIFY = "hook.verify"
     HOOKS_CLEAR = "hooks.clear"
     IL_INDEX_START = "il.index.start"
+    INPUT_BEGIN = "input.begin"
+    INPUT_CAPABILITIES = "input.capabilities"
+    INPUT_END = "input.end"
+    INPUT_RESUME = "input.resume"
+    INPUT_SEQUENCE_START = "input.sequence.start"
+    INPUT_SET = "input.set"
+    INPUT_TAP = "input.tap"
     INSTRUMENTATION_CLEAR = "instrumentation.clear"
     INSTRUMENTATION_STATUS = "instrumentation.status"
     JOB_CANCEL = "job.cancel"
@@ -200,6 +207,7 @@ class EventKinds:
     EXCEPTION = "exception"
     EXEC_EMIT = "exec.emit"
     HOOK_HITS = "hook.hits"
+    INPUT_SESSION = "input.session"
     JOB_FINISHED = "job.finished"
     JOB_PROGRESS = "job.progress"
     LOG = "log"
@@ -241,6 +249,7 @@ class ErrorCodes:
     DUPLICATE_ASSEMBLY = "DUPLICATE_ASSEMBLY"
     IO_FAILED = "IO_FAILED"
     BUSY = "BUSY"
+    SESSION_INACTIVE = "SESSION_INACTIVE"
     TIMEOUT = "TIMEOUT"
     CANCELLED = "CANCELLED"
     MAIN_THREAD_UNAVAILABLE = "MAIN_THREAD_UNAVAILABLE"
@@ -325,6 +334,13 @@ METHODS: dict[str, MethodDescriptor] = {
     Methods.HOOK_VERIFY: MethodDescriptor("hook.verify", MethodThread.MIXED, "ReadOnly", False, False, (), m.HookVerifyParams, m.HookVerifyResult, None),
     Methods.HOOKS_CLEAR: MethodDescriptor("hooks.clear", MethodThread.ANY, "ReadOnly", False, False, (), m.HooksClearParams, m.HooksClearResult, None),
     Methods.IL_INDEX_START: MethodDescriptor("il.index.start", MethodThread.ANY, "ReadOnly", True, False, (), m.IlIndexStartParams, m.JobRef, m.IlIndexStartJobResult),
+    Methods.INPUT_BEGIN: MethodDescriptor("input.begin", MethodThread.MAIN, "Full", False, True, (), m.InputBeginParams, m.InputSessionInfo, None),
+    Methods.INPUT_CAPABILITIES: MethodDescriptor("input.capabilities", MethodThread.MAIN, "ReadOnly", False, False, (), m.InputCapabilitiesParams, m.InputCapabilitiesResult, None),
+    Methods.INPUT_END: MethodDescriptor("input.end", MethodThread.MAIN, "Full", False, True, (), m.InputEndParams, m.InputEndResult, None),
+    Methods.INPUT_RESUME: MethodDescriptor("input.resume", MethodThread.MAIN, "Full", False, True, (), m.InputResumeParams, m.InputSessionInfo, None),
+    Methods.INPUT_SEQUENCE_START: MethodDescriptor("input.sequence.start", MethodThread.MIXED, "Full", True, True, (), m.InputSequenceStartParams, m.JobRef, m.InputSequenceStartJobResult),
+    Methods.INPUT_SET: MethodDescriptor("input.set", MethodThread.ANY, "Full", False, True, (), m.InputSetParams, m.InputSetResult, None),
+    Methods.INPUT_TAP: MethodDescriptor("input.tap", MethodThread.MAIN, "Full", False, True, (), m.InputTapParams, m.InputTapResult, None),
     Methods.INSTRUMENTATION_CLEAR: MethodDescriptor("instrumentation.clear", MethodThread.ANY, "ReadOnly", False, False, (), m.InstrumentationClearParams, m.InstrumentationClearResult, None),
     Methods.INSTRUMENTATION_STATUS: MethodDescriptor("instrumentation.status", MethodThread.ANY, "ReadOnly", False, False, (), m.InstrumentationStatusParams, m.InstrumentationStatusResult, None),
     Methods.JOB_CANCEL: MethodDescriptor("job.cancel", MethodThread.ANY, "ReadOnly", False, False, (), m.JobCancelParams, m.JobCancelResult, None),
@@ -439,6 +455,7 @@ EVENTS: dict[str, EventDescriptor] = {
     EventKinds.EXCEPTION: EventDescriptor("exception", m.ExceptionEventParams),
     EventKinds.EXEC_EMIT: EventDescriptor("exec.emit", m.ExecEmitEventParams),
     EventKinds.HOOK_HITS: EventDescriptor("hook.hits", m.HookHitsEventParams),
+    EventKinds.INPUT_SESSION: EventDescriptor("input.session", m.InputSessionEventParams),
     EventKinds.JOB_FINISHED: EventDescriptor("job.finished", m.JobFinishedEventParams),
     EventKinds.JOB_PROGRESS: EventDescriptor("job.progress", m.JobProgressEventParams),
     EventKinds.LOG: EventDescriptor("log", m.LogEventParams),
