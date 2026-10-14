@@ -1570,8 +1570,14 @@ public sealed partial class AppInfoResult : ProtocolMessage
     /// <summary><c>isFocused</c>.</summary>
     public bool IsFocused { get; set; }
 
-    /// <summary><c>runInBackground</c>.</summary>
+    /// <summary>Unity's Run In Background now (true while the agent keeps the game running).</summary>
     public bool RunInBackground { get; set; }
+
+    /// <summary>The game's own Run In Background setting (its value at start, or the last one it set since): false means the game pauses whenever its window loses focus. Null when it can't be read.</summary>
+    public bool? GameRunInBackground { get; set; }
+
+    /// <summary>Whether the agent is keeping the game running while its window is in the background (the agent's <c>Pump.KeepRunningInBackground</c> setting, on unless a client turned Run In Background off with <c>app.runInBackground</c>).</summary>
+    public bool KeptRunning { get; set; }
 
     /// <summary><c>screen</c>.</summary>
     public ScreenInfo Screen { get; set; } = new();
@@ -1598,6 +1604,8 @@ public sealed partial class AppInfoResult : ProtocolMessage
             ConsoleLogPath = r.RequiredNullableString("consoleLogPath"),
             IsFocused = r.RequiredBoolean("isFocused"),
             RunInBackground = r.RequiredBoolean("runInBackground"),
+            GameRunInBackground = r.RequiredNullableBoolean("gameRunInBackground"),
+            KeptRunning = r.RequiredBoolean("keptRunning"),
             Screen = r.Required("screen", global::UnityLudometry.Protocol.Messages.ScreenInfo.Read),
             QualityLevel = r.RequiredInt64("qualityLevel"),
             GraphicsDevice = r.RequiredString("graphicsDevice"),
@@ -1636,6 +1644,18 @@ public sealed partial class AppInfoResult : ProtocolMessage
         writer.WriteBoolean(IsFocused);
         writer.WritePropertyName("runInBackground");
         writer.WriteBoolean(RunInBackground);
+        if (GameRunInBackground.HasValue)
+        {
+            writer.WritePropertyName("gameRunInBackground");
+            writer.WriteBoolean(GameRunInBackground.Value);
+        }
+        else
+        {
+            writer.WritePropertyName("gameRunInBackground");
+            writer.WriteNull();
+        }
+        writer.WritePropertyName("keptRunning");
+        writer.WriteBoolean(KeptRunning);
         writer.WritePropertyName("screen");
         Screen.WriteJson(writer);
         writer.WritePropertyName("qualityLevel");

@@ -59,7 +59,7 @@ public static class Methods
     /// <summary>Quits the application after responding.</summary>
     public const string AppQuit = "app.quit";
 
-    /// <summary>Keeps the game updating while unfocused.</summary>
+    /// <summary>Keeps the game updating while unfocused (true), or lets it pause again (false). Setting false also stops the agent keeping the game running (<c>app.info</c> <c>keptRunning</c>) until true is set again; the game's own setting is reported as <c>gameRunInBackground</c>.</summary>
     public const string AppRunInBackground = "app.runInBackground";
 
     /// <summary>Runs several requests in order. With <c>sameFrame</c>, all main-thread requests run within one pump tick (a consistent snapshot of game state). Each item is checked against the mode like a single request.</summary>

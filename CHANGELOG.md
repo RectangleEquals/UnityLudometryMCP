@@ -34,6 +34,9 @@
   about: `input.begin` (a countdown, then active), `input.set` (held keys, mouse, gamepad, actions), `input.tap`,
   `input.sequence.start` (a frame-accurate timed script, as a job), `input.resume` after the user took over, and
   `input.end`; the `input.session` event reports each change, and a new error code `SESSION_INACTIVE`.
+- Protocol `0.1.0-dev.10`: games that pause in the background. `app.info` reports the game's own Run In Background
+  setting (`gameRunInBackground`: false means the game stops whenever its window loses focus) and whether the agent is
+  keeping it running anyway (`keptRunning`); `app.runInBackground` with false lets the game pause again.
 - Facts `ui.frameworks_available`, `input.systems_present` and `ui.frameworks_used` (static usage merged with the agent's
   `ui.frameworks` reports: what the agent saw in use wins, with the screens it saw it on).
 - Python project (`uv`, Python 3.13): the protocol layer (generated pydantic models, strict JSON, framing, envelopes,

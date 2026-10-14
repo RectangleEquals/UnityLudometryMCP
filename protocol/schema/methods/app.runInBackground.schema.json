@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/RectangleEquals/UnityLudometryMCP/protocol/schema/methods/app.runInBackground.schema.json",
   "title": "app.runInBackground",
-  "description": "Keeps the game updating while unfocused.",
+  "description": "Keeps the game updating while unfocused (true), or lets it pause again (false). Setting false also stops the agent keeping the game running (`app.info` `keptRunning`) until true is set again; the game's own setting is reported as `gameRunInBackground`.",
   "x-method": {
     "thread": "main",
     "minMode": "Full",

@@ -50,7 +50,19 @@
           "type": "boolean"
         },
         "runInBackground": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Unity's Run In Background now (true while the agent keeps the game running)."
+        },
+        "gameRunInBackground": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "The game's own Run In Background setting (its value at start, or the last one it set since): false means the game pauses whenever its window loses focus. Null when it can't be read."
+        },
+        "keptRunning": {
+          "type": "boolean",
+          "description": "Whether the agent is keeping the game running while its window is in the background (the agent's `Pump.KeepRunningInBackground` setting, on unless a client turned Run In Background off with `app.runInBackground`)."
         },
         "screen": {
           "title": "ScreenInfo",
@@ -92,6 +104,8 @@
         "consoleLogPath",
         "isFocused",
         "runInBackground",
+        "gameRunInBackground",
+        "keptRunning",
         "screen",
         "qualityLevel",
         "graphicsDevice"
